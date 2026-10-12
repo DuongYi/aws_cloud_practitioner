@@ -1,0 +1,6 @@
+{
+  "name": "AWS Cloud Practitioner (CLF-C02) Ôn Luyện & Thi Thử",
+  "description": "Trang web ôn luyện AWS Cloud Practitioner (CLF-C02) toàn diện, đánh dấu kiến thức core, tóm tắt bài giảng song ngữ và hệ thống thi thử mô phỏng đề thi thực tế.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
