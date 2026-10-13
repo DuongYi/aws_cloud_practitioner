@@ -15,7 +15,7 @@ import {
   Flame,
   ArrowRight
 } from 'lucide-react';
-import { ExamSet, ExamAttempt } from '../types';
+import { ExamSet, ExamAttempt, ExamSession } from '../types';
 import { getExamAttempts } from '../utils/storage';
 
 type Category = 'all' | 'mixed' | 'practice' | 'core' | 'custom';
@@ -52,6 +52,10 @@ interface ExamPickerProps {
   examMode: 'strict' | 'practice';
   onModeChange: (mode: 'strict' | 'practice') => void;
   onStart: () => void;
+  savedSessions?: Record<string, ExamSession>;
+  resume?: { session: ExamSession; exam: ExamSet } | null;
+  onResume?: (examId?: string) => void;
+  onDiscardResume?: (examId?: string) => void;
 }
 
 export const ExamPicker: React.FC<ExamPickerProps> = ({
@@ -61,6 +65,10 @@ export const ExamPicker: React.FC<ExamPickerProps> = ({
   examMode,
   onModeChange,
   onStart,
+  savedSessions,
+  resume,
+  onResume,
+  onDiscardResume,
 }) => {
   const reduce = useReducedMotion();
   const [category, setCategory] = useState<Category>('all');
@@ -68,6 +76,19 @@ export const ExamPicker: React.FC<ExamPickerProps> = ({
   const [query, setQuery] = useState('');
 
   const attempts: ExamAttempt[] = useMemo(() => getExamAttempts(), []);
+
+  const inProgressList = useMemo(() => {
+    if (savedSessions) {
+      return Object.values(savedSessions)
+        .map((s) => {
+          const ex = exams.find((e) => e.id === s.examId);
+          return ex ? { session: s, exam: ex } : null;
+        })
+        .filter((item): item is { session: ExamSession; exam: ExamSet } => item !== null)
+        .sort((a, b) => b.session.updatedAt - a.session.updatedAt);
+    }
+    return resume ? [resume] : [];
+  }, [savedSessions, exams, resume]);
   
   const statsByExam = useMemo(() => {
     const map: Record<string, { best: number; count: number; lastDate: string }> = {};
@@ -109,6 +130,109 @@ export const ExamPicker: React.FC<ExamPickerProps> = ({
   return (
     <div className="px-4 pb-36 pt-4 sm:px-6 lg:px-8 space-y-10">
       
+      {/* ================= IN-PROGRESS SESSIONS BANNER / CARDS ================= */}
+      {inProgressList.length === 1 && (() => {
+        const item = inProgressList[0];
+        const answeredCount = Object.values(item.session.answers).filter((a) => a.length > 0).length;
+        const minsLeft = item.session.remainingSeconds != null
+          ? Math.max(1, Math.ceil(item.session.remainingSeconds / 60))
+          : Math.max(1, Math.ceil((item.session.endsAt - Date.now()) / 60000));
+
+        return (
+          <section aria-label="Bài đang làm dở" className="flex flex-wrap items-center gap-x-6 gap-y-3 rounded-2xl border border-orange-500/40 bg-orange-500/[0.07] px-5 py-4">
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-2">
+                <span className="flex h-2 w-2 rounded-full bg-orange-400 animate-ping" />
+                <p className="text-xs font-semibold uppercase tracking-wider text-orange-300">Bài thi đang làm dở</p>
+              </div>
+              <p className="mt-0.5 truncate text-base font-semibold text-slate-50">{cleanTitle(item.exam)}</p>
+              <p className="mt-1 text-sm text-slate-300">
+                Đang dừng tại câu <strong className="text-white">{(item.session.currentIndex ?? 0) + 1}</strong> • Đã trả lời{' '}
+                <span className="font-mono tabular-nums text-orange-300 font-bold">
+                  {answeredCount}/{item.exam.questions.length}
+                </span>{' '}
+                câu
+                {item.session.mode === 'strict' ? (
+                  <>
+                    {' '}• Còn lại{' '}
+                    <span className="font-mono tabular-nums text-orange-300 font-bold">{minsLeft}</span> phút
+                  </>
+                ) : (
+                  ' • Chế độ luyện tập'
+                )}
+              </p>
+            </div>
+            <button
+              onClick={() => onDiscardResume?.(item.exam.id)}
+              className="h-10 rounded-lg px-4 text-sm font-medium text-slate-300 hover:text-white transition"
+            >
+              Bỏ bài này
+            </button>
+            <button
+              onClick={() => onResume?.(item.exam.id)}
+              className="flex h-10 items-center gap-2 rounded-xl bg-orange-500 px-5 text-sm font-semibold text-slate-950 hover:bg-orange-400 transition shadow-lg shadow-orange-500/20"
+            >
+              <Play className="h-4 w-4 fill-current" aria-hidden="true" />
+              Tiếp tục làm bài
+            </button>
+          </section>
+        );
+      })()}
+
+      {inProgressList.length > 1 && (
+        <section aria-label="Các bài đang làm dở" className="rounded-3xl border border-orange-500/40 bg-orange-500/[0.05] p-5 sm:p-6 space-y-4">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-2.5 w-2.5 rounded-full bg-orange-400 animate-ping" />
+              <h2 className="text-sm font-bold uppercase tracking-wider text-orange-300">
+                Bạn có {inProgressList.length} bài thi đang làm dở
+              </h2>
+            </div>
+            <span className="text-xs text-slate-400 hidden sm:inline">Tiến độ được lưu độc lập từng bài thi</span>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {inProgressList.map((item) => {
+              const answeredCount = Object.values(item.session.answers).filter((a) => a.length > 0).length;
+              const minsLeft = item.session.remainingSeconds != null
+                ? Math.max(1, Math.ceil(item.session.remainingSeconds / 60))
+                : Math.max(1, Math.ceil((item.session.endsAt - Date.now()) / 60000));
+
+              return (
+                <div
+                  key={item.exam.id}
+                  className="machined-card rounded-2xl p-4 flex flex-col justify-between space-y-3 border-orange-500/30 hover:border-orange-500/60 transition"
+                >
+                  <div>
+                    <h3 className="text-sm font-bold text-white line-clamp-1">{cleanTitle(item.exam)}</h3>
+                    <p className="mt-1 text-xs text-slate-300">
+                      Câu <strong className="text-white font-mono">{(item.session.currentIndex ?? 0) + 1}</strong> • Đã làm{' '}
+                      <span className="font-mono text-orange-300 font-bold">{answeredCount}/{item.exam.questions.length}</span>
+                      {item.session.mode === 'strict' && ` • Còn ${minsLeft}p`}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2 pt-2 border-t border-white/[0.06]">
+                    <button
+                      onClick={() => onDiscardResume?.(item.exam.id)}
+                      className="px-2 py-1 text-xs text-slate-400 hover:text-rose-300 transition"
+                    >
+                      Bỏ bài
+                    </button>
+                    <button
+                      onClick={() => onResume?.(item.exam.id)}
+                      className="ml-auto flex items-center gap-1.5 rounded-xl bg-orange-500 px-3.5 py-1.5 text-xs font-bold text-slate-950 hover:bg-orange-400 transition"
+                    >
+                      <Play className="h-3 w-3 fill-current" />
+                      Tiếp tục
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
       {/* ================= HERO INTRO SECTION ================= */}
       <section className="machined-card rounded-3xl p-6 sm:p-8 lg:p-10 relative overflow-hidden">
         {/* Ambient Glow Orb */}
@@ -266,6 +390,8 @@ export const ExamPicker: React.FC<ExamPickerProps> = ({
           {visible.map((ex, i) => {
             const s = statsByExam[ex.id];
             const isSel = ex.id === selectedExamId;
+            const pausedSession = savedSessions ? savedSessions[ex.id] : (resume?.exam.id === ex.id ? resume.session : null);
+            const isPaused = !!pausedSession;
             const passed = s && s.best >= ex.passingScore;
             const pct = s ? Math.max(0, Math.min(100, ((s.best - 100) / 900) * 100)) : 0;
             const passPct = ((ex.passingScore - 100) / 900) * 100;
@@ -285,14 +411,24 @@ export const ExamPicker: React.FC<ExamPickerProps> = ({
                   className={`group relative flex h-full w-full flex-col rounded-3xl p-5 sm:p-6 text-left transition-all duration-200 cursor-pointer ${
                     isSel
                       ? 'border-2 border-orange-500 bg-slate-900 shadow-xl ring-2 ring-orange-500/20 shadow-orange-500/10'
+                      : isPaused
+                      ? 'border border-orange-500/40 bg-slate-900/80 shadow-lg shadow-orange-500/5 hover:border-orange-500/60 hover:bg-slate-900'
                       : 'machined-card hover:border-orange-500/40 hover:bg-slate-900/90'
                   }`}
                 >
-                  {/* Top Bar: Category pill & Selected Tick */}
+                  {/* Top Bar: Category pill, in-progress badge & Selected Tick */}
                   <div className="flex items-center justify-between gap-3 mb-2">
-                    <span className="rounded-md border border-white/[0.08] bg-slate-950/80 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                      {CATEGORY_LABEL[cat]}
-                    </span>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="rounded-md border border-white/[0.08] bg-slate-950/80 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                        {CATEGORY_LABEL[cat]}
+                      </span>
+                      {isPaused && pausedSession && (
+                        <span className="flex items-center gap-1.5 rounded-full border border-orange-500/50 bg-orange-500/20 px-2 py-0.5 text-[10px] font-bold text-orange-300">
+                          <span className="h-1.5 w-1.5 rounded-full bg-orange-400 animate-pulse" />
+                          Đang làm dở ({Object.values(pausedSession.answers).filter((a) => a.length > 0).length}/{ex.questions.length})
+                        </span>
+                      )}
+                    </div>
 
                     {isSel ? (
                       <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-orange-500 text-slate-950 font-black shadow-md shadow-orange-500/30">
@@ -403,16 +539,43 @@ export const ExamPicker: React.FC<ExamPickerProps> = ({
             ))}
           </div>
 
-          {/* Start CTA Button */}
-          <button
-            onClick={onStart}
-            disabled={!selected}
-            className="flex h-11 items-center gap-2 rounded-2xl bg-gradient-to-r from-orange-400 to-amber-500 px-7 text-sm font-bold text-slate-950 shadow-lg shadow-orange-500/25 transition-all hover:scale-[1.02] hover:shadow-orange-500/35 active:scale-[0.98] disabled:opacity-40 disabled:pointer-events-none"
-          >
-            <Play className="h-4 w-4 fill-current ml-0.5" aria-hidden="true" />
-            <span>Bắt Đầu Làm Bài</span>
-            <ArrowRight className="h-4 w-4 ml-1" />
-          </button>
+          {/* Start / Resume CTA Button */}
+          {(() => {
+            const selectedSession = savedSessions ? (selected ? savedSessions[selected.id] : null) : (resume?.exam.id === selected?.id ? resume?.session ?? null : null);
+            if (selectedSession && selected) {
+              const answeredCount = Object.values(selectedSession.answers).filter((a) => a.length > 0).length;
+              return (
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={onStart}
+                    className="hidden sm:inline-flex h-11 items-center gap-1.5 rounded-2xl border border-white/10 px-4 text-xs font-semibold text-slate-300 hover:bg-white/5 hover:text-white transition"
+                    title="Bỏ tiến độ dở và thi lại bộ đề này từ đầu"
+                  >
+                    Làm lại từ đầu
+                  </button>
+                  <button
+                    onClick={() => onResume?.(selected.id)}
+                    className="flex h-11 items-center gap-2 rounded-2xl bg-gradient-to-r from-orange-400 to-amber-500 px-7 text-sm font-bold text-slate-950 shadow-lg shadow-orange-500/25 transition-all hover:scale-[1.02] hover:shadow-orange-500/35 active:scale-[0.98]"
+                  >
+                    <Play className="h-4 w-4 fill-current ml-0.5" aria-hidden="true" />
+                    <span>Tiếp Tục Làm Bài ({answeredCount}/{selected.questions.length} câu)</span>
+                    <ArrowRight className="h-4 w-4 ml-1" />
+                  </button>
+                </div>
+              );
+            }
+            return (
+              <button
+                onClick={onStart}
+                disabled={!selected}
+                className="flex h-11 items-center gap-2 rounded-2xl bg-gradient-to-r from-orange-400 to-amber-500 px-7 text-sm font-bold text-slate-950 shadow-lg shadow-orange-500/25 transition-all hover:scale-[1.02] hover:shadow-orange-500/35 active:scale-[0.98] disabled:opacity-40 disabled:pointer-events-none"
+              >
+                <Play className="h-4 w-4 fill-current ml-0.5" aria-hidden="true" />
+                <span>Bắt Đầu Làm Bài</span>
+                <ArrowRight className="h-4 w-4 ml-1" />
+              </button>
+            );
+          })()}
 
         </div>
       </div>

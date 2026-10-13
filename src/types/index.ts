@@ -100,3 +100,20 @@ export interface ExamAttempt {
   userAnswers: Record<string | number, number[]>;
   flaggedQuestionIds: (string | number)[];
 }
+
+/** A half-finished exam, saved so it can be resumed after a tab switch or reload. */
+export interface ExamSession {
+  examId: string;
+  mode: 'strict' | 'practice';
+  currentIndex: number;
+  answers: Record<string | number, number[]>;
+  flagged: (string | number)[];
+  eliminated: Record<string | number, number[]>;
+  /** Epoch ms when time runs out. */
+  endsAt: number;
+  /** Preserved seconds left when exam was paused. */
+  remainingSeconds?: number;
+  updatedAt: number;
+  /** True when the user left the exam on purpose; false means it was interrupted. */
+  paused?: boolean;
+}

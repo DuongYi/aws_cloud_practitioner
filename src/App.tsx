@@ -6,7 +6,12 @@ import { CheatSheetView } from './components/CheatSheetView';
 import { ExamSimulator } from './components/ExamSimulator';
 import { ExamManager } from './components/ExamManager';
 import { SECTIONS_DATA } from './data/sections';
+import { supabase } from './utils/supabase';
+import { useRoute, navigate, buildPath, Tab } from './utils/router';
+import { syncAll } from './utils/sync';
 import { 
+  getExamSession,
+  applySyncedData,
   getStoredCustomExams, 
   getAllExams, 
   getCompletedLectures, 
@@ -19,10 +24,17 @@ import { motion, useReducedMotion } from 'motion/react';
 import { Award, ShieldCheck, Heart, Sparkles } from 'lucide-react';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'study' | 'cheatsheet' | 'exam' | 'manage' | 'history'>(() => {
-    const t = new URLSearchParams(window.location.search).get('tab');
-    return t === 'cheatsheet' || t === 'exam' || t === 'manage' ? t : 'study';
-  });
+  const route = useRoute();
+  const activeTab = route.tab;
+
+  // Old ?tab=exam links keep working
+  useEffect(() => {
+    const legacy = new URLSearchParams(window.location.search).get('tab');
+    if (legacy === 'study' || legacy === 'cheatsheet' || legacy === 'exam' || legacy === 'manage') {
+      navigate(buildPath(legacy), { replace: true });
+    }
+  }, []);
+  const [examMounted, setExamMounted] = useState<boolean>(() => !!getExamSession() || route.tab === 'exam');
   const [searchQuery, setSearchQuery] = useState('');
   const [langMode, setLangMode] = useState<'bilingual' | 'vi' | 'en'>('bilingual');
   const reduceMotion = useReducedMotion();
@@ -67,6 +79,62 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  const [accountEmail, setAccountEmail] = useState<string | null>(null);
+  const [syncing, setSyncing] = useState(false);
+
+  useEffect(() => {
+    if (!supabase) return;
+    let syncedUser: string | null = null;
+    let running = false;
+
+    const snapshot = () => ({
+      lectures: getCompletedLectures(),
+      bookmarks: getBookmarkedFacts(),
+      attempts: getExamAttempts(),
+      customExams: getStoredCustomExams(),
+    });
+
+    const runSync = async (userId: string | null, email: string | null) => {
+      setAccountEmail(email);
+      if (!userId) {
+        syncedUser = null;
+        return;
+      }
+      // supabase-js emits SIGNED_IN again whenever the browser tab regains focus.
+      // Only sync once per user, otherwise stale results overwrite fresh edits.
+      if (syncedUser === userId || running) return;
+      running = true;
+      setSyncing(true);
+      try {
+        for (let attempt = 0; attempt < 3; attempt++) {
+          const before = JSON.stringify(snapshot());
+          const merged = await syncAll(snapshot());
+          if (!merged) break;
+          // The user edited while the request was in flight: merge again instead of overwriting.
+          if (JSON.stringify(snapshot()) !== before) continue;
+          applySyncedData(merged);
+          setCompletedLectures(merged.lectures);
+          setBookmarkedFacts(merged.bookmarks);
+          setAllExamsList(getAllExams());
+          setExamAttempts(getExamAttempts());
+          syncedUser = userId;
+          break;
+        }
+      } finally {
+        running = false;
+        setSyncing(false);
+      }
+    };
+
+    supabase.auth.getSession().then(({ data }) => runSync(data.session?.user.id ?? null, data.session?.user.email ?? null));
+    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') {
+        void runSync(session?.user.id ?? null, session?.user.email ?? null);
+      }
+    });
+    return () => sub.subscription.unsubscribe();
+  }, []);
+
   const handleToggleCompleted = (lectureId: string) => {
     const updated = toggleCompletedLecture(lectureId);
     setCompletedLectures(updated);
@@ -90,13 +158,15 @@ export default function App() {
     return SECTIONS_DATA.reduce((acc, sec) => acc + sec.quickExamFacts.length, 0);
   }, []);
 
-  const switchTab = (tab: typeof activeTab) => {
-    setActiveTab(tab);
+  const switchTab = (tab: Tab | 'history') => {
+    const target: Tab = tab === 'history' ? 'study' : tab;
+    if (target === 'exam') setExamMounted(true);
+    navigate(buildPath(target));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <div className="grain flex min-h-[100dvh] flex-col bg-slate-950 font-sans text-slate-100 antialiased selection:bg-orange-500 selection:text-slate-950">
+    <div className="grain flex min-h-[100dvh] flex-col bg-slate-950 font-sans text-slate-100 antialiased selection:bg-orange-500 selection:text-slate-950 overflow-x-clip">
       <div className="ambient-mesh" aria-hidden="true" />
       <a href="#main" className="skip-link">Bỏ qua tới nội dung chính</a>
 
@@ -111,6 +181,8 @@ export default function App() {
         completedLecturesCount={completedLectures.length}
         totalLecturesCount={totalLecturesCount}
         bookmarkedCount={bookmarkedFacts.length}
+        accountEmail={accountEmail}
+        syncing={syncing}
       />
 
       <main id="main" className="mx-auto w-full max-w-[1440px] flex-1 pb-16 relative z-10">
@@ -140,18 +212,12 @@ export default function App() {
               onToggleCompleted={handleToggleCompleted}
               bookmarkedFacts={bookmarkedFacts}
               onToggleBookmark={handleToggleBookmark}
+              routeLectureId={route.tab === 'study' ? route.id : undefined}
+              onSelectLecture={(id, replace) => navigate(buildPath('study', id), { replace })}
             />
           )}
 
           {activeTab === 'cheatsheet' && <CheatSheetView />}
-
-          {activeTab === 'exam' && (
-            <ExamSimulator 
-              exams={allExamsList} 
-              langMode={langMode} 
-              onFinishAttempt={handleRefreshExams} 
-            />
-          )}
 
           {activeTab === 'manage' && (
             <ExamManager
@@ -161,6 +227,20 @@ export default function App() {
             />
           )}
         </motion.div>
+
+        {/* Kept mounted once opened so an exam in progress keeps its answers and timer while browsing other tabs */}
+        {examMounted && (
+          <div hidden={activeTab !== 'exam'}>
+            <ExamSimulator
+              exams={allExamsList}
+              langMode={langMode}
+              onFinishAttempt={handleRefreshExams}
+              active={route.tab === 'exam'}
+              routeExamId={route.tab === 'exam' ? route.id : undefined}
+              onSelectExam={(id, replace) => navigate(buildPath('exam', id), { replace })}
+            />
+          </div>
+        )}
       </main>
 
       {/* Commercial Grade Footer */}

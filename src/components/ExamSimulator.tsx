@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { ExamSet, ExamQuestion, ExamAttempt } from '../types';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { ExamSet, ExamQuestion, ExamAttempt, ExamSession } from '../types';
 import { 
   Award, 
   Clock, 
@@ -23,7 +23,8 @@ import {
   X,
   ListOrdered
 } from 'lucide-react';
-import { saveExamAttempt } from '../utils/storage';
+import { saveExamAttempt, getAllExamSessions, saveExamSession, clearExamSession, adoptCloudSessions } from '../utils/storage';
+import { fetchSessions } from '../utils/sync';
 import { ExamPicker } from './ExamPicker';
 import { ResultSummary } from './ResultSummary';
 
@@ -31,10 +32,22 @@ interface ExamSimulatorProps {
   exams: ExamSet[];
   onFinishAttempt?: () => void;
   langMode: 'bilingual' | 'vi' | 'en';
+  routeExamId?: string;
+  active?: boolean;
+  onSelectExam?: (examId: string, replace: boolean) => void;
 }
 
-export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAttempt, langMode }) => {
-  const [selectedExamId, setSelectedExamId] = useState<string>(exams[0]?.id || '');
+export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAttempt, langMode, routeExamId, active, onSelectExam }) => {
+  const [selectedExamId, setSelectedExamId] = useState<string>(
+    exams.find((e) => e.id === routeExamId)?.id || exams[0]?.id || ''
+  );
+  useEffect(() => {
+    if (routeExamId && routeExamId !== selectedExamId && exams.some((e) => e.id === routeExamId)) setSelectedExamId(routeExamId);
+  }, [routeExamId]);
+  useEffect(() => {
+    // Only mirror to the URL while this tab is the visible one
+    if (active && onSelectExam && selectedExamId && selectedExamId !== routeExamId) onSelectExam(selectedExamId, !routeExamId);
+  }, [selectedExamId, active]);
   const [isExamActive, setIsExamActive] = useState<boolean>(false);
   const [examMode, setExamMode] = useState<'strict' | 'practice'>('strict');
   
@@ -54,6 +67,149 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
   const currentExam = useMemo(() => {
     return exams.find((e) => e.id === selectedExamId) || exams[0];
   }, [exams, selectedExamId]);
+
+  const isSessionValid = (s: ExamSession | null): boolean => {
+    if (!s) return false;
+    // A paused exam or practice exam session is saved intentionally and valid until resumed or discarded
+    if (s.paused || s.mode === 'practice') return true;
+    const secondsLeft = s.remainingSeconds ?? Math.ceil((s.endsAt - Date.now()) / 1000);
+    return secondsLeft > 0;
+  };
+
+  // ---- In-progress sessions map: supports multiple exams at once ----
+  const [savedSessions, setSavedSessions] = useState<Record<string, ExamSession>>(() => {
+    const all = getAllExamSessions();
+    const valid: Record<string, ExamSession> = {};
+    Object.entries(all).forEach(([id, s]) => {
+      if (isSessionValid(s)) valid[id] = s;
+    });
+    return valid;
+  });
+  const endsAtRef = useRef<number>(0);
+  const timeRemainingRef = useRef(timeRemainingSeconds);
+  const [savedToast, setSavedToast] = useState<string | null>(null);
+
+  useEffect(() => {
+    timeRemainingRef.current = timeRemainingSeconds;
+  }, [timeRemainingSeconds]);
+
+  useEffect(() => {
+    let alive = true;
+    fetchSessions().then((clouds) => {
+      if (!alive) return;
+      const adoptedMap = adoptCloudSessions(clouds);
+      const valid: Record<string, ExamSession> = {};
+      Object.entries(adoptedMap).forEach(([id, s]) => {
+        if (isSessionValid(s)) valid[id] = s;
+      });
+      setSavedSessions(valid);
+    });
+    return () => { alive = false; };
+  }, []);
+
+  // Save after every change of answers, flags, position (not every timer tick).
+  useEffect(() => {
+    if (!isExamActive || isExamCompleted || !currentExam) return;
+    const session: ExamSession = {
+      examId: currentExam.id,
+      mode: examMode,
+      currentIndex: currentQuestionIndex,
+      answers: userAnswers,
+      flagged: Array.from(flaggedQuestions),
+      eliminated: Object.fromEntries(Object.entries(eliminatedOptions).map(([k, v]) => [k, Array.from(v)])),
+      endsAt: endsAtRef.current,
+      remainingSeconds: timeRemainingRef.current,
+      updatedAt: Date.now(),
+      paused: false,
+    };
+    saveExamSession(session);
+    setSavedSessions((prev) => ({ ...prev, [currentExam.id]: session }));
+  }, [isExamActive, isExamCompleted, currentExam, examMode, currentQuestionIndex, userAnswers, flaggedQuestions, eliminatedOptions]);
+
+  const handleResumeExam = (targetExamId?: string) => {
+    const idToResume = targetExamId || selectedExamId;
+    const s = savedSessions[idToResume] || Object.values(savedSessions).sort((a, b) => b.updatedAt - a.updatedAt)[0];
+    const exam = s && exams.find((e) => e.id === s.examId);
+    if (!s || !exam) return;
+
+    // Use preserved paused time, or fallback to real-time wall-clock
+    const restoredSeconds = (s.paused || s.mode === 'practice')
+      ? (s.remainingSeconds ?? Math.max(1, Math.ceil((s.endsAt - Date.now()) / 1000)))
+      : Math.max(1, Math.ceil((s.endsAt - Date.now()) / 1000));
+
+    // Reset countdown anchor to resume from exact saved remaining time
+    endsAtRef.current = Date.now() + restoredSeconds * 1000;
+
+    setSelectedExamId(exam.id);
+    setExamMode(s.mode);
+    setCurrentQuestionIndex(Math.min(s.currentIndex, exam.questions.length - 1));
+    setUserAnswers(s.answers);
+    setFlaggedQuestions(new Set(s.flagged));
+    setEliminatedOptions(Object.fromEntries(Object.entries(s.eliminated || {}).map(([k, v]) => [k, new Set(v)])));
+    setTimeRemainingSeconds(restoredSeconds);
+    setIsExamCompleted(false);
+    setShowReviewGrid(false);
+    setShowFinishConfirm(false);
+    setShowExitConfirm(false);
+    setIsExamActive(true);
+  };
+
+  const handleSaveAndExit = () => {
+    setShowExitConfirm(false);
+    if (currentExam) {
+      const pausedSession: ExamSession = {
+        examId: currentExam.id,
+        mode: examMode,
+        currentIndex: currentQuestionIndex,
+        answers: userAnswers,
+        flagged: Array.from(flaggedQuestions),
+        eliminated: Object.fromEntries(Object.entries(eliminatedOptions).map(([k, v]) => [k, Array.from(v)])),
+        endsAt: endsAtRef.current,
+        remainingSeconds: timeRemainingSeconds,
+        updatedAt: Date.now(),
+        paused: true,
+      };
+      const cloud = saveExamSession(pausedSession, true);
+      setSavedSessions((prev) => ({ ...prev, [currentExam.id]: pausedSession }));
+      const answered = Object.values(userAnswers).filter((a) => a.length > 0).length;
+      const minsLeft = Math.max(1, Math.ceil(timeRemainingSeconds / 60));
+      const base = `Tiến độ đề "${currentExam.title}": ${answered}/${currentExam.questions.length} câu (còn ${minsLeft} phút).`;
+      setSavedToast(`${base} Đang lưu lên cloud...`);
+      cloud.then((ok) => {
+        setSavedToast(
+          ok === true
+            ? `Đã lưu lên cloud. ${base} Bấm "Tiếp tục làm bài" để làm tiếp.`
+            : ok === false
+              ? `Chỉ lưu được trên máy này, lưu lên cloud thất bại. ${base}`
+              : `Đã lưu trên máy này. Đăng nhập để lưu lên cloud và làm tiếp trên thiết bị khác. ${base}`
+        );
+        window.setTimeout(() => setSavedToast(null), 7000);
+      });
+    }
+    setIsExamActive(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // An interrupted exam (reload, crash) continues on its own if it wasn't paused intentionally.
+  const autoResumed = useRef(false);
+  useEffect(() => {
+    if (autoResumed.current || isExamActive) return;
+    const candidate = routeExamId ? savedSessions[routeExamId] : Object.values(savedSessions).sort((a, b) => b.updatedAt - a.updatedAt)[0];
+    if (!candidate || candidate.paused) return;
+    if (!exams.some((e) => e.id === candidate.examId)) return;
+    autoResumed.current = true;
+    handleResumeExam(candidate.examId);
+  }, [savedSessions, isExamActive, exams, routeExamId]);
+
+  const handleDiscardSession = (targetExamId?: string) => {
+    const idToClear = targetExamId || selectedExamId;
+    clearExamSession(idToClear);
+    setSavedSessions((prev) => {
+      const next = { ...prev };
+      delete next[idToClear];
+      return next;
+    });
+  };
 
   // Timer effect during active strict exam
   useEffect(() => {
@@ -82,6 +238,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
     setFlaggedQuestions(new Set());
     setEliminatedOptions({});
     setTimeRemainingSeconds(currentExam.timeLimitMinutes * 60);
+    endsAtRef.current = Date.now() + currentExam.timeLimitMinutes * 60 * 1000;
     setShowReviewGrid(false);
     setShowFinishConfirm(false);
     setShowExitConfirm(false);
@@ -135,6 +292,12 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
     setIsExamCompleted(true);
     setShowReviewGrid(false);
     setShowFinishConfirm(false);
+    clearExamSession(currentExam.id);
+    setSavedSessions((prev) => {
+      const next = { ...prev };
+      delete next[currentExam.id];
+      return next;
+    });
 
     // Calculate score
     let correctCount = 0;
@@ -194,6 +357,11 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
   if (!isExamActive) {
     return (
       <div className="mx-auto max-w-[1440px]">
+        {savedToast && (
+          <div role="status" className="fixed left-1/2 top-20 z-50 w-[min(92vw,34rem)] -translate-x-1/2 rounded-2xl border border-emerald-500/40 bg-slate-900/95 px-5 py-3 text-sm text-slate-100 shadow-2xl backdrop-blur-xl">
+            {savedToast}
+          </div>
+        )}
         <ExamPicker
           exams={exams}
           selectedExamId={currentExam?.id || ''}
@@ -201,6 +369,9 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
           examMode={examMode}
           onModeChange={setExamMode}
           onStart={handleStartExam}
+          savedSessions={savedSessions}
+          onResume={handleResumeExam}
+          onDiscardResume={handleDiscardSession}
         />
       </div>
     );
@@ -403,7 +574,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
             onClick={() => setShowExitConfirm(true)}
             className="text-xs font-semibold text-slate-400 hover:text-white px-2.5 py-1.5 rounded-xl border border-white/[0.08] bg-slate-800/80 hover:bg-slate-700 transition"
           >
-            &larr; Thoát
+            &larr; Lưu và thoát
           </button>
           <div>
             <h2 className="text-xs sm:text-sm font-bold text-white line-clamp-1 flex items-center gap-1.5">
@@ -514,25 +685,39 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
       {showExitConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md p-4">
           <div className="machined-card max-w-md w-full rounded-3xl p-6 space-y-4 shadow-2xl">
-            <h3 className="text-lg font-bold text-white">Xác nhận rời khỏi bài thi?</h3>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              Bài làm hiện tại sẽ không được lưu nếu bạn thoát bây giờ. Bạn có chắc chắn muốn quay lại danh sách đề thi không?
+            <h3 className="text-lg font-bold text-white">Rời khỏi bài thi?</h3>
+            <p className="text-sm text-slate-300 leading-relaxed">
+              Tiến độ làm bài (câu hỏi đang làm, các câu đã chọn, câu gắn cờ và thời gian làm bài còn lại) sẽ được lưu lại để bạn có thể tiếp tục bất cứ lúc nào.
             </p>
-            <div className="flex items-center justify-end gap-3 pt-2">
+            <div className="flex flex-wrap items-center justify-end gap-2 pt-2">
               <button
                 onClick={() => setShowExitConfirm(false)}
-                className="rounded-xl border border-white/[0.08] bg-slate-800 px-4 py-2 text-xs font-semibold text-slate-300 hover:text-white"
+                className="rounded-xl px-4 py-2.5 text-sm font-medium text-slate-300 hover:text-white"
               >
-                Tiếp tục làm bài
+                Ở lại làm bài
               </button>
               <button
                 onClick={() => {
                   setShowExitConfirm(false);
+                  if (currentExam) {
+                    clearExamSession(currentExam.id);
+                    setSavedSessions((prev) => {
+                      const next = { ...prev };
+                      delete next[currentExam.id];
+                      return next;
+                    });
+                  }
                   setIsExamActive(false);
                 }}
-                className="rounded-xl bg-rose-500 px-4 py-2 text-xs font-bold text-white hover:bg-rose-600"
+                className="rounded-xl border border-rose-500/40 px-4 py-2.5 text-sm font-medium text-rose-300 hover:bg-rose-500/10"
               >
-                Xác nhận thoát
+                Thoát, không lưu
+              </button>
+              <button
+                onClick={handleSaveAndExit}
+                className="rounded-xl bg-orange-500 px-5 py-2.5 text-sm font-semibold text-slate-950 hover:bg-orange-400"
+              >
+                Lưu và thoát
               </button>
             </div>
           </div>

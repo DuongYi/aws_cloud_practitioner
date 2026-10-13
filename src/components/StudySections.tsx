@@ -35,6 +35,8 @@ interface StudySectionsProps {
   onToggleCompleted: (lectureId: string) => void;
   bookmarkedFacts: string[];
   onToggleBookmark: (factKey: string) => void;
+  routeLectureId?: string;
+  onSelectLecture?: (lectureId: string, replace: boolean) => void;
 }
 
 export const StudySections: React.FC<StudySectionsProps> = ({
@@ -44,10 +46,17 @@ export const StudySections: React.FC<StudySectionsProps> = ({
   completedLectures,
   onToggleCompleted,
   bookmarkedFacts,
-  onToggleBookmark
+  onToggleBookmark,
+  routeLectureId,
+  onSelectLecture
 }) => {
   // Display layout mode: 'split' (primary) vs 'accordion' (secondary)
-  const [layoutMode, setLayoutMode] = useState<'split' | 'accordion'>('split');
+  const [layoutMode, setLayoutMode] = useState<'split' | 'accordion'>(() => {
+    try { return localStorage.getItem('aws_ccp_ui_layout') === 'accordion' ? 'accordion' : 'split'; } catch { return 'split'; }
+  });
+  useEffect(() => {
+    try { localStorage.setItem('aws_ccp_ui_layout', layoutMode); } catch { /* ignore */ }
+  }, [layoutMode]);
   const [showSectionContext, setShowSectionContext] = useState<boolean>(true);
 
   // Filter state
@@ -103,9 +112,31 @@ export const StudySections: React.FC<StudySectionsProps> = ({
     return sections.flatMap((s) => s.lectures.map((l) => ({ ...l, section: s })));
   }, [sections]);
 
-  const [selectedLectureId, setSelectedLectureId] = useState<string>(
-    allLectures[0]?.id || 'lec-14'
-  );
+  // Remember the open lecture and view settings when switching between app tabs
+  const [selectedLectureId, setSelectedLectureId] = useState<string>(() => {
+    if (routeLectureId && allLectures.some((l) => l.id === routeLectureId)) return routeLectureId;
+    try {
+      const saved = localStorage.getItem('aws_ccp_ui_selected_lecture');
+      if (saved && allLectures.some((l) => l.id === saved)) return saved;
+    } catch { /* storage unavailable */ }
+    return allLectures[0]?.id || 'lec-14';
+  });
+  useEffect(() => {
+    try { localStorage.setItem('aws_ccp_ui_selected_lecture', selectedLectureId); } catch { /* ignore */ }
+  }, [selectedLectureId]);
+
+  // URL is the source of truth: back/forward and shared links change the open lecture...
+  useEffect(() => {
+    if (routeLectureId && routeLectureId !== selectedLectureId && allLectures.some((l) => l.id === routeLectureId)) {
+      setSelectedLectureId(routeLectureId);
+    }
+  }, [routeLectureId]);
+  // ...and picking a lecture writes the URL (replace on first sync so Back does not loop).
+  useEffect(() => {
+    if (onSelectLecture && selectedLectureId !== routeLectureId) {
+      onSelectLecture(selectedLectureId, !routeLectureId);
+    }
+  }, [selectedLectureId]);
 
   const activeSearch = (localSearch || searchQuery).trim().toLowerCase();
 
