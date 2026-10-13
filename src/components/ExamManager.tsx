@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { ExamSet } from '../types';
 import { parseRawExamInput } from '../utils/examParser';
 import { saveCustomExam, deleteCustomExam } from '../utils/storage';
@@ -11,9 +11,13 @@ import {
   Check, 
   AlertCircle, 
   Play, 
-  Code, 
+  Sparkles,
   HelpCircle,
-  Copy
+  Copy,
+  Layers,
+  FileCode,
+  ShieldAlert,
+  ArrowRight
 } from 'lucide-react';
 
 interface ExamManagerProps {
@@ -73,6 +77,7 @@ export const ExamManager: React.FC<ExamManagerProps> = ({
   const [parseError, setParseError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [previewExam, setPreviewExam] = useState<ExamSet | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleTestParse = () => {
     setParseError(null);
@@ -125,44 +130,83 @@ export const ExamManager: React.FC<ExamManagerProps> = ({
     dlAnchor.click();
   };
 
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const content = event.target?.result as string;
+      if (content) {
+        setRawInput(content);
+        if (!examTitle) {
+          setExamTitle(file.name.replace(/\.[^/.]+$/, ''));
+        }
+        setParseError(null);
+      }
+    };
+    reader.readAsText(file);
+  };
+
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 space-y-8">
-      {/* Header Banner */}
-      <div className="bg-gradient-to-r from-slate-900 via-slate-850 to-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl relative">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      
+      {/* ================= HERO HEADER ================= */}
+      <div className="machined-card rounded-3xl p-6 sm:p-8 lg:p-9 relative overflow-hidden">
+        <div className="absolute right-0 top-0 h-80 w-80 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none" />
+
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
           <div>
-            <span className="px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 uppercase tracking-wider">
-              Bộ Đề Bổ Sung
-            </span>
-            <h2 className="text-2xl font-bold text-white tracking-tight mt-2">
-              Thêm &amp; Quản Lý Các Bộ Đề Thi Bổ Sung
-            </h2>
-            <p className="text-sm text-slate-300 mt-1 max-w-2xl leading-relaxed">
-              Bạn có thể dán trực tiếp các bộ đề thi thử bạn có vào đây (hỗ trợ cả định dạng văn bản A/B/C/D thông thường và JSON). 
-              Hệ thống sẽ tự động phân tích và tạo bài thi tương tác đầy đủ để bạn luyện tập!
+            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-xs font-semibold text-cyan-300 mb-3">
+              <PlusCircle className="h-3.5 w-3.5 text-cyan-400" />
+              <span>STUDIO NHẬP VÀ QUẢN LÝ ĐỀ THI TÙY BIẾN</span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+              Nhập &amp; Quản Lý Bộ Đề Mở Rộng
+            </h1>
+            <p className="text-sm text-slate-300 mt-2 max-w-2xl leading-relaxed">
+              Dễ dàng nạp bất kỳ bộ đề thi thử nào từ bên ngoài (hỗ trợ văn bản tự do A, B, C, D hoặc JSON). 
+              Bộ giải mã thông minh sẽ tự động chuẩn hóa thành bài thi Pearson VUE tương tác đầy đủ.
             </p>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <input 
+              type="file" 
+              ref={fileInputRef} 
+              onChange={handleFileUpload} 
+              accept=".txt,.json" 
+              className="hidden" 
+            />
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="flex items-center gap-2 rounded-2xl border border-white/[0.08] bg-slate-800/90 px-4 py-2.5 text-xs font-semibold text-slate-200 hover:text-white hover:bg-slate-700/80 transition"
+            >
+              <Upload className="h-4 w-4 text-cyan-400" />
+              <span>Tải file TXT / JSON</span>
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Import / Paste New Exam Form */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-lg space-y-5">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
-          <h3 className="text-base font-bold text-white flex items-center gap-2">
-            <PlusCircle className="w-5 h-5 text-orange-400" />
-            <span>Nhập Bộ Đề Thi Mới</span>
-          </h3>
+      {/* ================= IMPORT FORM STUDIO ================= */}
+      <div className="machined-card rounded-3xl p-6 sm:p-8 space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/[0.06] pb-4">
+          <h2 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-orange-400" />
+            <span>Biểu Mẫu Nạp Đề Thi Mới</span>
+          </h2>
 
           <div className="flex items-center gap-2">
             <button
               onClick={() => {
                 setRawInput(inputMode === 'text' ? SAMPLE_TEXT_TEMPLATE : SAMPLE_JSON_TEMPLATE);
-                setExamTitle('Bộ đề thực hành mẫu');
+                setExamTitle('Đề thực hành mẫu CLF-C02');
               }}
-              className="text-xs text-orange-400 hover:text-orange-300 px-3 py-1.5 rounded-lg bg-orange-500/10 border border-orange-500/30 transition flex items-center gap-1.5"
+              className="flex items-center gap-1.5 rounded-xl border border-orange-500/30 bg-orange-500/10 px-3.5 py-1.5 text-xs font-semibold text-orange-300 hover:bg-orange-500/20 transition"
             >
               <FileText className="w-3.5 h-3.5" />
-              <span>Điền mẫu ví dụ</span>
+              <span>Điền mẫu ví dụ nhanh</span>
             </button>
           </div>
         </div>
@@ -170,25 +214,25 @@ export const ExamManager: React.FC<ExamManagerProps> = ({
         {/* Title and Time Limit */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="sm:col-span-2 space-y-1.5">
-            <label className="text-xs font-semibold text-slate-300">Tên Bộ Đề Thi:</label>
+            <label className="text-xs font-bold text-slate-300">Tên Bộ Đề Thi:</label>
             <input
               type="text"
-              placeholder="Ví dụ: Đề thi thử số 3 (Bộ đề 65 câu tuyển chọn)"
+              placeholder="Ví dụ: Đề thi thử số 3 (Bộ đề 65 câu trắc nghiệm CLF-C02)"
               value={examTitle}
               onChange={(e) => setExamTitle(e.target.value)}
-              className="w-full bg-slate-800 text-sm text-white px-3.5 py-2 rounded-xl border border-slate-700 focus:outline-none focus:border-orange-500"
+              className="h-10 w-full rounded-xl border border-white/[0.08] bg-slate-950/70 px-3.5 text-xs sm:text-sm text-white placeholder-slate-500 focus:border-orange-500/80 focus:bg-slate-950 focus:outline-none focus:ring-1 focus:ring-orange-500/40"
             />
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-300">Thời gian làm bài (phút):</label>
+            <label className="text-xs font-bold text-slate-300">Thời gian làm bài (phút):</label>
             <input
               type="number"
               min={5}
               max={180}
               value={timeLimit}
               onChange={(e) => setTimeLimit(Number(e.target.value) || 90)}
-              className="w-full bg-slate-800 text-sm text-white px-3.5 py-2 rounded-xl border border-slate-700 focus:outline-none focus:border-orange-500"
+              className="h-10 w-full rounded-xl border border-white/[0.08] bg-slate-950/70 px-3.5 text-xs sm:text-sm text-white focus:border-orange-500/80 focus:bg-slate-950 focus:outline-none focus:ring-1 focus:ring-orange-500/40"
             />
           </div>
         </div>
@@ -196,12 +240,12 @@ export const ExamManager: React.FC<ExamManagerProps> = ({
         {/* Text Area for Questions */}
         <div className="space-y-2">
           <div className="flex items-center justify-between text-xs text-slate-400">
-            <span>Dán nội dung câu hỏi (Text trắc nghiệm A, B, C, D hoặc JSON):</span>
-            <span className="text-[11px] text-slate-500">Hỗ trợ nhận diện tự động</span>
+            <span className="font-semibold">Nội dung câu hỏi (Dán văn bản trắc nghiệm A, B, C, D hoặc mảng JSON):</span>
+            <span className="text-[11px] text-orange-400 font-mono">Tự động nhận diện cú pháp</span>
           </div>
 
           <textarea
-            rows={8}
+            rows={9}
             placeholder={`Dán nội dung các câu hỏi của bạn tại đây...
 Ví dụ:
 Câu 1: Câu hỏi là gì?
@@ -216,21 +260,21 @@ Giải thích: Vì sao A đúng...`}
               setRawInput(e.target.value);
               setParseError(null);
             }}
-            className="w-full bg-slate-800 text-sm font-mono text-slate-100 p-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-orange-500 leading-relaxed placeholder-slate-500"
+            className="w-full rounded-2xl border border-white/[0.08] bg-slate-950/80 p-4 font-mono text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:border-orange-500/80 focus:bg-slate-950 focus:outline-none focus:ring-1 focus:ring-orange-500/40 leading-relaxed"
           />
         </div>
 
         {/* Error / Success Messages */}
         {parseError && (
-          <div className="p-3.5 rounded-xl bg-rose-950/30 border border-rose-500/40 text-xs text-rose-300 flex items-start gap-2">
-            <AlertCircle className="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" />
+          <div className="rounded-2xl border border-rose-500/40 bg-rose-950/30 p-4 text-xs text-rose-300 flex items-start gap-2.5">
+            <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
             <span>{parseError}</span>
           </div>
         )}
 
         {successMessage && (
-          <div className="p-3.5 rounded-xl bg-emerald-950/30 border border-emerald-500/40 text-xs text-emerald-300 flex items-start gap-2">
-            <Check className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+          <div className="rounded-2xl border border-emerald-500/40 bg-emerald-950/30 p-4 text-xs text-emerald-300 flex items-start gap-2.5">
+            <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
             <span>{successMessage}</span>
           </div>
         )}
@@ -239,31 +283,32 @@ Giải thích: Vì sao A đúng...`}
         <div className="flex flex-wrap items-center justify-end gap-3 pt-2">
           <button
             onClick={handleTestParse}
-            className="px-5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 transition"
+            className="rounded-2xl border border-white/[0.08] bg-slate-800 px-5 py-2.5 text-xs font-semibold text-slate-200 hover:text-white hover:bg-slate-700 transition"
           >
             Kiểm tra &amp; Xem trước
           </button>
           <button
             onClick={handleSaveExam}
-            className="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-slate-950 text-xs font-bold rounded-xl shadow transition"
+            className="rounded-2xl bg-gradient-to-r from-orange-400 to-amber-500 px-6 py-2.5 text-xs font-bold text-slate-950 shadow-md hover:scale-[1.02] transition-all"
           >
-            Lưu Bộ Đề Thi
+            Lưu Vào Ngân Hàng Đề Thi
           </button>
         </div>
 
         {/* Preview of Parsed Exam */}
         {previewExam && (
-          <div className="mt-4 p-4 rounded-xl bg-slate-850 border border-orange-500/40 space-y-3">
-            <div className="flex items-center justify-between text-xs">
-              <span className="font-bold text-orange-400">
-                XEM TRƯỚC: Đã nhận diện thành công {previewExam.questions.length} câu hỏi
+          <div className="machined-inner rounded-2xl p-5 border-orange-500/40 space-y-3">
+            <div className="flex items-center justify-between text-xs border-b border-white/[0.06] pb-2">
+              <span className="font-bold text-orange-400 flex items-center gap-1.5">
+                <Check className="h-4 w-4" />
+                ĐÃ PHÂN TÍCH THÀNH CÔNG: {previewExam.questions.length} câu hỏi
               </span>
-              <span className="text-slate-400 font-mono">Thời gian: {previewExam.timeLimitMinutes} phút</span>
+              <span className="font-mono text-slate-400">Thời lượng: {previewExam.timeLimitMinutes} phút</span>
             </div>
 
-            <div className="space-y-2 max-h-48 overflow-y-auto text-xs pr-1">
+            <div className="space-y-2 max-h-48 overflow-y-auto text-xs pr-1 no-scrollbar">
               {previewExam.questions.slice(0, 5).map((q, idx) => (
-                <div key={idx} className="p-2.5 rounded-lg bg-slate-900 border border-slate-800">
+                <div key={idx} className="rounded-xl border border-white/[0.06] bg-slate-900/90 p-3">
                   <div className="font-semibold text-white">
                     Câu {idx + 1}: {q.question}
                   </div>
@@ -273,8 +318,8 @@ Giải thích: Vì sao A đúng...`}
                 </div>
               ))}
               {previewExam.questions.length > 5 && (
-                <div className="text-center text-slate-400 py-1">
-                  ... và {previewExam.questions.length - 5} câu hỏi khác
+                <div className="text-center text-slate-500 py-1 font-mono">
+                  ... và {previewExam.questions.length - 5} câu hỏi khác được nạp
                 </div>
               )}
             </div>
@@ -282,18 +327,19 @@ Giải thích: Vì sao A đúng...`}
         )}
       </div>
 
-      {/* List of Custom Imported Exams */}
+      {/* ================= CUSTOM EXAMS REPOSITORY ================= */}
       <div className="space-y-4">
-        <h3 className="text-base font-bold text-white uppercase tracking-wider px-1">
-          Các Bộ Đề Bạn Đã Thêm ({customExams.length} bộ đề)
+        <h3 className="text-sm font-bold uppercase tracking-wider text-slate-300 px-1 flex items-center gap-2">
+          <Layers className="h-4 w-4 text-orange-400" />
+          <span>Danh Sách Bộ Đề Tùy Biến Của Bạn ({customExams.length} bộ đề)</span>
         </h3>
 
         {customExams.length === 0 ? (
-          <div className="text-center py-12 bg-slate-900 rounded-2xl border border-slate-800 text-slate-400 p-4">
-            <FileText className="w-8 h-8 mx-auto mb-2 opacity-40 text-slate-500" />
-            <p className="text-sm font-medium">Bạn chưa nhập bộ đề thi bổ sung nào.</p>
-            <p className="text-xs text-slate-500 mt-1">
-              Khi bạn gửi các bộ đề mới sau này, hãy dán vào biểu mẫu ở trên để làm bài thi trực tiếp!
+          <div className="machined-inner rounded-3xl py-14 text-center text-slate-400 p-6">
+            <FileText className="w-10 h-10 mx-auto mb-2 text-slate-500 opacity-50" />
+            <h4 className="text-sm font-bold text-white">Bạn chưa thêm bộ đề tùy biến nào</h4>
+            <p className="text-xs text-slate-400 mt-1 max-w-md mx-auto">
+              Khi bạn sưu tầm được các bộ đề thi thử mới, hãy dán vào biểu mẫu ở trên để làm bài thi trực tiếp!
             </p>
           </div>
         ) : (
@@ -301,15 +347,15 @@ Giải thích: Vì sao A đúng...`}
             {customExams.map((exam) => (
               <div
                 key={exam.id}
-                className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-sm hover:border-slate-700 transition flex flex-col justify-between"
+                className="machined-card rounded-3xl p-5 sm:p-6 transition flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between text-xs mb-2">
-                    <span className="px-2 py-0.5 rounded bg-cyan-950/50 text-cyan-400 border border-cyan-800 font-bold">
+                    <span className="rounded-md border border-cyan-500/30 bg-cyan-950/50 px-2 py-0.5 font-bold text-cyan-400">
                       Tùy chỉnh
                     </span>
-                    <span className="text-slate-400 font-mono">
-                      {exam.questions.length} câu &bull; {exam.timeLimitMinutes} phút
+                    <span className="font-mono text-slate-400 text-xs">
+                      {exam.questions.length} câu • {exam.timeLimitMinutes} phút
                     </span>
                   </div>
 
@@ -321,18 +367,18 @@ Giải thích: Vì sao A đúng...`}
                   </p>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
+                <div className="mt-5 pt-3 border-t border-white/[0.06] flex items-center justify-between">
+                  <div className="flex items-center space-x-1.5">
                     <button
                       onClick={() => handleExportJSON(exam)}
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition"
+                      className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition"
                       title="Xuất file JSON"
                     >
                       <Download className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => handleDelete(exam.id, exam.title)}
-                      className="p-1.5 rounded-lg text-rose-400 hover:text-rose-300 hover:bg-rose-950/30 transition"
+                      className="p-2 rounded-xl text-rose-400 hover:text-rose-300 hover:bg-rose-950/30 transition"
                       title="Xóa bộ đề"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -341,7 +387,7 @@ Giải thích: Vì sao A đúng...`}
 
                   <button
                     onClick={() => onSelectExamToTake(exam.id)}
-                    className="px-4 py-1.5 bg-orange-500 hover:bg-orange-600 text-slate-950 font-bold text-xs rounded-lg flex items-center space-x-1.5 transition"
+                    className="rounded-xl bg-gradient-to-r from-orange-400 to-amber-500 px-4 py-2 text-xs font-bold text-slate-950 flex items-center space-x-1.5 shadow-sm transition hover:scale-[1.02]"
                   >
                     <Play className="w-3.5 h-3.5 fill-current" />
                     <span>Làm Bài Thi</span>
@@ -352,6 +398,7 @@ Giải thích: Vì sao A đúng...`}
           </div>
         )}
       </div>
+
     </div>
   );
 };

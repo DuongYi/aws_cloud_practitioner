@@ -1,5 +1,6 @@
 import { ExamSet, ExamAttempt } from '../types';
 import { DEFAULT_EXAMS } from '../data/defaultExams';
+import { DUMP_EXAMS } from '../data/dumpExams';
 
 const STORAGE_KEYS = {
   CUSTOM_EXAMS: 'aws_ccp_custom_exams',
@@ -41,7 +42,7 @@ export const deleteCustomExam = (examId: string): void => {
 
 export const getAllExams = (): ExamSet[] => {
   const custom = getStoredCustomExams();
-  return [...DEFAULT_EXAMS, ...custom];
+  return [...DEFAULT_EXAMS, ...DUMP_EXAMS, ...custom];
 };
 
 export const getExamAttempts = (): ExamAttempt[] => {

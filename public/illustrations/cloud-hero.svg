@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" fill="none" role="img" aria-label="Minh họa các lớp hạ tầng đám mây">
+  <defs>
+    <linearGradient id="face" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2b3140"/><stop offset="1" stop-color="#20242f"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e8944a" stop-opacity=".55"/><stop offset="1" stop-color="#e8944a" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="dots" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" fill="#3a4152"/></pattern>
+    <clipPath id="clip"><rect width="640" height="420" rx="24"/></clipPath>
+  </defs>
+  <g clip-path="url(#clip)">
+    <rect width="640" height="420" fill="#1b1e26"/>
+    <rect width="640" height="420" fill="url(#dots)" opacity=".7"/>
+    <ellipse cx="400" cy="120" rx="220" ry="150" fill="url(#glow)" opacity=".5"/>
+    <!-- stacked isometric slabs -->
+    <g transform="translate(330 250)">
+      <g transform="translate(0 70)">
+        <path d="M0 40L150 -20L300 40L150 100Z" fill="#171a21" stroke="#343b4c"/>
+        <path d="M0 40V58L150 118V100Z" fill="#14161c" stroke="#343b4c"/>
+        <path d="M300 40V58L150 118V100Z" fill="#191c24" stroke="#343b4c"/>
+      </g>
+      <g transform="translate(0 35)">
+        <path d="M0 40L150 -20L300 40L150 100Z" fill="url(#face)" stroke="#434c61"/>
+        <path d="M0 40V58L150 118V100Z" fill="#1c202a" stroke="#434c61"/>
+        <path d="M300 40V58L150 118V100Z" fill="#232836" stroke="#434c61"/>
+        <path d="M70 52L150 20L230 52L150 84Z" stroke="#59627a" stroke-dasharray="4 5"/>
+      </g>
+      <g>
+        <path d="M0 40L150 -20L300 40L150 100Z" fill="#e8944a"/>
+        <path d="M0 40V58L150 118V100Z" fill="#b8692a"/>
+        <path d="M300 40V58L150 118V100Z" fill="#cf7d38"/>
+        <path d="M60 46L150 10L240 46L150 82Z" fill="#f3b27a" opacity=".55"/>
+        <rect x="118" y="44" width="64" height="8" rx="4" fill="#1b1e26" opacity=".55" transform="skewY(-22) translate(0 52)"/>
+      </g>
+    </g>
+    <!-- cloud mark -->
+    <g transform="translate(470 70)" fill="#2a3040" stroke="#4a5368">
+      <path d="M40 90a34 34 0 0 1 4-67 44 44 0 0 1 83-6 36 36 0 0 1 9 73Z"/>
+    </g>
+    <g transform="translate(120 96)" fill="#232836" stroke="#3d455a" opacity=".9">
+      <path d="M26 58a22 22 0 0 1 2-43 28 28 0 0 1 53-4 23 23 0 0 1 6 47Z"/>
+    </g>
+    <!-- connection lines -->
+    <path d="M520 168V232M198 150V240" stroke="#59627a" stroke-dasharray="3 6"/>
+    <circle cx="520" cy="238" r="5" fill="#e8944a"/>
+    <circle cx="198" cy="246" r="5" fill="#59627a"/>
+  </g>
+</svg>
