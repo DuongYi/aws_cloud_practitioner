@@ -19,7 +19,12 @@ import {
   Target,
   Copy,
   CheckCheck,
-  Award
+  Award,
+  ChevronLeft,
+  ChevronRight,
+  ArrowLeft,
+  ArrowRight,
+  Lightbulb
 } from 'lucide-react';
 
 interface StudySectionsProps {
@@ -41,8 +46,9 @@ export const StudySections: React.FC<StudySectionsProps> = ({
   bookmarkedFacts,
   onToggleBookmark
 }) => {
-  // Display layout mode: 'accordion' vs 'split'
-  const [layoutMode, setLayoutMode] = useState<'accordion' | 'split'>('accordion');
+  // Display layout mode: 'split' (primary) vs 'accordion' (secondary)
+  const [layoutMode, setLayoutMode] = useState<'split' | 'accordion'>('split');
+  const [showSectionContext, setShowSectionContext] = useState<boolean>(true);
 
   // Filter state
   const [filterType, setFilterType] = useState<'all' | 'core' | 'uncompleted' | 'completed'>('all');
@@ -209,15 +215,80 @@ export const StudySections: React.FC<StudySectionsProps> = ({
   const progressPercent = Math.round((completedCount / (totalLecturesCount || 1)) * 100);
 
   // Selected lecture data for split view
-  const currentLectureData = useMemo(() => {
+  const currentLectureData = useMemo<{ lecture: LectureItem; section: SectionItem }>(() => {
+    for (const sec of processedSections) {
+      const found = sec.filteredLectures.find((l) => l.id === selectedLectureId);
+      if (found) return { lecture: found, section: sec };
+    }
     for (const sec of sections) {
       const found = sec.lectures.find((l) => l.id === selectedLectureId);
       if (found) return { lecture: found, section: sec };
     }
-    return { lecture: sections[0]?.lectures[0], section: sections[0] };
-  }, [sections, selectedLectureId]);
+    const defaultSec = sections[0];
+    const defaultLec = defaultSec.lectures[0];
+    return { lecture: defaultLec, section: defaultSec };
+  }, [sections, processedSections, selectedLectureId]);
 
   const { lecture: currentLecture, section: currentSection } = currentLectureData;
+
+  // Split view navigation helpers
+  const currentLectureIndex = allLectures.findIndex((l) => l.id === currentLecture?.id);
+  const prevLecture = currentLectureIndex > 0 ? allLectures[currentLectureIndex - 1] : null;
+  const nextLecture = currentLectureIndex >= 0 && currentLectureIndex < allLectures.length - 1 ? allLectures[currentLectureIndex + 1] : null;
+
+  const handleSelectLecture = (lecId: string, secId?: string) => {
+    setSelectedLectureId(lecId);
+    if (secId) {
+      setExpandedSectionIds((prev) => ({ ...prev, [secId]: true }));
+    }
+    const el = document.getElementById('split-reader-container');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const handlePrevLecture = () => {
+    if (prevLecture) {
+      handleSelectLecture(prevLecture.id, prevLecture.section.id);
+    }
+  };
+
+  const handleNextLecture = () => {
+    if (nextLecture) {
+      handleSelectLecture(nextLecture.id, nextLecture.section.id);
+    }
+  };
+
+  // Keyboard navigation for Split Mode
+  useEffect(() => {
+    if (layoutMode !== 'split') return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const activeTag = (document.activeElement as HTMLElement)?.tagName;
+      if (['INPUT', 'TEXTAREA'].includes(activeTag)) return;
+
+      if (e.key === 'ArrowRight' || e.key === 'j') {
+        if (nextLecture) {
+          e.preventDefault();
+          handleNextLecture();
+        }
+      } else if (e.key === 'ArrowLeft' || e.key === 'k') {
+        if (prevLecture) {
+          e.preventDefault();
+          handlePrevLecture();
+        }
+      } else if (e.key.toLowerCase() === 'c' && currentLecture) {
+        e.preventDefault();
+        onToggleCompleted(currentLecture.id);
+      } else if (e.key.toLowerCase() === 'b' && currentLecture) {
+        e.preventDefault();
+        onToggleBookmark(currentLecture.id);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [layoutMode, prevLecture, nextLecture, currentLecture, onToggleCompleted, onToggleBookmark]);
 
   return (
     <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 py-4 space-y-6">
@@ -264,22 +335,8 @@ export const StudySections: React.FC<StudySectionsProps> = ({
               </div>
             </div>
 
-            {/* Layout switch buttons */}
+            {/* Layout switch buttons: 2-column primary, direct expand secondary */}
             <div className="machined-inner flex items-center p-1 rounded-2xl">
-              <button
-                onClick={() => setLayoutMode('accordion')}
-                className={`flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-semibold transition-all ${
-                  layoutMode === 'accordion'
-                    ? 'bg-gradient-to-r from-orange-400 to-amber-500 text-slate-950 font-bold shadow-sm'
-                    : 'text-slate-400 hover:text-white hover:bg-white/[0.04]'
-                }`}
-                title="Mở rộng trực tiếp từng bài học"
-              >
-                <List className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">Mở rộng trực tiếp</span>
-                <span className="sm:hidden">Accordion</span>
-              </button>
-
               <button
                 onClick={() => setLayoutMode('split')}
                 className={`flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-semibold transition-all ${
@@ -287,11 +344,25 @@ export const StudySections: React.FC<StudySectionsProps> = ({
                     ? 'bg-gradient-to-r from-orange-400 to-amber-500 text-slate-950 font-bold shadow-sm'
                     : 'text-slate-400 hover:text-white hover:bg-white/[0.04]'
                 }`}
-                title="Chế độ đọc chia 2 cột tập trung"
+                title="Chế độ đọc chia 2 cột tập trung (Chế độ chính)"
               >
                 <Columns className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">Chia 2 cột</span>
-                <span className="sm:hidden">2 cột</span>
+                <span className="hidden sm:inline">Chia 2 cột (Chính)</span>
+                <span className="sm:hidden">2 cột (Chính)</span>
+              </button>
+
+              <button
+                onClick={() => setLayoutMode('accordion')}
+                className={`flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-semibold transition-all ${
+                  layoutMode === 'accordion'
+                    ? 'bg-gradient-to-r from-orange-400 to-amber-500 text-slate-950 font-bold shadow-sm'
+                    : 'text-slate-400 hover:text-white hover:bg-white/[0.04]'
+                }`}
+                title="Mở rộng danh sách trực tiếp trên trang (Lựa chọn phụ)"
+              >
+                <List className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">Mở rộng trực tiếp (Phụ)</span>
+                <span className="sm:hidden">Trực tiếp (Phụ)</span>
               </button>
             </div>
           </div>
@@ -807,91 +878,509 @@ export const StudySections: React.FC<StudySectionsProps> = ({
         </div>
       )}
 
-      {/* ================= OPTIONAL 2-COLUMN VIEW ================= */}
+      {/* ================= PRIMARY 2-COLUMN VIEW ================= */}
       {layoutMode === 'split' && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          
           {/* Left Navigation Tree */}
-          <aside className="lg:col-span-4 lg:sticky lg:top-24 machined-card rounded-3xl p-4 shadow-xl flex flex-col max-h-[calc(100vh-120px)] overflow-hidden">
-            <div className="text-xs font-bold text-white mb-2 pb-2 border-b border-white/[0.06] flex items-center justify-between">
-              <span>Danh mục bài học</span>
-              <span className="font-mono text-orange-400">{completedCount}/{totalLecturesCount} đã học</span>
+          <aside className="lg:col-span-4 xl:col-span-4 lg:sticky lg:top-24 machined-card rounded-3xl p-4 sm:p-5 shadow-xl flex flex-col max-h-[calc(100vh-120px)] overflow-hidden">
+            
+            <div className="pb-3 mb-3 border-b border-white/[0.08] flex items-center justify-between gap-2">
+              <div className="min-w-0">
+                <span className="text-xs font-bold uppercase tracking-wider text-white block">
+                  Mục lục bài giảng
+                </span>
+                <span className="font-mono text-[11px] text-orange-400">
+                  {completedCount}/{totalLecturesCount} đã học ({progressPercent}%)
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5 shrink-0">
+                <button
+                  onClick={handleExpandAll}
+                  className="rounded-lg border border-white/[0.08] bg-slate-800/80 px-2 py-1 text-[11px] font-medium text-slate-300 hover:text-white hover:bg-slate-700 transition"
+                  title="Mở tất cả chuyên đề"
+                >
+                  Mở hết
+                </button>
+                <button
+                  onClick={handleCollapseAll}
+                  className="rounded-lg border border-white/[0.08] bg-slate-800/80 px-2 py-1 text-[11px] font-medium text-slate-300 hover:text-white hover:bg-slate-700 transition"
+                  title="Thu gọn chuyên đề"
+                >
+                  Thu gọn
+                </button>
+              </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto space-y-2 pr-1 no-scrollbar">
-              {processedSections.map((sec) => (
-                <div key={sec.id} className="machined-inner rounded-xl overflow-hidden">
-                  <div
-                    onClick={() => toggleSection(sec.id)}
-                    className="p-2.5 cursor-pointer flex items-center justify-between text-xs font-semibold text-white bg-slate-900/80"
-                  >
-                    <span>Sec {sec.sectionNumber}: {sec.titleVi}</span>
-                    <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
-                  </div>
+            {/* Quick progress bar */}
+            <div className="h-1.5 w-full rounded-full bg-slate-800 overflow-hidden mb-3">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-orange-500 to-amber-400 transition-all duration-300"
+                style={{ width: `${progressPercent}%` }}
+              />
+            </div>
 
-                  {expandedSectionIds[sec.id] && (
-                    <div className="p-1 space-y-1">
-                      {sec.lectures.map((l) => (
-                        <div
-                          key={l.id}
-                          onClick={() => setSelectedLectureId(l.id)}
-                          className={`p-2 rounded-lg text-xs cursor-pointer flex items-center justify-between transition ${
-                            selectedLectureId === l.id
-                              ? 'bg-orange-500/20 text-orange-300 font-bold border border-orange-500/40'
-                              : 'text-slate-300 hover:bg-slate-800'
-                          }`}
-                        >
-                          <span className="line-clamp-1">{l.number}. {l.titleVi}</span>
-                          {completedLectures.includes(l.id) && (
-                            <Check className="h-3 w-3 text-emerald-400" />
+            {/* Scrollable list of sections and lectures */}
+            <div className="flex-1 overflow-y-auto space-y-2.5 pr-1 no-scrollbar">
+              {processedSections.length === 0 ? (
+                <div className="machined-inner rounded-2xl p-6 text-center text-xs text-slate-400">
+                  Không tìm thấy bài giảng nào.
+                </div>
+              ) : (
+                processedSections.map((sec) => {
+                  const isSecOpen = expandedSectionIds[sec.id] ?? false;
+                  const secDoneCount = sec.lectures.filter((l) => completedLectures.includes(l.id)).length;
+                  const secCoreCount = sec.lectures.filter((l) => l.isCore).length;
+                  const isCurrentSec = currentSection?.id === sec.id;
+
+                  return (
+                    <div 
+                      key={sec.id} 
+                      className={`machined-inner rounded-2xl overflow-hidden transition-all ${
+                        isCurrentSec ? 'ring-1 ring-orange-500/30' : ''
+                      }`}
+                    >
+                      {/* Section Accordion Trigger */}
+                      <div
+                        onClick={() => toggleSection(sec.id)}
+                        className={`p-3 cursor-pointer flex items-center justify-between text-xs font-semibold select-none transition ${
+                          isCurrentSec 
+                            ? 'bg-slate-800/90 text-orange-300' 
+                            : 'bg-slate-900/90 text-slate-200 hover:bg-slate-800/80'
+                        }`}
+                      >
+                        <div className="min-w-0 flex-1 pr-2">
+                          <div className="flex items-center gap-1.5">
+                            <span className="font-mono text-[10px] font-bold text-orange-400 bg-orange-500/10 px-1.5 py-0.5 rounded border border-orange-500/20 shrink-0">
+                              #{sec.sectionNumber}
+                            </span>
+                            <span className="truncate font-bold text-white text-xs">
+                              {sec.titleVi}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2 mt-1 text-[10px] text-slate-400 font-mono">
+                            <span>{sec.weightPercentage}</span>
+                            <span>•</span>
+                            <span>{secDoneCount}/{sec.lectures.length} bài</span>
+                            {secCoreCount > 0 && (
+                              <span className="text-amber-400 font-bold">• {secCoreCount} Core 🔥</span>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="shrink-0 text-slate-400">
+                          {isSecOpen ? (
+                            <ChevronUp className="h-3.5 w-3.5 text-orange-400" />
+                          ) : (
+                            <ChevronDown className="h-3.5 w-3.5" />
                           )}
                         </div>
-                      ))}
+                      </div>
+
+                      {/* Lectures List */}
+                      {isSecOpen && (
+                        <div className="p-1.5 space-y-1 bg-slate-950/60 border-t border-white/[0.04]">
+                          {sec.filteredLectures.map((l) => {
+                            const isSelected = selectedLectureId === l.id;
+                            const isDone = completedLectures.includes(l.id);
+                            const isBookmarked = bookmarkedFacts.includes(l.id);
+
+                            return (
+                              <div
+                                key={l.id}
+                                onClick={() => handleSelectLecture(l.id, sec.id)}
+                                className={`group relative p-2.5 rounded-xl text-xs cursor-pointer flex items-start gap-2.5 transition select-none ${
+                                  isSelected
+                                    ? 'bg-gradient-to-r from-orange-500/20 to-amber-500/10 text-orange-200 font-bold border border-orange-500/40 shadow-sm'
+                                    : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
+                                }`}
+                              >
+                                {/* Completion checkbox button */}
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    onToggleCompleted(l.id);
+                                  }}
+                                  className={`flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-md border transition-all mt-0.5 ${
+                                    isDone
+                                      ? 'bg-emerald-500 text-slate-950 border-emerald-400 font-bold'
+                                      : 'border-slate-700 bg-slate-800/80 text-transparent group-hover:border-slate-500'
+                                  }`}
+                                  title={isDone ? 'Đã học' : 'Đánh dấu đã học'}
+                                >
+                                  <Check className={`h-3 w-3 stroke-[3] ${isDone ? 'text-slate-950' : ''}`} />
+                                </button>
+
+                                <div className="min-w-0 flex-1 leading-tight">
+                                  <div className="flex items-center gap-1.5">
+                                    <span className="font-mono text-[10px] text-slate-400">
+                                      {l.number}.
+                                    </span>
+                                    <span className={`line-clamp-1 ${isDone ? 'line-through text-slate-400' : ''}`}>
+                                      {l.titleVi}
+                                    </span>
+                                  </div>
+                                  <span className="block text-[10px] text-slate-400 line-clamp-1 mt-0.5 font-normal">
+                                    {l.titleEn}
+                                  </span>
+                                </div>
+
+                                <div className="flex items-center gap-1 shrink-0 pt-0.5">
+                                  {l.isCore && (
+                                    <Flame className="h-3 w-3 fill-amber-400 text-amber-400" />
+                                  )}
+                                  {isBookmarked && (
+                                    <Bookmark className="h-3 w-3 fill-amber-400 text-amber-400" />
+                                  )}
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              ))}
+                  );
+                })
+              )}
             </div>
           </aside>
 
-          {/* Right Reader */}
-          <main className="lg:col-span-8 machined-card rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
-            {currentLecture && currentSection && (
+          {/* Right Reader Workspace */}
+          <main 
+            id="split-reader-container" 
+            className="lg:col-span-8 xl:col-span-8 space-y-5 min-w-0 scroll-mt-24"
+          >
+            {currentLecture && currentSection ? (
               <>
-                <div className="space-y-3 border-b border-white/[0.06] pb-5">
-                  <div className="flex items-center justify-between">
-                    <span className="rounded-md border border-orange-500/30 bg-orange-500/10 px-2.5 py-0.5 font-mono text-xs font-bold text-orange-300">
-                      Bài {currentLecture.number} • Section {currentSection.sectionNumber}
-                    </span>
+                {/* 1. Section Header & Exam Facts Banner */}
+                <div className="machined-card rounded-3xl p-5 sm:p-6 shadow-xl space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/[0.08]">
+                    <div className="flex items-center gap-2.5">
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500/20 to-amber-500/10 text-orange-400 font-mono text-xs font-bold border border-orange-500/30">
+                        #{currentSection.sectionNumber}
+                      </span>
+                      <div>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                            Chuyên đề gốc
+                          </span>
+                          <span className="rounded-md border border-white/[0.08] bg-slate-900 px-2 py-0.5 font-mono text-[10px] text-orange-300">
+                            {currentSection.domain} • {currentSection.weightPercentage}
+                          </span>
+                        </div>
+                        <h3 className="text-sm sm:text-base font-bold text-white">
+                          Section {currentSection.sectionNumber}: {currentSection.titleVi}
+                        </h3>
+                      </div>
+                    </div>
+
                     <button
-                      onClick={() => onToggleCompleted(currentLecture.id)}
-                      className="rounded-xl bg-orange-500 px-4 py-1.5 text-xs font-bold text-slate-950 shadow-sm"
+                      onClick={() => setShowSectionContext(!showSectionContext)}
+                      className="self-start sm:self-center flex items-center gap-1.5 rounded-xl border border-white/[0.08] bg-slate-800/80 px-3 py-1.5 text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-700 transition"
                     >
-                      {completedLectures.includes(currentLecture.id) ? 'Đã hoàn thành ✓' : 'Đánh dấu đã học'}
+                      <span>{showSectionContext ? 'Thu gọn tóm tắt' : 'Xem tóm tắt & mẹo Section'}</span>
+                      {showSectionContext ? (
+                        <ChevronUp className="h-3.5 w-3.5 text-orange-400" />
+                      ) : (
+                        <ChevronDown className="h-3.5 w-3.5" />
+                      )}
                     </button>
                   </div>
-                  <h2 className="text-2xl font-bold text-white">{currentLecture.titleVi}</h2>
-                  <p className="text-xs text-slate-400">{currentLecture.titleEn}</p>
-                </div>
 
-                <div className="space-y-2">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-amber-400">Tóm tắt bài học</h3>
-                  <div className="machined-inner rounded-2xl p-4 text-sm text-slate-200">
-                    {currentLecture.summaryVi}
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-orange-400">Kiến thức cốt lõi</h3>
-                  <div className="space-y-2">
-                    {currentLecture.keyPointsVi.map((pt, idx) => (
-                      <div key={idx} className="machined-inner rounded-xl p-3 text-xs sm:text-sm text-slate-200 flex items-start gap-2.5">
-                        <span className="h-2 w-2 rounded-full bg-orange-400 mt-2 shrink-0" />
-                        <span>{pt}</span>
+                  {showSectionContext && (
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-3.5 pt-1">
+                      {/* Overview */}
+                      <div className="md:col-span-5 machined-inner rounded-2xl p-3.5 space-y-1.5 text-xs text-slate-200">
+                        <div className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-orange-400 text-[11px]">
+                          <Sparkles className="h-3 w-3" />
+                          <span>Tổng quan chuyên đề</span>
+                        </div>
+                        <p className="leading-relaxed">
+                          {currentSection.overviewVi}
+                        </p>
+                        {langMode !== 'vi' && (
+                          <p className="text-[10px] text-slate-400 italic pt-1 border-t border-white/[0.04]">
+                            EN: {currentSection.overviewEn}
+                          </p>
+                        )}
                       </div>
-                    ))}
+
+                      {/* Quick Facts */}
+                      <div className="md:col-span-7 machined-inner rounded-2xl p-3.5 space-y-2">
+                        <div className="flex items-center justify-between text-[11px]">
+                          <div className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-amber-300">
+                            <Flame className="h-3 w-3 fill-amber-400 text-amber-400" />
+                            <span>Điểm thi then chốt (High Yield)</span>
+                          </div>
+                          <span className="text-slate-400 font-mono text-[10px]">{currentSection.quickExamFacts.length} điểm</span>
+                        </div>
+
+                        <div className="space-y-1.5">
+                          {currentSection.quickExamFacts.slice(0, 2).map((fact, fIdx) => (
+                            <div 
+                              key={fIdx} 
+                              className="group flex items-start gap-2 rounded-xl border border-amber-500/20 bg-amber-950/20 p-2 text-xs text-slate-200 transition hover:border-amber-500/40"
+                            >
+                              <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded bg-amber-500/20 font-mono text-[10px] font-bold text-amber-300 mt-0.5">
+                                {fIdx + 1}
+                              </span>
+                              <div className="flex-1 text-[11px] leading-relaxed">
+                                <span>{fact.vi}</span>
+                                {langMode !== 'vi' && (
+                                  <span className="block text-[10px] text-slate-400 italic mt-0.5">EN: {fact.en}</span>
+                                )}
+                              </div>
+                              <button
+                                onClick={() => handleCopyText(fact.vi, `split-fact-${fIdx}`)}
+                                className="text-slate-500 opacity-0 group-hover:opacity-100 hover:text-amber-300 p-0.5 transition"
+                                title="Sao chép"
+                              >
+                                {copiedKey === `split-fact-${fIdx}` ? (
+                                  <Check className="h-3 w-3 text-emerald-400" />
+                                ) : (
+                                  <Copy className="h-3 w-3" />
+                                )}
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* 2. Primary Lecture Reader Card */}
+                <div className="machined-card rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
+                  {/* Lecture Header Bar */}
+                  <div className="border-b border-white/[0.08] pb-6 space-y-4">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="rounded-xl border border-orange-500/30 bg-orange-500/15 px-3 py-1 font-mono text-xs font-bold text-orange-300 shadow-sm">
+                          Bài giảng số #{currentLecture.number}
+                        </span>
+
+                        {currentLecture.isCore && (
+                          <span className="flex items-center gap-1.5 rounded-xl border border-amber-500/40 bg-amber-500/20 px-3 py-1 text-xs font-bold text-amber-300 shadow-sm">
+                            <Flame className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
+                            Core Exam Lecture 🔥
+                          </span>
+                        )}
+
+                        <span className="font-mono text-xs text-slate-400">
+                          {currentLectureIndex + 1}/{totalLecturesCount}
+                        </span>
+                      </div>
+
+                      {/* Right toolbar actions */}
+                      <div className="flex items-center gap-2">
+                        {/* Bookmark Button */}
+                        <button
+                          onClick={() => onToggleBookmark(currentLecture.id)}
+                          className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-semibold transition ${
+                            bookmarkedFacts.includes(currentLecture.id)
+                              ? 'border-amber-500/40 bg-amber-500/15 text-amber-300'
+                              : 'border-white/[0.08] bg-slate-800/80 text-slate-300 hover:text-white'
+                          }`}
+                          title="Lưu bài giảng này"
+                        >
+                          <Bookmark className={`h-3.5 w-3.5 ${bookmarkedFacts.includes(currentLecture.id) ? 'fill-current' : ''}`} />
+                          <span className="hidden sm:inline">
+                            {bookmarkedFacts.includes(currentLecture.id) ? 'Đã lưu' : 'Lưu bài'}
+                          </span>
+                        </button>
+
+                        {/* Completion Button */}
+                        <button
+                          onClick={() => onToggleCompleted(currentLecture.id)}
+                          className={`flex items-center gap-1.5 rounded-xl px-4 py-1.5 text-xs font-bold transition shadow-sm ${
+                            completedLectures.includes(currentLecture.id)
+                              ? 'border border-emerald-500/40 bg-emerald-500/20 text-emerald-300'
+                              : 'bg-gradient-to-r from-orange-500 to-amber-500 text-slate-950 hover:from-orange-400 hover:to-amber-400'
+                          }`}
+                        >
+                          <Check className="h-3.5 w-3.5 stroke-[3]" />
+                          <span>
+                            {completedLectures.includes(currentLecture.id) ? 'Đã hoàn thành ✓' : 'Đánh dấu đã học'}
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Lecture Titles */}
+                    <div className="space-y-1">
+                      <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                        {currentLecture.titleVi}
+                      </h2>
+                      <p className="text-sm sm:text-base text-slate-400 font-medium">
+                        {currentLecture.titleEn}
+                      </p>
+                    </div>
                   </div>
+
+                  {/* 1. Tóm tắt nội dung bài học */}
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-400">
+                      <BookOpen className="h-4 w-4" />
+                      <span>1. Tóm tắt nội dung bài học</span>
+                    </div>
+                    <div className="machined-inner rounded-2xl p-4 sm:p-5 text-sm sm:text-base text-slate-200 leading-relaxed space-y-2">
+                      <p className="font-medium text-slate-100">
+                        {currentLecture.summaryVi}
+                      </p>
+                      {langMode !== 'vi' && (
+                        <p className="text-xs sm:text-sm text-slate-400 italic pt-2 border-t border-white/[0.04]">
+                          EN: {currentLecture.summaryEn}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* 2. Điểm kiến thức trọng tâm cần nhớ */}
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-orange-400">
+                        <Flame className="h-4 w-4 fill-orange-400" />
+                        <span>2. Điểm kiến thức trọng tâm cần nhớ</span>
+                      </div>
+                      <span className="text-[11px] font-mono text-orange-400/80">
+                        {currentLecture.keyPointsVi.length} điểm chính
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-2.5">
+                      {currentLecture.keyPointsVi.map((pt, pIdx) => (
+                        <div
+                          key={pIdx}
+                          className="machined-inner rounded-2xl p-4 flex items-start gap-3.5 text-xs sm:text-sm text-slate-200 transition hover:border-white/[0.12]"
+                        >
+                          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-orange-500/20 text-orange-300 font-mono text-xs font-bold mt-0.5">
+                            {pIdx + 1}
+                          </span>
+                          <div className="flex-1 leading-relaxed">
+                            <span className="font-medium text-slate-100 text-sm">{pt}</span>
+                            {langMode !== 'vi' && currentLecture.keyPointsEn[pIdx] && (
+                              <span className="block text-xs text-slate-400 mt-1 italic">
+                                EN: {currentLecture.keyPointsEn[pIdx]}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 3. Bảng dữ liệu / cấu trúc so sánh (nếu có) */}
+                  {currentLecture.table && (
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-cyan-400">
+                        <TableIcon className="h-4 w-4" />
+                        <span>3. Bảng so sánh &amp; Cấu trúc thành phần AWS</span>
+                      </div>
+                      <div className="overflow-x-auto rounded-2xl border border-white/[0.08] bg-slate-900 shadow-inner">
+                        <table className="w-full text-xs text-left">
+                          <thead className="bg-slate-800 text-slate-200 font-semibold border-b border-white/[0.08]">
+                            <tr>
+                              {currentLecture.table.headers.map((h, hIdx) => (
+                                <th key={hIdx} className="px-4 py-3 font-bold">
+                                  {h}
+                                </th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-white/[0.04] text-slate-200">
+                            {currentLecture.table.rows.map((row, rIdx) => (
+                              <tr key={rIdx} className="hover:bg-slate-800/40 transition">
+                                {row.map((cell, cIdx) => (
+                                  <td key={cIdx} className="px-4 py-3 font-mono text-[11px] sm:text-xs">
+                                    {cell}
+                                  </td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 4. Mẹo bẫy thi phòng thi liên quan (nếu có) */}
+                  {currentLecture.examTipsVi && currentLecture.examTipsVi.length > 0 && (
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-300">
+                        <Lightbulb className="h-4 w-4 text-amber-400" />
+                        <span>4. Mẹo phòng thi &amp; Bẫy trắc nghiệm CLF-C02</span>
+                      </div>
+                      <div className="machined-inner rounded-2xl p-4 border border-amber-500/30 bg-amber-950/20 space-y-2">
+                        {currentLecture.examTipsVi.map((tip, tIdx) => (
+                          <div key={tIdx} className="flex items-start gap-2.5 text-xs text-amber-200">
+                            <span className="h-1.5 w-1.5 rounded-full bg-amber-400 mt-1.5 shrink-0" />
+                            <span>{tip}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Bottom Navigation Toolbar */}
+                  <div className="pt-6 border-t border-white/[0.08] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+                    {/* Previous Button */}
+                    {prevLecture ? (
+                      <button
+                        onClick={handlePrevLecture}
+                        className="flex items-center gap-2 rounded-2xl border border-white/[0.08] bg-slate-800/80 px-4 py-2.5 text-xs font-semibold text-slate-200 hover:text-white hover:bg-slate-700 transition"
+                      >
+                        <ChevronLeft className="h-4 w-4 text-orange-400" />
+                        <div className="text-left">
+                          <span className="block text-[10px] text-slate-400 uppercase">Bài trước</span>
+                          <span className="font-bold">Bài {prevLecture.number}: {prevLecture.titleVi}</span>
+                        </div>
+                      </button>
+                    ) : (
+                      <div className="text-xs text-slate-500 font-mono py-2">
+                        • Điểm xuất phát của khoá học
+                      </div>
+                    )}
+
+                    {/* Keyboard hint */}
+                    <div className="hidden lg:flex items-center gap-1.5 text-[11px] text-slate-400 font-mono">
+                      <span className="kbd-tag">←</span>
+                      <span className="kbd-tag">→</span>
+                      <span>chuyển bài</span>
+                      <span>•</span>
+                      <span className="kbd-tag">C</span>
+                      <span>hoàn thành</span>
+                    </div>
+
+                    {/* Next Button */}
+                    {nextLecture ? (
+                      <button
+                        onClick={handleNextLecture}
+                        className="flex items-center gap-2 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 px-5 py-2.5 text-xs font-bold text-slate-950 shadow-lg hover:from-orange-400 hover:to-amber-400 transition transform hover:-translate-y-0.5"
+                      >
+                        <div className="text-right">
+                          <span className="block text-[10px] text-slate-950/70 uppercase">Bài kế tiếp</span>
+                          <span>Bài {nextLecture.number}: {nextLecture.titleVi}</span>
+                        </div>
+                        <ChevronRight className="h-4 w-4 stroke-[3]" />
+                      </button>
+                    ) : (
+                      <div className="flex items-center gap-2 rounded-2xl border border-emerald-500/40 bg-emerald-500/20 px-4 py-2 text-xs font-bold text-emerald-300">
+                        <CheckCircle2 className="h-4 w-4" />
+                        <span>Đã học hết tất cả các bài!</span>
+                      </div>
+                    )}
+                  </div>
+
                 </div>
               </>
+            ) : (
+              <div className="machined-card rounded-3xl p-12 text-center space-y-3">
+                <BookOpen className="h-10 w-10 text-orange-400 mx-auto" />
+                <h3 className="text-lg font-bold text-white">Chưa chọn bài giảng</h3>
+                <p className="text-xs text-slate-400">
+                  Vui lòng chọn một bài học từ danh mục bên trái để bắt đầu ôn tập.
+                </p>
+              </div>
             )}
           </main>
         </div>
