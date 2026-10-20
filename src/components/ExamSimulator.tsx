@@ -229,6 +229,12 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
     setSavedSessions((prev) => ({ ...prev, [currentExam.id]: session }));
   };
 
+  // Moving to another question lifts the pause (the user keeps reading while paused, then carries on)
+  const goToQuestion = (target: number | ((prev: number) => number)) => {
+    if (isPaused) handleUnpause();
+    setCurrentQuestionIndex(target);
+  };
+
   const handleSaveAndExit = () => {
     setShowExitConfirm(false);
     if (currentExam) {
@@ -706,14 +712,17 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5">
-          {/* Pause */}
+          {/* Pause / resume (the question stays readable while paused) */}
           <button
-            onClick={handlePause}
-            className="flex items-center gap-1.5 h-8 rounded-xl border border-white/[0.08] bg-slate-800/80 px-3 text-xs font-semibold text-slate-200 transition hover:bg-slate-700"
-            title="Tạm dừng, đồng hồ sẽ dừng lại"
+            onClick={isPaused ? handleUnpause : handlePause}
+            aria-pressed={isPaused}
+            className={`flex items-center gap-1.5 h-8 rounded-xl border px-3 text-xs font-semibold transition ${
+              isPaused ? 'border-amber-500/60 bg-amber-500/15 text-amber-200 hover:bg-amber-500/25' : 'border-white/[0.08] bg-slate-800/80 text-slate-200 hover:bg-slate-700'
+            }`}
+            title={isPaused ? 'Tiếp tục tính giờ' : 'Tạm dừng đồng hồ (vẫn đọc được câu hỏi)'}
           >
-            <Pause className="h-3.5 w-3.5" aria-hidden="true" />
-            <span className="hidden sm:inline">Tạm dừng</span>
+            {isPaused ? <Play className="h-3.5 w-3.5 fill-current" aria-hidden="true" /> : <Pause className="h-3.5 w-3.5" aria-hidden="true" />}
+            <span className="hidden sm:inline">{isPaused ? 'Tiếp tục' : 'Tạm dừng'}</span>
           </button>
 
           {/* Zoom text control */}
@@ -807,7 +816,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
                 <button
                   key={q.id}
                   onClick={() => {
-                    setCurrentQuestionIndex(idx);
+                    goToQuestion(idx);
                     setShowReviewGrid(false);
                   }}
                   className={`py-2 rounded-xl text-xs font-mono font-bold border transition ${btnClass}`}
@@ -909,29 +918,18 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
       )}
 
       {isPaused && (
-        <div role="dialog" aria-modal="true" aria-label="Bài thi đang tạm dừng" className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/95 p-4 backdrop-blur-xl">
-          <div className="machined-card w-full max-w-md rounded-3xl p-8 text-center">
-            <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-500/15 text-orange-300">
-              <Pause className="h-7 w-7" aria-hidden="true" />
-            </span>
-            <h3 className="mt-5 text-2xl font-semibold tracking-tight text-white">Đã tạm dừng</h3>
-            <p className="mx-auto mt-2 max-w-[34ch] text-sm leading-relaxed text-slate-400">Đồng hồ đã dừng và nội dung câu hỏi được ẩn cho tới khi bạn tiếp tục.</p>
-            <dl className="mt-6 grid grid-cols-3 gap-3 text-center">
-              <div><dt className="text-[11px] text-slate-400">Còn lại</dt><dd className="mt-1 font-mono text-lg tabular-nums text-white">{formatTimer(timeRemainingSeconds)}</dd></div>
-              <div><dt className="text-[11px] text-slate-400">Đã làm</dt><dd className="mt-1 font-mono text-lg tabular-nums text-white">{answeredNow}/{totalQ}</dd></div>
-              <div><dt className="text-[11px] text-slate-400">Câu hiện tại</dt><dd className="mt-1 font-mono text-lg tabular-nums text-white">{currentQuestionIndex + 1}</dd></div>
-            </dl>
-            <button
-              onClick={handleUnpause}
-              autoFocus
-              className="mt-7 flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-orange-500 text-sm font-semibold text-slate-950 hover:bg-orange-400"
-            >
-              <Play className="h-4 w-4 fill-current" aria-hidden="true" /> Tiếp tục làm bài
-            </button>
-            <button onClick={handleSaveAndExit} className="mt-2 h-11 w-full rounded-xl text-sm font-medium text-slate-300 hover:text-white">
-              Lưu và thoát
-            </button>
-          </div>
+        <div role="status" className="flex flex-wrap items-center gap-x-4 gap-y-2 rounded-2xl border border-amber-500/40 bg-amber-500/[0.08] px-4 py-3 text-sm text-amber-100">
+          <Pause className="h-4 w-4 shrink-0" aria-hidden="true" />
+          <span className="min-w-0 flex-1">
+            <span className="font-semibold">Đang tạm dừng, đồng hồ không chạy.</span>{' '}
+            <span className="text-amber-200/80">Bạn vẫn đọc được câu hỏi. Bấm Câu trước hoặc Câu tiếp để tiếp tục tính giờ.</span>
+          </span>
+          <button onClick={handleUnpause} className="h-8 rounded-lg bg-amber-500 px-3 text-xs font-semibold text-slate-950 hover:bg-amber-400">
+            Tiếp tục
+          </button>
+          <button onClick={handleSaveAndExit} className="h-8 rounded-lg px-2 text-xs font-medium text-amber-200 hover:text-white">
+            Lưu và thoát
+          </button>
         </div>
       )}
 
@@ -965,7 +963,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
 
             <div className="flex items-center gap-2">
             <button
-              onClick={() => setCurrentQuestionIndex((prev) => Math.max(0, prev - 1))}
+              onClick={() => goToQuestion((prev) => Math.max(0, prev - 1))}
               disabled={currentQuestionIndex === 0}
               aria-label="Câu trước"
               title="Câu trước"
@@ -974,7 +972,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
               <ArrowLeft className="h-4 w-4" />
             </button>
             <button
-              onClick={() => setCurrentQuestionIndex((prev) => Math.min(totalQ - 1, prev + 1))}
+              onClick={() => goToQuestion((prev) => Math.min(totalQ - 1, prev + 1))}
               disabled={currentQuestionIndex >= totalQ - 1}
               aria-label="Câu tiếp"
               title="Câu tiếp"
@@ -1178,7 +1176,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
               return (
                 <button
                   key={q.id}
-                  onClick={() => setCurrentQuestionIndex(idx)}
+                  onClick={() => goToQuestion(idx)}
                   title={`Câu ${idx + 1}${t ? `, đã dùng ${mmss(t)}` : ''}${isFlag ? ', đã gắn cờ' : ''}`}
                   aria-label={`Câu ${idx + 1}${isAnswered ? ', đã trả lời' : ''}${isFlag ? ', gắn cờ' : ''}`}
                   aria-current={isCurrent ? 'true' : undefined}
