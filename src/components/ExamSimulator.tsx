@@ -28,6 +28,7 @@ import { fetchSessions } from '../utils/sync';
 import { ExamPicker } from './ExamPicker';
 import { ResultSummary } from './ResultSummary';
 import { ExplanationPanel } from './ExplanationPanel';
+import { ExplanationFallback } from './ExplanationFallback';
 import { useExplanations } from '../utils/explanations';
 
 interface ExamSimulatorProps {
@@ -554,26 +555,13 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
                     chosenLabels={userSelected.map((i) => String.fromCharCode(65 + i))}
                   />
                 ) : (
-                  <div className="p-4 rounded-2xl bg-slate-950/70 border border-white/[0.06] text-xs sm:text-sm space-y-1.5">
-                    <div className="font-bold text-amber-400 flex items-center gap-1.5">
-                      <AlertCircle className="w-4 h-4" />
-                      <span>Giải thích chi tiết:</span>
-                    </div>
-                    <p className="text-slate-200 leading-relaxed">
-                      {langMode === 'en' ? q.explanation : q.explanationVi || q.explanation}
-                    </p>
-                    {langMode === 'bilingual' && q.explanation && q.explanationVi && (
-                      <p className="text-xs text-slate-400 italic pt-1 border-t border-white/[0.04]">
-                        EN: {q.explanation}
-                      </p>
-                    )}
-                    {q.referenceLecture && (
-                      <div className="text-xs text-slate-400 pt-1 font-mono">
-                        Tham khảo: {q.referenceSection} &bull; {q.referenceLecture}
-                      </div>
-                    )}
-                  </div>
-
+                  <ExplanationFallback
+                    loading={detailed.loading}
+                    failed={detailed.isFailed(explanationKey(currentExam.id, q.id))}
+                    configured={detailed.configured}
+                    onRetry={detailed.retry}
+                    legacyText={(langMode === 'en' ? q.explanation : q.explanationVi || q.explanation) || undefined}
+                  />
                 )}
               </div>
             );
@@ -893,20 +881,15 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
             drill.get(explanationKey(currentExam.id, currentQ.id)) ? (
               <div className="mt-4"><ExplanationPanel data={drill.get(explanationKey(currentExam.id, currentQ.id))!} chosenLabels={selectedForCurrent.map((i) => String.fromCharCode(65 + i))} /></div>
             ) : (
-            <div className="p-4 rounded-2xl bg-slate-950/80 border border-white/[0.08] text-xs sm:text-sm space-y-1.5 mt-4">
-              <div className="font-bold text-amber-400 flex items-center gap-1.5">
-                <AlertCircle className="w-4 h-4" />
-                <span>Giải thích ngay (Chế độ Luyện Tập):</span>
+              <div className="mt-4">
+                <ExplanationFallback
+                  loading={drill.loading}
+                  failed={drill.isFailed(explanationKey(currentExam.id, currentQ.id))}
+                  configured={drill.configured}
+                  onRetry={drill.retry}
+                  legacyText={(langMode === 'en' ? currentQ.explanation : currentQ.explanationVi || currentQ.explanation) || undefined}
+                />
               </div>
-              <p className="text-slate-200 leading-relaxed">
-                {langMode === 'en' ? currentQ.explanation : currentQ.explanationVi || currentQ.explanation}
-              </p>
-              {langMode === 'bilingual' && currentQ.explanation && currentQ.explanationVi && (
-                <p className="text-xs text-slate-400 italic pt-1 border-t border-white/[0.04]">
-                  EN: {currentQ.explanation}
-                </p>
-              )}
-            </div>
             )
           )}
 

@@ -3,12 +3,11 @@ import raw from './dumpExams.json';
 
 type RawExam = { id: string; n: number; questions: Omit<ExamQuestion, 'explanationVi'>[] };
 
-const NOTE = 'Đáp án theo bộ đề gốc. Xem tài liệu tham khảo (nếu có) để hiểu rõ hơn.';
-
 const toQuestion = (q: RawExam['questions'][number]): ExamQuestion => ({
   ...q,
-  explanation: q.explanation || 'See the AWS documentation for this service.',
-  explanationVi: q.explanation ? `${NOTE} ${q.explanation}` : NOTE,
+  // The detailed Vietnamese explanation is loaded from Supabase; only the source link is kept here.
+  explanation: q.explanation ? `Tài liệu tham khảo: ${q.explanation}` : '',
+  explanationVi: q.explanation ? `Tài liệu tham khảo: ${q.explanation}` : '',
 });
 
 const exams = raw as unknown as RawExam[];
