@@ -47,7 +47,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "",
     "id": "pe1-3"
    },
@@ -65,7 +65,7 @@
      4
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe1-4"
    },
@@ -113,7 +113,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe1-7"
    },
@@ -163,7 +163,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe1-10"
    },
@@ -211,7 +211,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe1-13"
    },
@@ -229,7 +229,7 @@
      4
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe1-14"
    },
@@ -393,7 +393,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe1-24"
    },
@@ -641,7 +641,7 @@
      1
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe1-39"
    },
@@ -723,7 +723,7 @@
      4
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe1-44"
    },
@@ -739,7 +739,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe1-45"
    },
@@ -773,7 +773,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe1-47"
    },
@@ -845,7 +845,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "",
     "id": "pe2-1"
    },
@@ -877,7 +877,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe2-3"
    },
@@ -1007,7 +1007,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe2-11"
    },
@@ -1057,7 +1057,7 @@
      2
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe2-14"
    },
@@ -1173,7 +1173,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "",
     "id": "pe2-21"
    },
@@ -1205,7 +1205,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe2-23"
    },
@@ -1223,7 +1223,7 @@
      4
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe2-24"
    },
@@ -1255,7 +1255,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe2-26"
    },
@@ -1353,7 +1353,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe2-32"
    },
@@ -1537,7 +1537,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe2-43"
    },
@@ -1571,7 +1571,7 @@
      4
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe2-45"
    },
@@ -1621,7 +1621,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "",
     "id": "pe2-48"
    },
@@ -1653,7 +1653,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe2-50"
    }
@@ -1757,7 +1757,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe3-6"
    },
@@ -1809,7 +1809,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe3-9"
    },
@@ -1857,7 +1857,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe3-12"
    },
@@ -1907,7 +1907,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe3-15"
    },
@@ -2059,7 +2059,7 @@
      4
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe3-24"
    },
@@ -2257,7 +2257,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe3-36"
    },
@@ -2273,7 +2273,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "",
     "id": "pe3-37"
    },
@@ -2323,7 +2323,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "",
     "id": "pe3-40"
    },
@@ -2355,7 +2355,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe3-42"
    },
@@ -2373,7 +2373,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe3-43"
    },
@@ -2405,7 +2405,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe3-45"
    },
@@ -2547,7 +2547,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "",
     "id": "pe4-3"
    },
@@ -2579,7 +2579,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe4-5"
    },
@@ -2595,7 +2595,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe4-6"
    },
@@ -2611,7 +2611,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe4-7"
    },
@@ -2677,7 +2677,7 @@
      2
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe4-11"
    },
@@ -2695,7 +2695,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe4-12"
    },
@@ -2711,7 +2711,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "",
     "id": "pe4-13"
    },
@@ -2825,7 +2825,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "",
     "id": "pe4-20"
    },
@@ -2925,7 +2925,7 @@
      4
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "",
     "id": "pe4-26"
    },
@@ -2941,7 +2941,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "",
     "id": "pe4-27"
    },
@@ -2959,7 +2959,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe4-28"
    },
@@ -2977,7 +2977,7 @@
      4
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "",
     "id": "pe4-29"
    },
@@ -2995,7 +2995,7 @@
      4
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe4-30"
    },
@@ -3029,7 +3029,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe4-32"
    },
@@ -3127,7 +3127,7 @@
      4
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe4-38"
    },
@@ -3163,7 +3163,7 @@
      2
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "",
     "id": "pe4-40"
    },
@@ -3181,7 +3181,7 @@
      2
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "",
     "id": "pe4-41"
    },
@@ -3435,7 +3435,7 @@
      2
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe5-6"
    },
@@ -3533,7 +3533,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe5-12"
    },
@@ -3615,7 +3615,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe5-17"
    },
@@ -3631,7 +3631,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe5-18"
    },
@@ -3681,7 +3681,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe5-21"
    },
@@ -3715,7 +3715,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe5-23"
    },
@@ -3731,7 +3731,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe5-24"
    },
@@ -3795,7 +3795,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "",
     "id": "pe5-28"
    },
@@ -3927,7 +3927,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe5-36"
    },
@@ -4007,7 +4007,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe5-41"
    },
@@ -4041,7 +4041,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe5-43"
    },
@@ -4231,7 +4231,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe6-4"
    },
@@ -4299,7 +4299,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe6-8"
    },
@@ -4349,7 +4349,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "",
     "id": "pe6-11"
    },
@@ -4383,7 +4383,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe6-13"
    },
@@ -4415,7 +4415,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe6-15"
    },
@@ -4511,7 +4511,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "",
     "id": "pe6-21"
    },
@@ -4659,7 +4659,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "",
     "id": "pe6-30"
    },
@@ -4709,7 +4709,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe6-33"
    },
@@ -4777,7 +4777,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe6-37"
    },
@@ -4809,7 +4809,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe6-39"
    },
@@ -4891,7 +4891,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe6-44"
    },
@@ -4907,7 +4907,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe6-45"
    },
@@ -4939,7 +4939,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe6-47"
    },
@@ -4957,7 +4957,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe6-48"
    },
@@ -4973,7 +4973,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe6-49"
    },
@@ -5047,7 +5047,7 @@
      4
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "",
     "id": "pe7-3"
    },
@@ -5065,7 +5065,7 @@
      4
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe7-4"
    },
@@ -5147,7 +5147,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe7-9"
    },
@@ -5163,7 +5163,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe7-10"
    },
@@ -5179,7 +5179,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe7-11"
    },
@@ -5213,7 +5213,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe7-13"
    },
@@ -5245,7 +5245,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe7-15"
    },
@@ -5277,7 +5277,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe7-17"
    },
@@ -5359,7 +5359,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe7-22"
    },
@@ -5409,7 +5409,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe7-25"
    },
@@ -5425,7 +5425,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "",
     "id": "pe7-26"
    },
@@ -5475,7 +5475,7 @@
      2
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe7-29"
    },
@@ -5509,7 +5509,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "",
     "id": "pe7-31"
    },
@@ -5527,7 +5527,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "",
     "id": "pe7-32"
    },
@@ -5543,7 +5543,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "",
     "id": "pe7-33"
    },
@@ -5591,7 +5591,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe7-36"
    },
@@ -5673,7 +5673,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe7-41"
    },
@@ -5705,7 +5705,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe7-43"
    },
@@ -5721,7 +5721,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe7-44"
    },
@@ -5771,7 +5771,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe7-47"
    },
@@ -5789,7 +5789,7 @@
      4
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe7-48"
    },
@@ -5861,7 +5861,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe8-2"
    },
@@ -5995,7 +5995,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "",
     "id": "pe8-10"
    },
@@ -6043,7 +6043,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe8-13"
    },
@@ -6061,7 +6061,7 @@
      4
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "",
     "id": "pe8-14"
    },
@@ -6145,7 +6145,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "",
     "id": "pe8-19"
    },
@@ -6395,7 +6395,7 @@
      2
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe8-34"
    },
@@ -6413,7 +6413,7 @@
      4
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe8-35"
    },
@@ -6431,7 +6431,7 @@
      4
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "",
     "id": "pe8-36"
    },
@@ -6577,7 +6577,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe8-45"
    },
@@ -6609,7 +6609,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe8-47"
    },
@@ -6641,7 +6641,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe8-49"
    },
@@ -6659,7 +6659,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe8-50"
    }
@@ -6681,7 +6681,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe9-1"
    },
@@ -6729,7 +6729,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe9-4"
    },
@@ -6778,7 +6778,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe9-7"
    },
@@ -6826,7 +6826,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe9-10"
    },
@@ -6926,7 +6926,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe9-16"
    },
@@ -7008,7 +7008,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe9-21"
    },
@@ -7074,7 +7074,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "",
     "id": "pe9-25"
    },
@@ -7090,7 +7090,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "",
     "id": "pe9-26"
    },
@@ -7274,7 +7274,7 @@
      2
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe9-37"
    },
@@ -7292,7 +7292,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe9-38"
    },
@@ -7356,7 +7356,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- AWS Managed Services takes care of all of your patching and backup activities to help keep your resources current and secure. When updates or patches are released by OS vendors, AWS Managed Services applies them in a timely and consistent manner to minimize the impact on your business\n      - Critical security patches are applied immediately, while others are applied based on the patch schedule you request. Backups of Stacks are automated using Amazon Elastic Block Store (EBS) and RDS snapshots, and can be restored in the event of a failure or outage, ensuring business continuity",
     "id": "pe9-42"
    },
@@ -7440,7 +7440,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe9-47"
    },
@@ -7744,7 +7744,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe10-15"
    },
@@ -7794,7 +7794,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe10-18"
    },
@@ -7943,7 +7943,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe10-27"
    },
@@ -8059,7 +8059,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe10-34"
    },
@@ -8075,7 +8075,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe10-35"
    },
@@ -8107,7 +8107,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe10-37"
    },
@@ -8123,7 +8123,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe10-38"
    },
@@ -8173,7 +8173,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "",
     "id": "pe10-41"
    },
@@ -8205,7 +8205,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe10-43"
    },
@@ -8221,7 +8221,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe10-44"
    },
@@ -8269,7 +8269,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "",
     "id": "pe10-47"
    },
@@ -8339,7 +8339,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe11-1"
    },
@@ -8393,7 +8393,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe11-4"
    },
@@ -8445,7 +8445,7 @@
      2
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe11-7"
    },
@@ -8509,7 +8509,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe11-11"
    },
@@ -8525,7 +8525,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "",
     "id": "pe11-12"
    },
@@ -8591,7 +8591,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe11-16"
    },
@@ -8639,7 +8639,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe11-19"
    },
@@ -8721,7 +8721,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe11-24"
    },
@@ -8851,7 +8851,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "",
     "id": "pe11-32"
    },
@@ -8883,7 +8883,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe11-34"
    },
@@ -8983,7 +8983,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "",
     "id": "pe11-40"
    },
@@ -8999,7 +8999,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe11-41"
    },
@@ -9063,7 +9063,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe11-45"
    },
@@ -9129,7 +9129,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe11-49"
    },
@@ -9203,7 +9203,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe12-3"
    },
@@ -9237,7 +9237,7 @@
      2
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe12-5"
    },
@@ -9253,7 +9253,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe12-6"
    },
@@ -9301,7 +9301,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe12-9"
    },
@@ -9335,7 +9335,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe12-11"
    },
@@ -9401,7 +9401,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe12-15"
    },
@@ -9417,7 +9417,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe12-16"
    },
@@ -9713,7 +9713,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe12-34"
    },
@@ -9749,7 +9749,7 @@
      2
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe12-36"
    },
@@ -9765,7 +9765,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe12-37"
    },
@@ -9849,7 +9849,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe12-42"
    }
@@ -9903,7 +9903,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "https://aws.amazon.com/professional-services/",
     "id": "pe13-3"
    },
@@ -9919,7 +9919,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "",
     "id": "pe13-4"
    },
@@ -10003,7 +10003,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe13-9"
    },
@@ -10087,7 +10087,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe13-14"
    },
@@ -10103,7 +10103,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "https://aws.amazon.com/about-aws/global-infrastructure/regions_az/#Region_Maps_and_Edge_Networks",
     "id": "pe13-15"
    },
@@ -10172,7 +10172,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "https://d1.awsstatic.com/whitepapers/introduction-to-aws-cloud-economics-final.pdf (10)",
     "id": "pe13-19"
    },
@@ -10188,7 +10188,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe13-20"
    },
@@ -10220,7 +10220,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "",
     "id": "pe13-22"
    },
@@ -10252,7 +10252,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe13-24"
    },
@@ -10318,7 +10318,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe13-28"
    },
@@ -10334,7 +10334,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "https://d1.awsstatic.com/whitepapers/AWS_Cloud_Best_Practices.pdf",
     "id": "pe13-29"
    },
@@ -10466,7 +10466,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe13-37"
    },
@@ -10482,7 +10482,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe13-38"
    },
@@ -10562,7 +10562,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "https://aws.amazon.com/solutions/case-studies/encoding/",
     "id": "pe13-43"
    },
@@ -10594,7 +10594,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "- Global Reach will support an international company using Cloud-Front.",
     "id": "pe13-45"
    },
@@ -10700,7 +10700,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://aws.amazon.com/getting-started/projects/host-static-website/",
     "id": "pe14-1"
    },
@@ -10764,7 +10764,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://aws.amazon.com/redshift/",
     "id": "pe14-5"
    },
@@ -10814,7 +10814,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe14-8"
    },
@@ -10848,7 +10848,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "https://aws.amazon.com/enterprise/hybrid/",
     "id": "pe14-10"
    },
@@ -10930,7 +10930,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- Amazon Relational Database Service (Amazon RDS) makes it easy to set up, operate, and scale a relational database in the cloud.\n    - It provides cost-efficient and resizable capacity while automating time-consuming administration tasks such as hardware provisioning, database setup, patching and backups.\n    - It frees you to focus on your applications so you can give them the fast performance, high availability, security and compatibility they need.\n\n    Reference: https://aws.amazon.com/rds/?c=db&sec=srv",
     "id": "pe14-15"
    },
@@ -10946,7 +10946,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- Amazon Elastic File System (Amazon EFS) provides a simple, scalable, fully managed elastic NFS file system for use with AWS Cloud services and on-premises resources.\n    - It is built to scale on demand to petabytes without disrupting applications, growing and shrinking automatically as you add and remove files, eliminating the need to provision and manage capacity to accommodate growth.\n    - Amazon EFS is designed to provide the throughput, IOPS, and low latency needed for Linux workloads.\n    - Throughput and IOPS scale as a file system grows and can burst to higher throughput levels for short periods of time to support the unpredictable performance needs of file workloads.\n    - For the most demanding workloads, Amazon EFS can support performance over 10 GB/sec and up to 500,000 IOPS.",
     "id": "pe14-16"
    },
@@ -10978,7 +10978,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- Amazon S3 Glacier is a secure, durable, and low-cost storage class of S3 for data archiving and long-term backup. Customers can store large or small amounts of data for as little as $0.004 per gigabyte per month.\n    - The S3 Glacier storage class is ideal for archives where data is regularly retrieved and some of the data may be needed in minutes.\n    - Amazon RDS is a relational database service that hosts databases. It helps you create and manage databases.\n    - Amazon Snowball is a petabyte-scale data transfer service that provides cost efficient data transfer to AWS from tamper proof physical devices. Similarly, Elastic block storage offers persistent block storage volumes for EC2 instances.\n\n    Reference: https://aws.amazon.com/backup-restore/services/",
     "id": "pe14-18"
    },
@@ -11010,7 +11010,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "- AWS Marketplace is a digital catalog with thousands of software listings from independent software vendors that make it easy to find, test, buy, and deploy software that runs on AWS.\n\n    Reference: https://aws.amazon.com",
     "id": "pe14-20"
    },
@@ -11090,7 +11090,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- Amazon CloudWatch is basically a metrics repository.\n    - An AWS service -- such as Amazon EC2 -- puts metrics into the repository, and you retrieve statistics based on those metrics.\n    - If you put your own custom metrics into the repository, you can retrieve statistics on these metrics as well.\n\n    Reference: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/ cloudwatch_architecture.html",
     "id": "pe14-25"
    },
@@ -11418,7 +11418,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe14-45"
    },
@@ -11468,7 +11468,7 @@
      4
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "- AWS Training and Certification builds your competence, confidence, and credibility through practical cloud skills that help you innovate and build your future.\n    - Our content is built by experts at AWS and updated regularly so you're always learning the latest and keeping your cloud skills fresh.\n    - Amazon offer both digital and classroom training including private on-site training. You can choose to learn online at your own pace or learn from an accredited AWS instructor.\n    - Whether you're just starting out, building on existing IT skills, or sharpening your cloud knowledge, AWS Training and Certification can help you be more effective and do more in the cloud.\n\n    Reference: https://aws.amazon.com/training/course-descriptions/",
     "id": "pe14-48"
    },
@@ -11486,7 +11486,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- Amazon Virtual Private Cloud (Amazon VPC) lets you provision a logically isolated section of the AWS Cloud where you can launch AWS resources in a virtual network that you define.\n    - You have complete control over your virtual networking environment, including selection of your own IP address range, creation of subnets, and configuration of route tables and network gateways.\n    - You can use both IPv4 and IPv6 in your VPC for secure and easy access to resources and applications.\n    - You can easily customize the network configuration for your Amazon VPC.\n    - For example, you can create a public-facing subnet for your web servers that has access to the Internet, and place your backend systems such as databases or application servers in a private-facing subnet with no Internet access.\n    - You can leverage multiple layers of security, including security groups and network access control lists, to help control access to Amazon EC2 instances in each subnet.\n\n    Reference: https://aws.amazon.com/vpc/",
     "id": "pe14-49"
    },
@@ -11560,7 +11560,7 @@
      2
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe15-3"
    },
@@ -11640,7 +11640,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe15-8"
    },
@@ -11738,7 +11738,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- Quick Starts are built by AWS solutions architects and partners to help you deploy popular technologies on AWS, based on AWS best practices for security and high availability.\n    - These accelerators reduce hundreds of manual procedures into just a few steps, so you can build your production environment quickly and start using it immediately.\n\n    Reference: https://aws.amazon.com/quickstart/?quickstart-all.sort-by=item.additionalFields.updateDate&quickstart-all.sort-order=desc",
     "id": "pe15-14"
    },
@@ -11770,7 +11770,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- AWS provides a set of fully managed services that you can use to build and run serverless applications.\n    - Serverless applications don't require provisioning, maintaining, and administering servers for backend components such as compute, databases, storage, stream processing, message queueing, and more. You also no longer need to worry about ensuring application fault tolerance and availability.\n    - Instead, AWS handles all of these capabilities for you.\n    - Serverless platform includes: AWS lambda, Amazon S3, DynamoDB, API gateway, Amazon SNS, AWS step functions, Amazon kinesis and developing tools and services.\n\n    Reference: https://aws.amazon.com/serverless/",
     "id": "pe15-16"
    },
@@ -11838,7 +11838,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "http://jayendrapatil.com/aws-global-vs-regional-vs-az-resources/",
     "id": "pe15-20"
    },
@@ -11922,7 +11922,7 @@
      2
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe15-25"
    },
@@ -12036,7 +12036,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe15-32"
    },
@@ -12134,7 +12134,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "- Single sign-on only works when used on a computer that is joined to the AWS Directory Service directory.\n    - It cannot be used on computers that are not joined to the directory.\n\n    Reference: https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_single_sign_on.html",
     "id": "pe15-38"
    },
@@ -12406,7 +12406,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- Amazon CloudFront is a content delivery network (CDN) service that distributes data from multiple locations worldwide, providing low-latency access to end-users.",
     "id": "pe16-4"
    },
@@ -12422,7 +12422,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "- The cloud allows you to trade capital expenses (such as data centers and physical servers) for variable expenses, and only pay for IT as you consume it.\n    - Plus, the variable expenses are much lower than what you would pay to do it yourself because of the economies of scale.\n\n    Reference: https://aws.amazon.com/what-is-cloud-computing/",
     "id": "pe16-5"
    },
@@ -12438,7 +12438,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "- With AWS, you can use APIs to programmatically retrieve information about your resources—such as EC2 instances, volumes, IP addresses, tags, and configurations.\n    - This is much easier than manually tracking physical servers and hardware in a traditional data center.",
     "id": "pe16-6"
    },
@@ -12454,7 +12454,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://docs.amazonaws.cn/en_us/AmazonRDS/latest/UserGuide/rds-ug.pdf",
     "id": "pe16-7"
    },
@@ -12520,7 +12520,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "- AWS offers premium services such as AWS Trusted Advisor, which provides real-time guidance to help you reduce cost, increase performance, and improve security.\n\n    Reference: https://www.ibm.com/downloads/cas/2N40X4PQ",
     "id": "pe16-11"
    },
@@ -12536,7 +12536,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- Support for monitoring the health of each service independently, as health checks are defined at the target group level and many CloudWatch metrics are reported at the target group level.\n    - Attaching a target group to an Auto Scaling group enables you to scale each service dynamically based on demand.\n\n    Reference: https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html",
     "id": "pe16-12"
    },
@@ -12650,7 +12650,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- Amazon VPC provides multiple network connectivity options for you to leverage depending on your current network designs and requirements.\n    - These connectivity options include leveraging either the internet or an AWS Direct Connect connection as the network backbone and terminating the connection into either AWS or user-managed network endpoints.\n    - Additionally, with AWS, you can choose how network routing is delivered between Amazon VPC and your networks, leveraging either AWS or user-managed network equipment and routes.\n\n    Reference: https://docs.aws.amazon.com/whitepapers/latest/aws-vpc-connectivity-options/ introduction.html",
     "id": "pe16-19"
    },
@@ -12700,7 +12700,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "- To improve control over your AWS environment, you can use AWS Organizations to create groups of accounts, and then attach policies to a group to ensure the correct policies are applied across the accounts without requiring custom scripts and manual processes.\n\n    Reference: https://aws.amazon.com/organizations/",
     "id": "pe16-22"
    },
@@ -12908,7 +12908,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- AWS CodeCommit is a version control service hosted by Amazon Web Services that you can use to privately store and manage assets (such as documents, source code, and binary files) in the cloud.\n\n    Reference: https://docs.aws.amazon.com/codecommit/latest/userguide/welcome.html",
     "id": "pe16-35"
    },
@@ -12940,7 +12940,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- AWS Snowmobile is an exabyte-scale data transfer service that can move extremely large amounts of data to AWS in a fast, secure, and cost-effective manner.\n    - You can transfer up to 100PB per Snowmobile, a 45-foot long ruggedized shipping container, pulled by a semi-trailer truck. - Snowmobile makes it easy to move massive volumes of data to the cloud, including video libraries, image repositories, or even a complete data center migration.\n    - All data is encrypted with 256-bit encryption and you can manage your encryption keys with AWS Key Management Service (AWS KMS).\n    - Snowmobile includes GPS tracking, alarm monitoring, 24/7 video surveillance and an optional escort security vehicle while in transit.\n\n    Reference: https://aws.amazon.com/about-aws/whats-new/2016/11/move-exabyte-scale-data-sets-with- aws-snowmobile/",
     "id": "pe16-37"
    },
@@ -12992,7 +12992,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "- AWS offers you a pay-as-you-go approach for pricing for over 160 cloud services.\n    - With AWS you pay only for the individual services you need, for as long as you use them, and without requiring long-term contracts or complex licensing.\n    - AWS pricing is similar to how you pay for utilities like water and electricity.\n    - You only pay for the services you consume, and once you stop using them, there are no additional costs or termination fees.\n\n    Reference: https://aws.amazon.com/pricing/",
     "id": "pe16-40"
    },
@@ -13008,7 +13008,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- You can deliver content and decrease end-user latency of your web application using Amazon CloudFront.\n    - CloudFront speeds up content delivery by leveraging its global network of data centers, known as edge locations, to reduce delivery time by caching your content close to your end users.\n    - CloudFront fetches your content from an origin, such as an Amazon S3 bucket, an Amazon EC2 instance, an Amazon Elastic Load\n    Balancing load balancer or your own web server, when it's not already in an edge location.\n    - CloudFront can be used to deliver your entire website or application, including dynamic, static, streaming, and interactive content.\n\n    Reference: https://aws.amazon.com/getting-started/tutorials/deliver-content-faster/",
     "id": "pe16-41"
    },
@@ -13056,7 +13056,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "https://aws.amazon.com/premiumsupport/plans/enterprise/",
     "id": "pe16-44"
    },
@@ -13088,7 +13088,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "- You can continue to optimize your spend and keep your development costs low by making sure you revisit your architecture often, to adjust to your startup growth.\n    - Manage your cost further by leveraging different options such as S3 CloudFront for caching & offloading to reduce cost of EC2 computing, as well as Elastic Load Balancing which prepares you for massive scale, high reliability and uninterrupted growth.\n    - Another way to keep costs down is to use AWS Identity and Access Management solutions (IAM) to manage governance of your cost drivers effectively and by the right teams.\n\n    Reference: https://aws.amazon.com/startups/lean/",
     "id": "pe16-46"
    },
@@ -13180,7 +13180,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- Rekognition Image is an image recognition service that detects objects, scenes, and faces; extracts text; recognizes celebrities; and identifies inappropriate content in images.\n    - It also allows you to search and compare faces.\n    - Rekognition Image is based on the same proven, highly scalable, deep learning technology developed by Amazon's computer vision scientists to analyze billions of images daily for Prime Photos.\n\n    Reference: https://aws.amazon.com/rekognition/faqs/",
     "id": "pe17-1"
    },
@@ -13376,7 +13376,7 @@
      1
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "https://aws.amazon.com/blogs/apn/the-5-pillars-of-the-aws-well-architected-framework/",
     "id": "pe17-13"
    },
@@ -13442,7 +13442,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- With Basic monitoring you get data on your cloudwatch metrics every 5 minutes.\n    - Enabling detailed monitoring, you will get the data every one minute.\n    - To check if detailed monitoring is enabled, on your EC2 Console, Select the instance, on the lower plane, Select Monitoring.\n\n    Reference: https://forums.aws.amazon.com/thread.jspa?threadID=263876",
     "id": "pe17-17"
    },
@@ -13592,7 +13592,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- AWS Direct Connect lets you establish a dedicated network connection between your network and one of the AWS Direct Connect locations.\n    - Using industry standard 802.1q VLANs, this dedicated connection can be partitioned into multiple virtual interfaces.\n    - This allows you to use the same connection to access public resources such as objects stored in Amazon S3 using public IP address space, and private resources such as Amazon EC2 instances running within an Amazon Virtual Private Cloud (VPC) using private IP space, while maintaining network separation between the public and private environments.\n    - Virtual interfaces can be reconfigured at any time to meet your changing needs.\n\n    Reference: https://aws.amazon.com/directconnect/",
     "id": "pe17-26"
    },
@@ -13610,7 +13610,7 @@
      1
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://www.edureka.co/community/600/what-is-an-edge-location-in-aws",
     "id": "pe17-27"
    },
@@ -13660,7 +13660,7 @@
      1
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://aws.amazon.com/partners/aws-marketplace/",
     "id": "pe17-30"
    },
@@ -13808,7 +13808,7 @@
      2
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe17-39"
    },
@@ -13824,7 +13824,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "- AWS Organizations helps you centrally govern your environment as you grow and scale your workloads on AWS.\n    - Whether you are a growing startup or a large enterprise, Organizations helps you to centrally manage billing; control access, compliance, and security; and share resources across your AWS accounts.\n\n    Reference: https://aws.amazon.com/organizations/",
     "id": "pe17-40"
    },
@@ -13890,7 +13890,7 @@
      2
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "- https://aws.amazon.com/cloudfront/",
     "id": "pe17-44"
    },
@@ -13938,7 +13938,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html",
     "id": "pe17-47"
    },
@@ -14140,7 +14140,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://asperbrothers.com/blog/infrastructure-as-code-aws/",
     "id": "pe18-9"
    },
@@ -14188,7 +14188,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- AWS CloudFormation provides a common language for you to model and provision AWS and third party application resources in your cloud environment.\n    - AWS CloudFormation allows you to use programming languages or a simple text file to model and provision, in an automated and secure manner, all the resources needed for your applications across all regions and accounts.\n    - This gives you a single source of truth for your AWS and third party resources.\n\n    Reference: https://aws.amazon.com/cloudformation/",
     "id": "pe18-12"
    },
@@ -14238,7 +14238,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe18-15"
    },
@@ -14286,7 +14286,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- AWS Service Catalog Delivery Partners are APN Consulting Partners who help create catalogs of IT services that are approved by the customer's organization for use on AWS.\n    - With AWS Service Catalog, customers and partners can centrally manage commonly deployed IT services to help achieve consistent governance and meet compliance requirements while enabling users to self-provision approved services.\n\n    Reference: https://aws.amazon.com/servicecatalog/partners/",
     "id": "pe18-18"
    },
@@ -14302,7 +14302,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- S3 Glacier Deep Archive is Amazon S3's lowest-cost storage class and supports long-term retention and digital preservation for data that may be accessed once or twice in a year.\n    - It is designed for customers --particularly those in highly-regulated industries, such as the Financial Services, Healthcare, and Public Sectors -- that retain data sets for 7-10 years or longer to meet regulatory compliance requirements.\n    - S3 Glacier Deep Archive can also be used for backup and disaster recovery use cases, and is a cost-effective and easy-to-manage alternative to magnetic tape systems, whether they are on-premises libraries or off-premises services.\n\n    Reference: https://aws.amazon.com/s3/storage-classes/",
     "id": "pe18-19"
    },
@@ -14320,7 +14320,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe18-20"
    },
@@ -14368,7 +14368,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html",
     "id": "pe18-23"
    },
@@ -14516,7 +14516,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "https://aws.amazon.com/pricing/cost-optimization/",
     "id": "pe18-32"
    },
@@ -14534,7 +14534,7 @@
      2
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://aws.amazon.com/marketplace",
     "id": "pe18-33"
    },
@@ -14550,7 +14550,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "https://aws.amazon.com/hybrid/",
     "id": "pe18-34"
    },
@@ -14616,7 +14616,7 @@
      2
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "https://data-flair.training/blogs/aws-advantages/",
     "id": "pe18-38"
    },
@@ -14650,7 +14650,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "https://aws.amazon.com/tco-calculator/",
     "id": "pe18-40"
    },
@@ -14682,7 +14682,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/six-advantages-of-cloud-computing.html",
     "id": "pe18-42"
    },
@@ -14698,7 +14698,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "https://d1.awsstatic.com/whitepapers/Migration/aws-migration-whitepaper.pdf",
     "id": "pe18-43"
    },
@@ -14714,7 +14714,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "https://aws.amazon.com/blogs/mt/automate-account-creation-and-resource-provisioning-using-aws-service-catalog-aws-organizations-and-aws-lambda/",
     "id": "pe18-44"
    },
@@ -14730,7 +14730,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- Amazon RDS provides high availability and failover support for DB instances using Multi-AZ deployments.\n    - Amazon RDS uses several different technologies to provide failover support.\n    - Multi-AZ deployments for Oracle, PostgreSQL, MySQL, and MariaDB DB instances use Amazon's failover technology.\n    - SQL Server DB instances use SQL Server Database Mirroring (DBM).\n\n    Reference: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html",
     "id": "pe18-45"
    },
@@ -14794,7 +14794,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "- The ability to launch instances on-demand when needed allows customers launch and terminate instances in response to a varying workload.\n    - This is a more economical practice than purchasing enough on-premises servers to handle the peak load.",
     "id": "pe18-49"
    },
@@ -14928,7 +14928,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html",
     "id": "pe19-7"
    },
@@ -14944,7 +14944,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "https://aws.amazon.com/aup/",
     "id": "pe19-8"
    },
@@ -14960,7 +14960,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "- AWS does not require minimum spend commitments or long-term contracts.\n    - You replace large upfront expenses with low variable payments that only apply to what you use.\n    - With AWS you are not bound to multi-year agreements or complicated licensing models.\n\n    Reference: https://aws.amazon.com/economics/",
     "id": "pe19-9"
    },
@@ -15030,7 +15030,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "https://aws.amazon.com/solutions/aws-landing-zone/",
     "id": "pe19-13"
    },
@@ -15078,7 +15078,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "https://aws.amazon.com/ec2/faqs/",
     "id": "pe19-16"
    },
@@ -15126,7 +15126,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "https://aws.amazon.com/premiumsupport/knowledge-center/report-aws-abuse/",
     "id": "pe19-19"
    },
@@ -15144,7 +15144,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://aws.amazon.com/cloudfront/faqs/",
     "id": "pe19-20"
    },
@@ -15178,7 +15178,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://subscription.packtpub.com/book/virtualization_and_cloud/9781788293723/3/ch03lvl1sec26/vpc-components",
     "id": "pe19-22"
    },
@@ -15282,7 +15282,7 @@
      2
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "https://aws.amazon.com/compliance/data-center/controls/",
     "id": "pe19-28"
    },
@@ -15316,7 +15316,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- https://aws.amazon.com/directconnect/\n    - https://aws.amazon.com/blogs/networking-and-content-delivery/introducing-aws-client-vpn-to-securely-access-aws-and-on-premises-resources/",
     "id": "pe19-30"
    },
@@ -15348,7 +15348,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/global-infrastructure.html",
     "id": "pe19-32"
    },
@@ -15364,7 +15364,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC.\n    - Flow log data can be published to Amazon CloudWatch Logs or Amazon S3. After you've created a flow log, you can retrieve and view its data in the chosen destination.\n\n    Reference: https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html",
     "id": "pe19-33"
    },
@@ -15380,7 +15380,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://aws.amazon.com/blogs/aws/category/auto-scaling/",
     "id": "pe19-34"
    },
@@ -15412,7 +15412,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- Amazon RDS makes it easy to set up, operate, and scale a relational database in the cloud.\n    - It provides cost-efficient and resizable capacity while automating time-consuming administration tasks, such as hardware provisioning, database setup, patching, and backups.\n    - It frees you to focus on your applications, so you can give them the fast performance, high availability, security, and compatibility that they need.\n\n    Reference: https://aws.amazon.com/blogs/database/part-1-role-of-the-dba-when-moving-to-amazon-rds-responsibilities/",
     "id": "pe19-36"
    },
@@ -15562,7 +15562,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "https://d1.awsstatic.com/whitepapers/aws-whitepaper-business-value-of-aws.pdf",
     "id": "pe19-45"
    },
@@ -15578,7 +15578,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://docs.aws.amazon.com/AmazonS3/latest/dev/replication.html",
     "id": "pe19-46"
    },
@@ -15594,7 +15594,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "https://aws.amazon.com/compliance/shared-responsibility-model/",
     "id": "pe19-47"
    },
@@ -15644,7 +15644,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html",
     "id": "pe19-50"
    }
@@ -15666,7 +15666,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "https://aws.amazon.com/guardduty/",
     "id": "pe20-1"
    },
@@ -15780,7 +15780,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html",
     "id": "pe20-8"
    },
@@ -15796,7 +15796,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- AWS Global Accelerator uses the AWS global network to optimize the path from your users to your applications, improving the performance of your traffic by as much as 60%.\n    - AWS Global Accelerator continually monitors the health of your application endpoints and redirects traffic to healthy endpoints in less than 30 seconds.\n\n    Reference: https://aws.amazon.com/global-accelerator/?blogs-global-accelerator.sort-by=item.additionalFields.createdDate&blogs-global-accelerator.sort-order=desc&aws-global-accelerator-wn.sort-by=item.additionalFields.postDateTime&aws-global-accelerator-wn.sort-order=desc",
     "id": "pe20-9"
    },
@@ -15829,7 +15829,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "https://aws.amazon.com/blogs/mt/monitor-and-notify-on-aws-account-root-user-activity/",
     "id": "pe20-11"
    },
@@ -15879,7 +15879,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe20-14"
    },
@@ -15927,7 +15927,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://aws.amazon.com/autoscaling/",
     "id": "pe20-17"
    },
@@ -15991,7 +15991,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "https://aws.amazon.com/about-aws/global-infrastructure/",
     "id": "pe20-21"
    },
@@ -16007,7 +16007,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://aws.amazon.com/ec2/faqs/",
     "id": "pe20-22"
    },
@@ -16091,7 +16091,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://aws.amazon.com/efs/",
     "id": "pe20-27"
    },
@@ -16205,7 +16205,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "https://aws.amazon.com/compliance/shared-responsibility-model/",
     "id": "pe20-34"
    },
@@ -16241,7 +16241,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://aws.amazon.com/global-accelerator/faqs/",
     "id": "pe20-36"
    },
@@ -16403,7 +16403,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe20-46"
    },
@@ -16451,7 +16451,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "- When your web traffic is geo-dispersed, it's not always feasible and certainly not cost effective to replicate your entire infrastructure across the globe.\n    - A CDN provides you the ability to utilize its global network of edge locations to deliver a cached copy of web content such as videos, webpages, images and so on to your customers.\n    - To reduce response time, the CDN utilizes the nearest edge location to the customer or originating request location in order to reduce the response time.\n    - Throughput is dramatically increased given that the web assets are delivered from cache.\n    - For dynamic data, many CDNs can be configured to retrieve data from the origin servers.\n\n    Reference: https://aws.amazon.com/caching/",
     "id": "pe20-49"
    },
@@ -16467,7 +16467,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "https://d1.awsstatic.com/whitepapers/architecture/AWS_Well-Architected_Framework.pdf",
     "id": "pe20-50"
    }
@@ -16639,7 +16639,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://aws.amazon.com/rds/faqs/",
     "id": "pe21-10"
    },
@@ -16865,7 +16865,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-concepts.html",
     "id": "pe21-24"
    },
@@ -16933,7 +16933,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/compute-services.html",
     "id": "pe21-28"
    },
@@ -17029,7 +17029,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "https://aws.amazon.com/hybrid/",
     "id": "pe21-34"
    },
@@ -17061,7 +17061,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "- Control Tower automates the process of setting up a new baseline multi-account AWS environment that is secure, well-architected, and ready to use.\n    - Control Tower incorporates the knowledge that AWS Professional Service has gained over the course of thousands of successful customer engagements.\n\n    Reference: https://aws.amazon.com/blogs/aws/aws-control-tower-set-up-govern-a-multi-account-aws-environment/",
     "id": "pe21-36"
    },
@@ -17223,7 +17223,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe21-46"
    },
@@ -17275,7 +17275,7 @@
      2
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "",
     "id": "pe21-49"
    },
@@ -17379,7 +17379,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe22-5"
    },
@@ -17395,7 +17395,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "",
     "id": "pe22-6"
    },
@@ -17427,7 +17427,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe22-8"
    },
@@ -17443,7 +17443,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "",
     "id": "pe22-9"
    },
@@ -17657,7 +17657,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 4: Billing, Pricing and Support",
     "explanation": "",
     "id": "pe22-22"
    },
@@ -17722,7 +17722,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://aws.amazon.com/blogs/storage/migrating-hundreds-of-tb-of-data-to-amazon-s3-with-aws-datasync/",
     "id": "pe22-26"
    },
@@ -17916,7 +17916,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "",
     "id": "pe22-38"
    },
@@ -17966,7 +17966,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://aws.amazon.com/about-aws/whats-new/2018/11/s3-intelligent-tiering/",
     "id": "pe22-41"
    },
@@ -18014,7 +18014,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "https://www.gremlin.com/blog/implementing-cost-saving-strategies-on-amazon-ec-2-with-chaos-engineering/",
     "id": "pe22-44"
    },
@@ -18346,7 +18346,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://aws.amazon.com/elasticbeanstalk/",
     "id": "pe23-14"
    },
@@ -18448,7 +18448,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-increase-availability.html",
     "id": "pe23-20"
    },
@@ -18594,7 +18594,7 @@
      4
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 2: Security and Compliance",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/compute-services.html",
     "id": "pe23-29"
    },
@@ -18676,7 +18676,7 @@
      4
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 3: Cloud Technology and Services",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "https://wa.aws.amazon.com/wat.pillar.reliability.en.html",
     "id": "pe23-34"
    },
@@ -18694,7 +18694,7 @@
      3
     ],
     "isMultipleResponse": true,
-    "domain": "Domain 1: Cloud Concepts",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://aws.amazon.com/cloudfront/faqs/",
     "id": "pe23-35"
    },
@@ -18742,7 +18742,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 2: Security and Compliance",
     "explanation": "https://aws.amazon.com/waf/faq/",
     "id": "pe23-38"
    },
@@ -18856,7 +18856,7 @@
      0
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://aws.amazon.com/blogs/industries/how-to-build-a-global-scalable-low-latency-and-secure-machine-learning-medical-imaging-analysis-platform-on-aws/",
     "id": "pe23-45"
    },
@@ -18888,7 +18888,7 @@
      3
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "https://innovationtactics.com/amazon-business-model-amazon-web-services/",
     "id": "pe23-47"
    },
@@ -18904,7 +18904,7 @@
      2
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 3: Cloud Technology and Services",
     "explanation": "https://d1.awsstatic.com/whitepapers/building-a-scalable-and-secure-multi-vpc-aws-network-infrastructure.pdf",
     "id": "pe23-48"
    },
@@ -18920,7 +18920,7 @@
      1
     ],
     "isMultipleResponse": false,
-    "domain": "Domain 4: Billing, Pricing and Support",
+    "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe23-49"
    },

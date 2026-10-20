@@ -1,0 +1,2550 @@
+[
+ {
+  "id": "pe11-1",
+  "question_vi": "Công ty có thể giảm Total Cost of Ownership (TCO) bằng AWS như thế nào?",
+  "domain": "Domain 1: Cloud Concepts",
+  "topic": "Giảm TCO với AWS",
+  "explanation_vi": "Câu hỏi kiểm tra lợi ích tài chính cốt lõi của điện toán đám mây. Khi dùng AWS, công ty không phải bỏ vốn lớn ban đầu để mua máy chủ, trung tâm dữ liệu, mạng; thay vào đó trả theo mức sử dụng thực tế (pay-as-you-go), chuyển từ capital expenditure (CapEx) sang operational expenditure (OpEx). Nhờ đó giảm chi phí đầu tư, giảm lãng phí do dự phòng dư thừa và tăng tính linh hoạt. Cần nhớ rằng AWS không xóa bỏ hoàn toàn OpEx hay trách nhiệm của khách hàng về giấy phép và ứng dụng.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Giảm thiểu chi tiêu vốn lớn",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì mô hình trả theo mức dùng thay thế khoản đầu tư phần cứng ban đầu (CapEx) bằng chi phí vận hành linh hoạt (OpEx). Đây là nguồn tiết kiệm TCO chính khi chuyển lên đám mây."
+   },
+   {
+    "label": "B",
+    "text_vi": "Không phải chịu trách nhiệm chi phí giấy phép bên thứ ba",
+    "is_correct": false,
+    "analysis_vi": "Sai vì khách hàng vẫn chịu trách nhiệm về giấy phép phần mềm của mình, trừ khi chọn mô hình license included (ví dụ Windows trên EC2, RDS). Ngay cả khi đó vẫn phải trả tiền cho giấy phép trong giá dịch vụ."
+   },
+   {
+    "label": "C",
+    "text_vi": "Không còn chi phí vận hành",
+    "is_correct": false,
+    "analysis_vi": "Sai vì dùng AWS vẫn phát sinh chi phí vận hành hằng tháng (OpEx) theo mức sử dụng. Điểm khác biệt là chi phí chuyển từ cố định ban đầu sang biến đổi, chứ không biến mất."
+   },
+   {
+    "label": "D",
+    "text_vi": "Để AWS quản lý ứng dụng",
+    "is_correct": false,
+    "analysis_vi": "Sai vì theo Shared Responsibility Model, khách hàng vẫn quản lý ứng dụng, dữ liệu và cấu hình của mình. AWS chỉ quản lý hạ tầng bên dưới (hoặc thêm phần nền tảng với dịch vụ managed), không quản lý ứng dụng thay khách hàng."
+   }
+  ],
+  "tips": [
+   "Từ khóa TCO gần như luôn gắn với việc giảm CapEx, chuyển sang OpEx và trả theo mức dùng.",
+   "Loại các đáp án dùng từ tuyệt đối như no responsibility, no operational expenditures vì AWS hiếm khi xóa bỏ hoàn toàn một khoản chi hay trách nhiệm.",
+   "Nhớ AWS quản lý hạ tầng, khách hàng quản lý ứng dụng và dữ liệu."
+  ],
+  "keywords": [
+   {
+    "term": "Total Cost of Ownership",
+    "points_to": "Tổng chi phí sở hữu, so sánh on-premises với AWS"
+   },
+   {
+    "term": "capital expenditures",
+    "points_to": "CapEx chuyển thành OpEx"
+   }
+  ],
+  "related_services": [
+   "AWS Pricing Calculator",
+   "AWS Cost Explorer"
+  ]
+ },
+ {
+  "id": "pe11-2",
+  "question_vi": "Các lựa chọn nào AWS cung cấp cho khách hàng muốn học về bảo mật trên đám mây theo hình thức có giảng viên hướng dẫn? (Chọn HAI)",
+  "domain": "Domain 2: Security and Compliance",
+  "topic": "Đào tạo bảo mật AWS",
+  "explanation_vi": "Câu hỏi kiểm tra các kênh học tập và đào tạo của AWS có người hướng dẫn trực tiếp hoặc trực tuyến. AWS Classroom Training là các khóa học do giảng viên AWS hoặc đối tác đào tạo giảng dạy, trong đó có các khóa về bảo mật. AWS Online Tech Talks là các buổi webinar trực tuyến do chuyên gia AWS trình bày, trả lời câu hỏi trực tiếp nên được đề thi xếp vào nhóm có người hướng dẫn. Câu hỏi yêu cầu chọn đủ hai đáp án vì đề nêu rõ Select TWO. Các lựa chọn còn lại là công cụ, tài liệu hoặc diễn đàn, không phải khóa học có giảng viên.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "AWS Trusted Advisor",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Trusted Advisor là công cụ kiểm tra tài khoản và đưa ra khuyến nghị về chi phí, bảo mật, hiệu năng, không phải kênh đào tạo. Nó đánh giá tài nguyên của bạn chứ không dạy bạn kiến thức."
+   },
+   {
+    "label": "B",
+    "text_vi": "AWS Online Tech Talks",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì đây là các phiên trực tuyến do chuyên gia AWS trình bày, có chủ đề bảo mật và cho phép hỏi đáp. Đề thi coi đây là hình thức học có người hướng dẫn."
+   },
+   {
+    "label": "C",
+    "text_vi": "AWS Blog",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Blog là nội dung văn bản để tự đọc, không có giảng viên hướng dẫn. Nó phù hợp để cập nhật tin tức và bài viết kỹ thuật chứ không phải lớp học."
+   },
+   {
+    "label": "D",
+    "text_vi": "AWS Forums",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Forums là nơi cộng đồng hỏi đáp, không có lớp học hay giảng viên chính thức. Đây là kênh hỗ trợ ngang hàng, không phải đào tạo có cấu trúc."
+   },
+   {
+    "label": "E",
+    "text_vi": "AWS Classroom Training",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì đây là khóa đào tạo do giảng viên đứng lớp (trực tiếp hoặc ảo), có các khóa về bảo mật như Security Engineering on AWS. Đây là đáp án rõ nhất cho cụm instructor-led."
+   }
+  ],
+  "tips": [
+   "Cụm instructor-led trỏ tới Classroom Training; webinar trực tuyến trỏ tới Tech Talks.",
+   "Loại Trusted Advisor ngay vì nó là công cụ, không phải tài liệu học.",
+   "Blog và Forums là nội dung tự đọc hoặc cộng đồng, không có giảng viên."
+  ],
+  "keywords": [
+   {
+    "term": "instructor-led",
+    "points_to": "AWS Classroom Training"
+   },
+   {
+    "term": "Online Tech Talks",
+    "points_to": "Webinar do AWS trình bày"
+   }
+  ],
+  "related_services": [
+   "AWS Training and Certification",
+   "AWS Trusted Advisor"
+  ]
+ },
+ {
+  "id": "pe11-3",
+  "question_vi": "Những phương án nào giúp tăng cường bảo mật khi truy cập AWS Management Console? (Chọn HAI)",
+  "domain": "Domain 2: Security and Compliance",
+  "topic": "Bảo mật đăng nhập Console",
+  "explanation_vi": "Câu hỏi kiểm tra các biện pháp bảo vệ danh tính người dùng đăng nhập vào Console. MFA thêm một lớp xác thực thứ hai ngoài mật khẩu, nên kẻ tấn công biết mật khẩu vẫn không vào được. Password policy trong IAM ép độ dài, độ phức tạp, thời hạn đổi mật khẩu, giúp mật khẩu khó đoán hơn. Cần chọn đủ cả hai vì đề yêu cầu hai đáp án; các dịch vụ còn lại bảo vệ bí mật ứng dụng, chứng chỉ TLS hoặc lưu lượng mạng chứ không liên quan đến đăng nhập Console.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "AWS Secrets Manager",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Secrets Manager lưu và xoay vòng bí mật như mật khẩu cơ sở dữ liệu, API key cho ứng dụng. Nó không bảo vệ quá trình đăng nhập của người dùng vào Console."
+   },
+   {
+    "label": "B",
+    "text_vi": "AWS Certificate Manager",
+    "is_correct": false,
+    "analysis_vi": "Sai vì ACM cấp và quản lý chứng chỉ SSL/TLS cho website và dịch vụ. Nó bảo vệ kênh truyền, không tăng cường xác thực đăng nhập Console."
+   },
+   {
+    "label": "C",
+    "text_vi": "AWS Multi-Factor Authentication (AWS MFA)",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì MFA yêu cầu thêm mã dùng một lần hoặc khóa bảo mật ngoài mật khẩu khi đăng nhập Console. Dù mật khẩu bị lộ, kẻ tấn công vẫn thiếu yếu tố thứ hai."
+   },
+   {
+    "label": "D",
+    "text_vi": "Security groups",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Security group là tường lửa ảo ở cấp instance, lọc lưu lượng mạng vào ra EC2. Nó không kiểm soát việc người dùng đăng nhập vào Console."
+   },
+   {
+    "label": "E",
+    "text_vi": "Password policies",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì IAM password policy đặt yêu cầu độ dài, ký tự, thời hạn hết hạn và chống dùng lại mật khẩu. Mật khẩu mạnh hơn làm Console khó bị tấn công dò mật khẩu."
+   }
+  ],
+  "tips": [
+   "Từ khóa truy cập Console/đăng nhập thường trỏ tới MFA và password policy.",
+   "Secrets Manager dành cho ứng dụng, ACM dành cho TLS, security group dành cho mạng. Không dùng chúng cho xác thực người dùng.",
+   "Ưu tiên các đáp án liên quan IAM khi đề nói về xác thực."
+  ],
+  "keywords": [
+   {
+    "term": "access to the AWS Management Console",
+    "points_to": "Xác thực người dùng IAM: MFA, password policy"
+   }
+  ],
+  "related_services": [
+   "AWS IAM",
+   "AWS MFA"
+  ]
+ },
+ {
+  "id": "pe11-4",
+  "question_vi": "Những tính năng nào có thể cấu hình qua Amazon Virtual Private Cloud (Amazon VPC) Dashboard? (Chọn HAI)",
+  "domain": "Domain 3: Cloud Technology and Services",
+  "topic": "Cấu hình trong VPC Dashboard",
+  "explanation_vi": "Câu hỏi kiểm tra bạn biết tài nguyên nào thuộc phạm vi mạng của VPC. Trong VPC Dashboard bạn tạo và quản lý subnet, route table, internet gateway, NAT gateway, network ACL và security group. Subnet chia dải IP của VPC theo Availability Zone, còn security group là tường lửa stateful cho instance. CloudFront, Route 53 và Elastic Load Balancing có console riêng (ELB nằm trong EC2 console), không cấu hình trong VPC Dashboard.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Phân phối Amazon CloudFront",
+    "is_correct": false,
+    "analysis_vi": "Sai vì CloudFront là dịch vụ CDN toàn cầu có console riêng, không phụ thuộc VPC. Nó phân phối nội dung qua edge location chứ không là thành phần mạng của VPC."
+   },
+   {
+    "label": "B",
+    "text_vi": "Amazon Route 53",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Route 53 là dịch vụ DNS toàn cầu với console riêng. Dù có thể liên kết với VPC (private hosted zone), việc cấu hình không nằm trong VPC Dashboard."
+   },
+   {
+    "label": "C",
+    "text_vi": "Security Groups",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì security group được quản lý trong mục Security của VPC Dashboard. Chúng điều khiển lưu lượng vào ra ở cấp instance trong VPC."
+   },
+   {
+    "label": "D",
+    "text_vi": "Subnets",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì subnet là thành phần cốt lõi của VPC và được tạo, chỉnh trong VPC Dashboard. Mỗi subnet nằm trong một Availability Zone."
+   },
+   {
+    "label": "E",
+    "text_vi": "Elastic Load Balancing",
+    "is_correct": false,
+    "analysis_vi": "Sai vì ELB được tạo và quản lý trong EC2 console (mục Load Balancing). Nó cần chọn subnet của VPC nhưng bản thân không cấu hình ở VPC Dashboard."
+   }
+  ],
+  "tips": [
+   "Nhớ nhóm thành phần mạng của VPC: subnet, route table, gateway, NACL, security group.",
+   "Dịch vụ toàn cầu hoặc edge như CloudFront, Route 53 không nằm trong VPC Dashboard.",
+   "ELB nằm trong EC2 console, là bẫy dễ nhầm."
+  ],
+  "keywords": [
+   {
+    "term": "VPC Dashboard",
+    "points_to": "Subnet, security group, route table, gateway"
+   }
+  ],
+  "related_services": [
+   "Amazon VPC",
+   "Security Groups"
+  ]
+ },
+ {
+  "id": "pe11-5",
+  "question_vi": "Với quy trình kiểm toán nào AWS hoàn toàn chịu trách nhiệm?",
+  "domain": "Domain 2: Security and Compliance",
+  "topic": "Trách nhiệm kiểm toán của AWS",
+  "explanation_vi": "Câu hỏi kiểm tra Shared Responsibility Model. AWS chịu trách nhiệm bảo mật CỦA đám mây, gồm cơ sở vật chất, phần cứng, mạng nền tảng và an ninh vật lý của data center. Khách hàng chịu trách nhiệm bảo mật TRONG đám mây, gồm cấu hình IAM, bucket policy, log và dữ liệu. Vì vậy chỉ an ninh vật lý là phần AWS chịu hoàn toàn, còn các lựa chọn khác do khách hàng cấu hình và kiểm toán.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Chính sách AWS IAM",
+    "is_correct": false,
+    "analysis_vi": "Sai vì IAM policy do khách hàng viết và gán, nên khách hàng chịu trách nhiệm xem xét. AWS chỉ cung cấp dịch vụ IAM, không quyết định quyền của bạn."
+   },
+   {
+    "label": "B",
+    "text_vi": "An ninh vật lý",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì data center, kiểm soát ra vào, camera, bảo vệ là hạ tầng do AWS vận hành hoàn toàn. Khách hàng không có quyền truy cập vật lý nên chỉ dựa vào báo cáo kiểm toán (qua AWS Artifact)."
+   },
+   {
+    "label": "C",
+    "text_vi": "Chính sách bucket Amazon S3",
+    "is_correct": false,
+    "analysis_vi": "Sai vì bucket policy do khách hàng cấu hình để cho phép hay chặn truy cập vào dữ liệu. Cấu hình sai là lỗi phía khách hàng."
+   },
+   {
+    "label": "D",
+    "text_vi": "Nhật ký AWS CloudTrail",
+    "is_correct": false,
+    "analysis_vi": "Sai vì CloudTrail ghi lại API call trong tài khoản, việc bật, lưu trữ và xem xét log là việc của khách hàng. AWS chỉ cung cấp dịch vụ."
+   }
+  ],
+  "tips": [
+   "Câu hỏi sole responsibility của AWS thường là physical security, phần cứng, hạ tầng toàn cầu.",
+   "Bất kỳ thứ gì bạn cấu hình (IAM, bucket policy, security group, log) là trách nhiệm khách hàng.",
+   "Phân biệt security OF the cloud (AWS) với security IN the cloud (khách hàng)."
+  ],
+  "keywords": [
+   {
+    "term": "sole responsibility",
+    "points_to": "Phần AWS tự chịu: an ninh vật lý"
+   },
+   {
+    "term": "auditing process",
+    "points_to": "Shared Responsibility Model"
+   }
+  ],
+  "related_services": [
+   "AWS Artifact",
+   "AWS IAM"
+  ]
+ },
+ {
+  "id": "pe11-6",
+  "question_vi": "Những lợi ích nào của AWS consolidated billing? (Chọn HAI)",
+  "domain": "Domain 4: Billing, Pricing and Support",
+  "topic": "Lợi ích Consolidated Billing",
+  "explanation_vi": "Câu hỏi kiểm tra tính năng consolidated billing trong AWS Organizations. Tính năng này gộp hóa đơn của nhiều tài khoản thành một hóa đơn cho tài khoản quản lý (management account), giúp theo dõi chi phí dễ hơn. Mức sử dụng của mọi tài khoản được cộng dồn nên đạt các bậc giá theo khối lượng (volume discount), ví dụ với S3 hoặc truyền dữ liệu. Tính năng này không tăng giới hạn dịch vụ, không giảm giá cố định và không tự mở rộng support plan sang các tài khoản khác.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Khả năng nhận một hóa đơn cho nhiều tài khoản",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì consolidated billing tổng hợp chi phí của tất cả tài khoản thành viên vào một hóa đơn duy nhất. Điều này đơn giản hóa thanh toán và theo dõi chi phí."
+   },
+   {
+    "label": "B",
+    "text_vi": "Giới hạn dịch vụ tự động tăng ở mọi tài khoản",
+    "is_correct": false,
+    "analysis_vi": "Sai vì service quotas áp dụng riêng từng tài khoản và không tăng chỉ vì dùng consolidated billing. Muốn tăng phải gửi yêu cầu nâng quota."
+   },
+   {
+    "label": "C",
+    "text_vi": "Giảm giá cố định trên hóa đơn hằng tháng",
+    "is_correct": false,
+    "analysis_vi": "Sai vì không có mức giảm cố định cho consolidated billing. Giảm giá chỉ xuất hiện khi mức dùng gộp chạm các bậc giá theo khối lượng hoặc khi dùng Savings Plans, RI."
+   },
+   {
+    "label": "D",
+    "text_vi": "Có thể được giảm giá theo khối lượng do mức dùng của mọi tài khoản được cộng gộp",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì mức dùng được gộp nên dễ đạt bậc giá rẻ hơn của các dịch vụ định giá theo bậc. Reserved Instances và Savings Plans cũng có thể chia sẻ giữa các tài khoản."
+   },
+   {
+    "label": "E",
+    "text_vi": "Tự động mở rộng support plan của master account cho mọi tài khoản",
+    "is_correct": false,
+    "analysis_vi": "Sai vì mỗi tài khoản có support plan riêng, plan của tài khoản quản lý không áp dụng tự động cho tài khoản khác. Cần đăng ký plan cho từng tài khoản nếu muốn."
+   }
+  ],
+  "tips": [
+   "Hai lợi ích kinh điển của consolidated billing: một hóa đơn và volume discount.",
+   "Cảnh giác các đáp án đưa ra mức giảm cố định hoặc tự động nâng quota, support, đều là bẫy.",
+   "Nhớ chia sẻ RI và Savings Plans giữa tài khoản cũng là điểm cộng của tính năng này."
+  ],
+  "keywords": [
+   {
+    "term": "one bill",
+    "points_to": "Consolidated billing"
+   },
+   {
+    "term": "usage in all accounts is combined",
+    "points_to": "Volume discount"
+   }
+  ],
+  "related_services": [
+   "AWS Organizations",
+   "AWS Billing and Cost Management"
+  ],
+  "answer_note": "Đề dùng tên cũ master account; theo AWS hiện hành là management account (tài khoản quản lý) của AWS Organizations."
+ },
+ {
+  "id": "pe11-7",
+  "question_vi": "Những tác vụ IT thông thường nào AWS có thể đảm nhận để giải phóng nguồn lực IT của công ty? (Chọn HAI)",
+  "domain": "Domain 1: Cloud Concepts",
+  "topic": "Tác vụ AWS quản lý hộ",
+  "explanation_vi": "Câu hỏi kiểm tra lợi ích của dịch vụ managed như Amazon RDS: AWS lo các tác vụ vận hành lặp đi lặp lại không tạo giá trị riêng (undifferentiated heavy lifting). Với RDS, AWS tự vá phần mềm cơ sở dữ liệu (patching) và tự động sao lưu (backup), nên đội IT không phải làm thủ công. Còn thiết kế schema, kiểm thử ứng dụng, chạy penetration test vẫn là việc của khách hàng vì liên quan trực tiếp đến ứng dụng và dữ liệu của họ.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Vá phần mềm cơ sở dữ liệu",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì với dịch vụ managed như RDS, AWS tự động vá hệ điều hành và engine cơ sở dữ liệu theo maintenance window. Khách hàng chỉ cần chọn lịch."
+   },
+   {
+    "label": "B",
+    "text_vi": "Kiểm thử phiên bản ứng dụng",
+    "is_correct": false,
+    "analysis_vi": "Sai vì kiểm thử ứng dụng là công việc phát triển của khách hàng, AWS không biết logic ứng dụng của bạn. AWS chỉ cung cấp công cụ như CodeBuild, Device Farm."
+   },
+   {
+    "label": "C",
+    "text_vi": "Sao lưu cơ sở dữ liệu",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì RDS hỗ trợ automated backup và snapshot do AWS thực hiện theo cấu hình. Việc này giảm gánh nặng vận hành cho đội IT."
+   },
+   {
+    "label": "D",
+    "text_vi": "Tạo schema cơ sở dữ liệu",
+    "is_correct": false,
+    "analysis_vi": "Sai vì schema là thiết kế dữ liệu riêng của ứng dụng, khách hàng phải tự tạo. AWS không thiết kế bảng hay quan hệ thay bạn."
+   },
+   {
+    "label": "E",
+    "text_vi": "Chạy kiểm thử xâm nhập",
+    "is_correct": false,
+    "analysis_vi": "Sai vì penetration test do khách hàng thực hiện trên tài nguyên của mình (theo chính sách cho phép của AWS), không phải việc AWS làm hộ. Nhớ AWS chỉ cho phép khách hàng thực hiện, còn bản thân việc kiểm thử là trách nhiệm của khách hàng."
+   }
+  ],
+  "tips": [
+   "Tìm các tác vụ thuần hạ tầng và lặp lại như patching, backup, provisioning, đây là việc AWS giúp.",
+   "Công việc gắn với logic ứng dụng hoặc dữ liệu (schema, test) luôn là của khách hàng.",
+   "Liên hệ với Shared Responsibility Model cho dịch vụ managed."
+  ],
+  "keywords": [
+   {
+    "term": "Patching databases software",
+    "points_to": "RDS tự động hóa vá lỗi"
+   },
+   {
+    "term": "Backing up databases",
+    "points_to": "Automated backups của RDS"
+   }
+  ],
+  "related_services": [
+   "Amazon RDS",
+   "AWS Managed Services"
+  ]
+ },
+ {
+  "id": "pe11-8",
+  "question_vi": "Một công ty muốn mở rộng từ một AWS Region sang Region thứ hai. Công ty cần làm gì để bắt đầu hỗ trợ Region mới?",
+  "domain": "Domain 1: Cloud Concepts",
+  "topic": "Mở rộng sang Region mới",
+  "explanation_vi": "Câu hỏi kiểm tra hiểu biết về Region trong hạ tầng toàn cầu AWS. Các Region độc lập, đều dùng cùng một tài khoản và cùng mô hình trả theo mức dùng, nên không cần ký hợp đồng mới hay cài phần mềm gì. Công ty chỉ cần chọn Region mới trong console, CLI hoặc SDK rồi bắt đầu triển khai tài nguyên. Cần nhớ một số Region đặc biệt (opt-in Regions) phải bật trước trong tài khoản, nhưng không cần hợp đồng.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Liên hệ AWS Account Manager để ký hợp đồng mới",
+    "is_correct": false,
+    "analysis_vi": "Sai vì không cần hợp đồng riêng cho từng Region, cùng tài khoản AWS dùng được ở nhiều Region. Hợp đồng chỉ liên quan trong các thỏa thuận đặc biệt như Enterprise Discount Program."
+   },
+   {
+    "label": "B",
+    "text_vi": "Di chuyển một Availability Zone sang Region mới",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Availability Zone là cơ sở vật lý cố định của một Region, khách hàng không thể di chuyển. Muốn dùng Region khác phải tạo tài nguyên mới tại đó."
+   },
+   {
+    "label": "C",
+    "text_vi": "Bắt đầu triển khai tài nguyên ở Region thứ hai",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì chỉ cần chọn Region đích rồi tạo tài nguyên, mô hình trả theo mức dùng không đổi. Dữ liệu và cấu hình cần được sao chép hoặc dựng lại vì Region cô lập với nhau."
+   },
+   {
+    "label": "D",
+    "text_vi": "Tải AWS Management Console cho Region mới",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Console là ứng dụng web dùng chung cho mọi Region, chỉ cần đổi Region ở góc trên. Không có phiên bản console riêng để tải về."
+   }
+  ],
+  "tips": [
+   "Dịch vụ AWS không cần hợp đồng hay cài đặt riêng cho mỗi Region.",
+   "Nhớ Region là cô lập, tài nguyên và dữ liệu không tự sao chép sang Region khác.",
+   "AZ nằm trong Region và không thể di chuyển."
+  ],
+  "keywords": [
+   {
+    "term": "second AWS Region",
+    "points_to": "Triển khai tài nguyên mới tại Region đó"
+   }
+  ],
+  "related_services": [
+   "AWS Global Infrastructure",
+   "AWS Management Console"
+  ]
+ },
+ {
+  "id": "pe11-9",
+  "question_vi": "Vì sao nên dùng Elastic Load Balancers với ứng dụng?",
+  "domain": "Domain 3: Cloud Technology and Services",
+  "topic": "Lợi ích Elastic Load Balancing",
+  "explanation_vi": "Câu hỏi kiểm tra vai trò của Elastic Load Balancing (ELB), vốn phân phối lưu lượng đến nhiều target (như EC2 instance) ở nhiều Availability Zone. Vì lưu lượng thay đổi liên tục, ELB tự mở rộng dung lượng của chính nó để xử lý biến động và chỉ gửi lưu lượng đến target khỏe mạnh qua health check. Nhờ đó ứng dụng sẵn sàng cao và chịu tải tốt. Đề có các lựa chọn bị chia cắt câu chữ, nhưng đáp án C là đáp án đúng về nội dung.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Cho phép chuyển đổi từ Application Load (Balancer)",
+    "is_correct": false,
+    "analysis_vi": "Sai vì ELB không có chức năng chuyển đổi giữa các loại load balancer. Mỗi loại như ALB, NLB, CLB là một tài nguyên riêng và phải tạo lại nếu muốn đổi."
+   },
+   {
+    "label": "B",
+    "text_vi": "Balancers sang Classic Load Balancers (phần đứt câu của A)",
+    "is_correct": false,
+    "analysis_vi": "Sai vì đây là phần nối tiếp bị cắt của A và vẫn nói về việc chuyển đổi loại load balancer, không phải lợi ích của ELB. Classic Load Balancer còn là thế hệ cũ, AWS khuyên dùng ALB hoặc NLB."
+   },
+   {
+    "label": "C",
+    "text_vi": "Chúng có khả năng xử lý các thay đổi liên tục của mô hình lưu lượng mạng",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì ELB tự động co giãn để phân phối lưu lượng biến động giữa nhiều target và nhiều AZ. Đây là lợi ích chính khi dùng ELB cho tính sẵn sàng và khả năng mở rộng."
+   },
+   {
+    "label": "D",
+    "text_vi": "Tự động điều chỉnh dung lượng; được cung cấp miễn phí",
+    "is_correct": false,
+    "analysis_vi": "Sai vì ELB tính phí theo giờ và theo mức dùng (LCU), không miễn phí. Vế đầu nói về tự điều chỉnh dung lượng có phần đúng nhưng vế sau miễn phí làm cả đáp án sai."
+   }
+  ],
+  "tips": [
+   "Cảnh giác đáp án chứa hai ý, chỉ cần một ý sai (như miễn phí) là loại.",
+   "ELB gắn với từ khóa phân phối lưu lượng, health check, multi-AZ.",
+   "Phân biệt ELB (phân phối tải) với Auto Scaling (thêm bớt instance)."
+  ],
+  "keywords": [
+   {
+    "term": "constant changes in network traffic",
+    "points_to": "Elastic Load Balancing tự co giãn"
+   }
+  ],
+  "related_services": [
+   "Elastic Load Balancing",
+   "Amazon EC2 Auto Scaling"
+  ],
+  "answer_note": "Đề gốc bị chia cắt phương án A và B do lỗi định dạng; đáp án đúng vẫn là C. Ngoài ra Classic Load Balancer là thế hệ cũ, nên dùng ALB hoặc NLB."
+ },
+ {
+  "id": "pe11-10",
+  "question_vi": "Gói AWS Support TỐI THIỂU nào cho phép thời gian phản hồi mục tiêu một giờ với các case hỗ trợ?",
+  "domain": "Domain 4: Billing, Pricing and Support",
+  "topic": "AWS Support và thời gian phản hồi",
+  "explanation_vi": "Câu hỏi kiểm tra bảng so sánh các gói support. Gói Business đưa ra thời gian phản hồi dưới 1 giờ cho case production system down, và dưới 4 giờ cho production system impaired. Gói Enterprise nhanh hơn, 15 phút cho business-critical system down, nhưng đắt hơn. Gói Developer chỉ phản hồi trong 12 giờ cho case cơ bản (dưới 4 giờ cho system impaired), còn Basic không có hỗ trợ kỹ thuật theo case. Vì hỏi mức tối thiểu nên chọn Business.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Enterprise",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Enterprise đáp ứng điều kiện (thậm chí nhanh hơn, 15 phút) nhưng không phải gói thấp nhất. Đề hỏi MINIMUM nên phải chọn gói rẻ hơn còn đáp ứng được."
+   },
+   {
+    "label": "B",
+    "text_vi": "Business",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì Business là gói thấp nhất có phản hồi dưới 1 giờ cho production system down. Nó cũng có hỗ trợ 24/7 qua phone, chat, email."
+   },
+   {
+    "label": "C",
+    "text_vi": "Developer",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Developer chỉ phản hồi trong giờ làm việc qua email, với mục tiêu khoảng 12 giờ (dưới 4 giờ khi system impaired). Phù hợp môi trường thử nghiệm hơn là production."
+   },
+   {
+    "label": "D",
+    "text_vi": "Basic",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Basic không có support case kỹ thuật, chỉ có tài liệu, diễn đàn, Trusted Advisor core checks và Health Dashboard. Không có mục tiêu thời gian phản hồi."
+   }
+  ],
+  "tips": [
+   "Nhớ các mốc: Developer 12 giờ, Business 1 giờ, Enterprise 15 phút.",
+   "Từ khóa MINIMUM nghĩa là chọn gói rẻ nhất thỏa mãn, không chọn gói cao hơn.",
+   "Từ khóa production system down và 1 hour cùng xuất hiện thì là Business."
+  ],
+  "keywords": [
+   {
+    "term": "one-hour target response time",
+    "points_to": "Business Support"
+   },
+   {
+    "term": "MINIMUM",
+    "points_to": "Gói rẻ nhất đáp ứng"
+   }
+  ],
+  "related_services": [
+   "AWS Support",
+   "AWS Trusted Advisor"
+  ]
+ },
+ {
+  "id": "pe11-11",
+  "question_vi": "Lựa chọn lưu trữ bền vững, chi phí thấp nhất để giữ các bản sao lưu cơ sở dữ liệu mà vẫn truy xuất ngay lập tức là gì?",
+  "domain": "Domain 3: Cloud Technology and Services",
+  "topic": "Lưu trữ backup chi phí thấp",
+  "explanation_vi": "Câu hỏi kiểm tra chọn dịch vụ lưu trữ theo ba tiêu chí: bền vững, rẻ, truy xuất ngay. Amazon S3 có độ bền 11 số chín, giá theo GB thấp và cho phép đọc ngay lập tức (millisecond) với các lớp như S3 Standard hoặc Standard-IA. Glacier rẻ hơn nhưng truy xuất có độ trễ (phút đến giờ, trừ Glacier Instant Retrieval), EBS đắt hơn và gắn với EC2, instance store thì tạm thời. Vì vậy S3 là lựa chọn cân bằng nhất cho backup cần lấy lại ngay.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Amazon S3",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì S3 bền vững (11 số chín), lưu object với chi phí thấp và đọc ngay lập tức. Rất phổ biến để chứa bản sao lưu cơ sở dữ liệu."
+   },
+   {
+    "label": "B",
+    "text_vi": "Amazon Glacier",
+    "is_correct": false,
+    "analysis_vi": "Sai trong ngữ cảnh đề vì Glacier cổ điển cần thời gian khôi phục từ vài phút đến vài giờ, không đáp ứng yêu cầu truy xuất ngay. Nó phù hợp lưu trữ lâu dài, hiếm khi truy cập."
+   },
+   {
+    "label": "C",
+    "text_vi": "Amazon EBS",
+    "is_correct": false,
+    "analysis_vi": "Sai vì EBS là block storage gắn vào EC2, giá theo GB đã cấp phát cao hơn S3. Nó dùng cho ổ đĩa của instance, không tối ưu chi phí cho kho backup."
+   },
+   {
+    "label": "D",
+    "text_vi": "Bộ nhớ instance store của Amazon EC2",
+    "is_correct": false,
+    "analysis_vi": "Sai vì instance store là lưu trữ tạm thời gắn với host vật lý, dữ liệu mất khi instance stop hoặc terminate. Không bền vững nên không thể dùng cho backup."
+   }
+  ],
+  "tips": [
+   "Từ khóa immediate retrieval loại Glacier cổ điển, durable loại instance store.",
+   "Backup rẻ và bền thường là S3 (hoặc S3 Glacier nếu không cần lấy ngay).",
+   "Nhớ instance store là ephemeral."
+  ],
+  "keywords": [
+   {
+    "term": "durable",
+    "points_to": "S3 với độ bền 11 số chín"
+   },
+   {
+    "term": "immediate retrieval",
+    "points_to": "Không dùng Glacier cổ điển"
+   }
+  ],
+  "related_services": [
+   "Amazon S3",
+   "Amazon EBS"
+  ],
+  "answer_note": "Amazon Glacier nay được gọi là Amazon S3 Glacier (các lớp S3 Glacier Instant Retrieval, Flexible Retrieval, Deep Archive). Riêng Glacier Instant Retrieval cũng cho truy xuất tức thì, nhưng đề gốc dùng khái niệm Glacier cổ điển."
+ },
+ {
+  "id": "pe11-12",
+  "question_vi": "Nhóm nào của AWS hỗ trợ khách hàng đẩy nhanh việc áp dụng đám mây thông qua các hợp đồng trả phí ở nhiều lĩnh vực chuyên môn?",
+  "domain": "Domain 4: Billing, Pricing and Support",
+  "topic": "AWS Professional Services",
+  "explanation_vi": "Câu hỏi kiểm tra các nguồn hỗ trợ có trả phí của AWS. AWS Professional Services là đội ngũ chuyên gia của AWS làm việc theo các hợp đồng (engagement) có tính phí để giúp khách hàng đạt kết quả kinh doanh khi áp dụng đám mây, theo các practice area như bảo mật, di chuyển, dữ liệu. Các lựa chọn khác là gói hỗ trợ, kiến trúc sư giải pháp hoặc quản lý tài khoản, không phải đội cung cấp dịch vụ tư vấn trả phí theo dự án. Từ khóa paid engagements là dấu hiệu nhận biết.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "AWS Enterprise Support",
+    "is_correct": false,
+    "analysis_vi": "Sai vì đây là gói support trả phí theo tháng với TAM và Concierge, không phải các engagement dự án. Nó tập trung hỗ trợ vận hành và tư vấn kiến trúc chủ động."
+   },
+   {
+    "label": "B",
+    "text_vi": "AWS Solutions Architects",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Solutions Architects hướng dẫn thiết kế kiến trúc, thường là một phần dịch vụ pre-sales hoặc kèm theo support, không phải hợp đồng trả phí theo practice area. Muốn được kèm đội ngũ chuyên gia theo dự án trả phí thì phải chọn Professional Services."
+   },
+   {
+    "label": "C",
+    "text_vi": "AWS Professional Services",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì đây là đội tư vấn trả phí giúp khách hàng chuyển đổi, di chuyển và vận hành đám mây theo dự án. Họ chia theo các practice area chuyên môn."
+   },
+   {
+    "label": "D",
+    "text_vi": "AWS Account Managers",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Account Manager là đầu mối kinh doanh, quản lý quan hệ và gói thương mại, không thực hiện các dự án tư vấn kỹ thuật trả phí. Khi cần tư vấn kỹ thuật theo dự án thì Account Manager chuyển sang đội chuyên môn phù hợp."
+   }
+  ],
+  "tips": [
+   "Từ khóa paid engagements và practice areas chỉ Professional Services.",
+   "Phân biệt: Professional Services (dự án trả phí), TAM (hỗ trợ Enterprise), Solutions Architect (thiết kế).",
+   "Partner Network (APN) là tổ chức bên ngoài, đừng nhầm."
+  ],
+  "keywords": [
+   {
+    "term": "paid engagements",
+    "points_to": "AWS Professional Services"
+   }
+  ],
+  "related_services": [
+   "AWS Professional Services",
+   "AWS Support"
+  ]
+ },
+ {
+  "id": "pe11-13",
+  "question_vi": "Một công ty cần hỗ trợ 24/7 qua điện thoại, email và chat với thời gian phản hồi dưới 1 giờ khi hệ thống production bị gián đoạn. Gói AWS Support nào đáp ứng với chi phí THẤP NHẤT?",
+  "domain": "Domain 4: Billing, Pricing and Support",
+  "topic": "Chọn gói Support rẻ nhất",
+  "explanation_vi": "Câu hỏi kiểm tra chọn gói support theo yêu cầu và chi phí. Business là gói rẻ nhất có hỗ trợ 24/7 qua phone, email, chat và phản hồi dưới 1 giờ cho production system down. Developer chỉ hỗ trợ giờ hành chính qua email, Basic không có hỗ trợ kỹ thuật theo case, còn Enterprise đáp ứng được nhưng đắt hơn. Do đề nhấn mạnh LOWEST cost nên đáp án là Business.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Basic",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Basic không có support case kỹ thuật, không có phone hay chat, chỉ có tài liệu, diễn đàn và Health Dashboard. Không đáp ứng yêu cầu nào của đề."
+   },
+   {
+    "label": "B",
+    "text_vi": "Developer",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Developer chỉ hỗ trợ qua email trong giờ làm việc, thời gian phản hồi dài hơn 1 giờ. Không có phone 24/7."
+   },
+   {
+    "label": "C",
+    "text_vi": "Business",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì đây là gói thấp nhất có 24/7 phone, email, chat và phản hồi dưới 1 giờ khi production system down. Đáp ứng đủ yêu cầu với chi phí thấp nhất."
+   },
+   {
+    "label": "D",
+    "text_vi": "Enterprise",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Enterprise đáp ứng mọi yêu cầu nhưng giá cao hơn rất nhiều, kèm TAM và Concierge không cần thiết. Đề hỏi gói chi phí thấp nhất."
+   }
+  ],
+  "tips": [
+   "Gói Business là ranh giới: từ đây trở lên mới có phone, chat 24/7.",
+   "Đọc kỹ LOWEST cost để không chọn Enterprise.",
+   "Nhớ production system down là mốc 1 giờ."
+  ],
+  "keywords": [
+   {
+    "term": "24/7 phone email and chat",
+    "points_to": "Business trở lên"
+   },
+   {
+    "term": "LOWEST cost",
+    "points_to": "Gói thấp nhất thỏa yêu cầu"
+   }
+  ],
+  "related_services": [
+   "AWS Support",
+   "AWS Trusted Advisor"
+  ]
+ },
+ {
+  "id": "pe11-14",
+  "question_vi": "Nếu khách hàng cần kiểm toán việc quản lý thay đổi của các tài nguyên AWS, nên dùng dịch vụ nào?",
+  "domain": "Domain 2: Security and Compliance",
+  "topic": "Kiểm toán thay đổi cấu hình",
+  "explanation_vi": "Câu hỏi kiểm tra dịch vụ theo dõi lịch sử cấu hình và thay đổi. AWS Config ghi lại cấu hình của tài nguyên theo thời gian, cho biết ai/khi nào đổi cái gì và đánh giá so với quy tắc tuân thủ, nên phù hợp kiểm toán change management. Trusted Advisor đưa ra khuyến nghị, CloudWatch giám sát metric và log, còn Inspector quét lỗ hổng. Cần nhớ CloudTrail ghi API call, còn Config ghi trạng thái cấu hình; hai dịch vụ bổ trợ nhau.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "AWS Config",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì Config ghi nhận và lưu lịch sử cấu hình tài nguyên, cho phép xem thay đổi theo thời gian và kiểm tra tuân thủ. Đây là công cụ chuẩn cho kiểm toán thay đổi."
+   },
+   {
+    "label": "B",
+    "text_vi": "AWS Trusted Advisor",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Trusted Advisor kiểm tra tài khoản theo best practices (chi phí, bảo mật, hiệu năng) rồi đưa khuyến nghị. Nó không lưu lịch sử thay đổi cấu hình."
+   },
+   {
+    "label": "C",
+    "text_vi": "Amazon CloudWatch",
+    "is_correct": false,
+    "analysis_vi": "Sai vì CloudWatch thu thập metric, log và tạo alarm để giám sát hiệu năng vận hành. Nó không theo dõi lịch sử cấu hình tài nguyên."
+   },
+   {
+    "label": "D",
+    "text_vi": "Amazon Inspector",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Inspector quét lỗ hổng bảo mật và rủi ro phơi nhiễm của EC2, container, Lambda. Nó không kiểm toán thay đổi cấu hình."
+   }
+  ],
+  "tips": [
+   "Từ khóa change management, configuration history trỏ tới AWS Config.",
+   "Ai gọi API gì thì là CloudTrail; cấu hình trước và sau là Config.",
+   "Inspector quét lỗ hổng, Trusted Advisor đưa khuyến nghị."
+  ],
+  "keywords": [
+   {
+    "term": "audit the change management",
+    "points_to": "AWS Config"
+   }
+  ],
+  "related_services": [
+   "AWS Config",
+   "AWS CloudTrail"
+  ]
+ },
+ {
+  "id": "pe11-15",
+  "question_vi": "AWS Trusted Advisor cung cấp hướng dẫn cho người dùng AWS Cloud như thế nào? (Chọn HAI)",
+  "domain": "Domain 4: Billing, Pricing and Support",
+  "topic": "Chức năng Trusted Advisor",
+  "explanation_vi": "Câu hỏi kiểm tra Trusted Advisor làm gì và không làm gì. Dịch vụ này kiểm tra tài khoản theo các nhóm cost optimization, performance, security, fault tolerance và service limits, rồi đưa ra khuyến nghị dựa trên mức sử dụng hiện tại. Nó phát hiện rủi ro bảo mật do cấu hình quyền (ví dụ S3 bucket public, security group mở rộng), nhưng chỉ khuyến nghị chứ không tự sửa. Nó cũng không quét lỗ hổng phần mềm (việc của Inspector) hay phát hiện instance bị xâm nhập (việc của GuardDuty). Phải chọn đủ hai ý đúng.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Nó xác định lỗ hổng phần mềm trong ứng dụng chạy trên AWS",
+    "is_correct": false,
+    "analysis_vi": "Sai vì quét lỗ hổng phần mềm là việc của Amazon Inspector. Trusted Advisor chỉ kiểm tra cấu hình tài khoản theo best practices."
+   },
+   {
+    "label": "B",
+    "text_vi": "Nó cung cấp danh sách khuyến nghị tối ưu chi phí dựa trên mức dùng hiện tại",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì cost optimization là một trong các nhóm kiểm tra, ví dụ phát hiện tài nguyên nhàn rỗi hoặc dùng quá mức. Kết quả là khuyến nghị cụ thể."
+   },
+   {
+    "label": "C",
+    "text_vi": "Nó phát hiện các lỗ hổng bảo mật tiềm ẩn do cấu hình quyền trên tài nguyên tài khoản",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì mục security kiểm tra quyền hạn và cấu hình như bucket mở, security group hở, MFA root. Nó cảnh báo rủi ro nhưng để khách hàng xử lý."
+   },
+   {
+    "label": "D",
+    "text_vi": "Nó tự động sửa các sự cố bảo mật tiềm ẩn do cấu hình quyền",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Trusted Advisor chỉ đề xuất, không tự động thực hiện thay đổi trên tài nguyên của bạn. Việc sửa vẫn do khách hàng làm."
+   },
+   {
+    "label": "E",
+    "text_vi": "Nó cảnh báo chủ động khi một instance EC2 bị xâm nhập",
+    "is_correct": false,
+    "analysis_vi": "Sai vì phát hiện instance bị xâm nhập thuộc về Amazon GuardDuty. Trusted Advisor không giám sát hành vi độc hại."
+   }
+  ],
+  "tips": [
+   "Nhớ Trusted Advisor chỉ khuyến nghị, không tự sửa.",
+   "Phân biệt: Inspector (lỗ hổng phần mềm), GuardDuty (đe dọa), Trusted Advisor (best practices).",
+   "Năm nhóm kiểm tra: cost, performance, security, fault tolerance, service limits."
+  ],
+  "keywords": [
+   {
+    "term": "recommendations",
+    "points_to": "Trusted Advisor"
+   },
+   {
+    "term": "compromised",
+    "points_to": "Amazon GuardDuty, không phải Trusted Advisor"
+   }
+  ],
+  "related_services": [
+   "AWS Trusted Advisor",
+   "Amazon Inspector",
+   "Amazon GuardDuty"
+  ]
+ },
+ {
+  "id": "pe11-16",
+  "question_vi": "Dịch vụ managed nào của AWS được dùng để lưu trữ cơ sở dữ liệu?",
+  "domain": "Domain 3: Cloud Technology and Services",
+  "topic": "Dịch vụ cơ sở dữ liệu managed",
+  "explanation_vi": "Câu hỏi kiểm tra bạn nhận ra dịch vụ cơ sở dữ liệu managed. Amazon RDS là dịch vụ cơ sở dữ liệu quan hệ do AWS quản lý, hỗ trợ MySQL, PostgreSQL, SQL Server, Oracle, MariaDB và tự động hóa vá lỗi, sao lưu, nhân bản. Các lựa chọn còn lại phục vụ mục đích khác: batch computing, tài liệu tuân thủ và điều phối luồng dữ liệu. Đây là câu nhận diện dịch vụ cơ bản.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "AWS Batch",
+    "is_correct": false,
+    "analysis_vi": "Sai vì AWS Batch chạy các batch job quy mô lớn bằng cách tự cấp phát tài nguyên tính toán. Nó không phải cơ sở dữ liệu."
+   },
+   {
+    "label": "B",
+    "text_vi": "AWS Artifact",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Artifact là cổng cung cấp báo cáo tuân thủ và thỏa thuận của AWS để tải về. Nó không lưu trữ cơ sở dữ liệu."
+   },
+   {
+    "label": "C",
+    "text_vi": "AWS Data Pipeline",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Data Pipeline là dịch vụ điều phối việc di chuyển và xử lý dữ liệu theo lịch giữa các dịch vụ. Nó không phải nơi host cơ sở dữ liệu (và dịch vụ này nay ở chế độ bảo trì)."
+   },
+   {
+    "label": "D",
+    "text_vi": "Amazon RDS",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì RDS là dịch vụ managed để chạy cơ sở dữ liệu quan hệ, AWS lo hạ tầng, vá lỗi và sao lưu. Đây là dịch vụ host database tiêu chuẩn."
+   }
+  ],
+  "tips": [
+   "Từ khóa host databases kèm managed trỏ tới RDS (hoặc DynamoDB cho NoSQL).",
+   "Batch, Artifact, Data Pipeline đều không lưu database.",
+   "Học tên dịch vụ theo chức năng chính."
+  ],
+  "keywords": [
+   {
+    "term": "managed service to host databases",
+    "points_to": "Amazon RDS"
+   }
+  ],
+  "related_services": [
+   "Amazon RDS",
+   "Amazon Aurora",
+   "Amazon DynamoDB"
+  ]
+ },
+ {
+  "id": "pe11-17",
+  "question_vi": "Thực thể IAM nào được gắn với access key ID và secret access key khi dùng AWS Command Line Interface (AWS CLI)?",
+  "domain": "Domain 2: Security and Compliance",
+  "topic": "Khóa truy cập của IAM user",
+  "explanation_vi": "Câu hỏi kiểm tra xác thực truy cập lập trình. Access key ID và secret access key là thông tin xác thực dài hạn được tạo cho một IAM user, dùng ký request khi gọi API qua CLI hoặc SDK. IAM role dùng thông tin xác thực tạm thời qua STS, nhóm chỉ để gom user áp quyền, còn policy là tài liệu mô tả quyền. Thực hành tốt là ưu tiên role và hạn chế khóa dài hạn, nhưng đáp án của câu này là IAM user.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "IAM group",
+    "is_correct": false,
+    "analysis_vi": "Sai vì group là tập hợp IAM user để gán quyền chung, không có thông tin xác thực riêng. Group không đăng nhập hay gọi API."
+   },
+   {
+    "label": "B",
+    "text_vi": "IAM user",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì access key được tạo cho từng IAM user để truy cập lập trình qua CLI/SDK. Mỗi user có thể có tối đa hai bộ access key."
+   },
+   {
+    "label": "C",
+    "text_vi": "IAM role",
+    "is_correct": false,
+    "analysis_vi": "Sai vì role dùng thông tin xác thực tạm thời do STS cấp khi được assume, không có access key dài hạn cố định. Role thích hợp cho EC2, Lambda, truy cập chéo tài khoản."
+   },
+   {
+    "label": "D",
+    "text_vi": "IAM policy",
+    "is_correct": false,
+    "analysis_vi": "Sai vì policy là tài liệu JSON xác định quyền cho user, group hoặc role. Nó không phải thực thể có thông tin xác thực."
+   }
+  ],
+  "tips": [
+   "Access key ID và secret access key đi với IAM user (truy cập lập trình).",
+   "Role dùng credential tạm thời, ưu tiên cho ứng dụng chạy trên AWS.",
+   "Policy chỉ định quyền, không phải danh tính."
+  ],
+  "keywords": [
+   {
+    "term": "access key ID and secret access key",
+    "points_to": "IAM user"
+   },
+   {
+    "term": "AWS CLI",
+    "points_to": "Truy cập lập trình"
+   }
+  ],
+  "related_services": [
+   "AWS IAM",
+   "AWS CLI",
+   "AWS STS"
+  ]
+ },
+ {
+  "id": "pe11-18",
+  "question_vi": "Theo shared responsibility model, khách hàng chịu trách nhiệm việc nào sau đây?",
+  "domain": "Domain 2: Security and Compliance",
+  "topic": "Trách nhiệm của khách hàng",
+  "explanation_vi": "Câu hỏi kiểm tra ranh giới trách nhiệm trong Shared Responsibility Model. AWS chịu trách nhiệm bảo mật của đám mây: phần cứng, firmware, thiết bị mạng, cáp, tiêu hủy ổ đĩa an toàn. Khách hàng chịu trách nhiệm bảo mật trong đám mây, bao gồm dữ liệu, cấu hình, IAM và mã hóa dữ liệu khi lưu trữ (data at rest), vì khách hàng quyết định có bật mã hóa hay không. Ba phương án còn lại đều là hạ tầng vật lý thuộc AWS.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Đảm bảo ổ đĩa được xóa sạch sau khi sử dụng",
+    "is_correct": false,
+    "analysis_vi": "Sai vì việc sanitize ổ đĩa vật lý khi hết vòng đời là trách nhiệm của AWS theo tiêu chuẩn NIST. Khách hàng không chạm vào phần cứng."
+   },
+   {
+    "label": "B",
+    "text_vi": "Đảm bảo firmware được cập nhật trên thiết bị phần cứng",
+    "is_correct": false,
+    "analysis_vi": "Sai vì firmware của phần cứng nền tảng do AWS quản lý. Khách hàng chỉ lo hệ điều hành guest và ứng dụng với EC2."
+   },
+   {
+    "label": "C",
+    "text_vi": "Đảm bảo dữ liệu được mã hóa khi lưu trữ",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì khách hàng quyết định và cấu hình mã hóa dữ liệu (S3, EBS, RDS) và quản lý khóa. AWS cung cấp công cụ nhưng việc bật là của khách hàng."
+   },
+   {
+    "label": "D",
+    "text_vi": "Đảm bảo cáp mạng đạt chuẩn category six trở lên",
+    "is_correct": false,
+    "analysis_vi": "Sai vì cáp mạng trong data center là hạ tầng vật lý do AWS lo. Khách hàng không quản lý hạ tầng này."
+   }
+  ],
+  "tips": [
+   "Phần cứng, firmware, cáp, data center thuộc AWS; dữ liệu, mã hóa, IAM thuộc khách hàng.",
+   "Mã hóa at rest là lựa chọn của khách hàng dù AWS cung cấp tính năng.",
+   "Hỏi bản thân: khách hàng có thể chạm vào đó không? Nếu không thì là AWS."
+  ],
+  "keywords": [
+   {
+    "term": "encrypted at rest",
+    "points_to": "Trách nhiệm khách hàng"
+   }
+  ],
+  "related_services": [
+   "AWS KMS",
+   "Amazon S3",
+   "Amazon EBS"
+  ]
+ },
+ {
+  "id": "pe11-19",
+  "question_vi": "Dịch vụ AWS nào cung cấp giải pháp lưu trữ tệp dùng chung đơn giản và có khả năng mở rộng, dùng với máy chủ Linux trên AWS và tại chỗ (on-premises)?",
+  "domain": "Domain 3: Cloud Technology and Services",
+  "topic": "Lưu trữ tệp dùng chung",
+  "explanation_vi": "Câu hỏi kiểm tra chọn đúng loại lưu trữ: file storage dùng chung cho Linux là Amazon EFS. EFS là hệ thống tệp NFS managed, tự co giãn dung lượng, có thể mount từ nhiều EC2 instance cùng lúc và từ máy chủ on-premises qua Direct Connect hoặc VPN. S3 là object storage, EBS là block storage gắn một instance (thường), còn Glacier là lưu trữ dài hạn. Từ khóa shared file storage và Linux chỉ EFS.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Amazon S3",
+    "is_correct": false,
+    "analysis_vi": "Sai vì S3 là object storage truy cập qua API/HTTP, không phải hệ thống tệp NFS để mount trực tiếp như thư mục Linux. Phù hợp cho dữ liệu object, web, backup."
+   },
+   {
+    "label": "B",
+    "text_vi": "Amazon Glacier",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Glacier là lưu trữ dài hạn chi phí thấp, truy xuất chậm. Không dùng làm file system dùng chung."
+   },
+   {
+    "label": "C",
+    "text_vi": "Amazon EBS",
+    "is_correct": false,
+    "analysis_vi": "Sai vì EBS là block storage thường gắn với một EC2 instance trong một AZ, không mount đồng thời từ nhiều server và on-premises. Muốn dùng chung file system cho nhiều server Linux thì phải chọn EFS."
+   },
+   {
+    "label": "D",
+    "text_vi": "Amazon EFS",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì EFS là hệ thống tệp NFS managed, mở rộng tự động và mount được từ nhiều máy Linux, kể cả on-premises. Đây là giải pháp shared file storage cho Linux."
+   }
+  ],
+  "tips": [
+   "Shared file system cho Linux là EFS; cho Windows là FSx for Windows File Server.",
+   "Block: EBS, object: S3, file: EFS.",
+   "On-premises mount được qua kết nối Direct Connect hoặc VPN."
+  ],
+  "keywords": [
+   {
+    "term": "shared file storage",
+    "points_to": "Amazon EFS"
+   },
+   {
+    "term": "Linux-based",
+    "points_to": "NFS, EFS"
+   }
+  ],
+  "related_services": [
+   "Amazon EFS",
+   "Amazon FSx"
+  ],
+  "answer_note": "Amazon Glacier nay được gọi là Amazon S3 Glacier. Ngoài ra FSx for Windows File Server là lựa chọn tương ứng cho máy chủ Windows."
+ },
+ {
+  "id": "pe11-20",
+  "question_vi": "Những thành phần thông tin xác thực nào cần có để truy cập lập trình vào một tài khoản AWS? (Chọn HAI)",
+  "domain": "Domain 2: Security and Compliance",
+  "topic": "Credential truy cập lập trình",
+  "explanation_vi": "Câu hỏi kiểm tra cách xác thực khi gọi API bằng CLI, SDK. Truy cập lập trình cần cặp access key ID (định danh khóa) và secret access key (bí mật dùng ký request), nên phải chọn đủ cả hai. Các thuật ngữ primary key, secondary key, user ID không phải thành phần xác thực của AWS. Secret access key chỉ hiện một lần khi tạo, cần lưu an toàn.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Access key ID",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì đây là phần định danh của cặp khóa truy cập, gửi kèm request để AWS biết khóa nào đang dùng. Luôn đi cùng secret access key."
+   },
+   {
+    "label": "B",
+    "text_vi": "Primary key",
+    "is_correct": false,
+    "analysis_vi": "Sai vì primary key là khái niệm của cơ sở dữ liệu (ví dụ DynamoDB), không liên quan xác thực truy cập AWS. Vì vậy đây là phương án nhiễu quen thuộc, cần loại ngay khi thấy thuật ngữ database."
+   },
+   {
+    "label": "C",
+    "text_vi": "Secret access key",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì đây là bí mật dùng để ký các request API, chỉ hiển thị một lần khi tạo. Kết hợp với access key ID tạo thành credential lập trình."
+   },
+   {
+    "label": "D",
+    "text_vi": "User ID",
+    "is_correct": false,
+    "analysis_vi": "Sai vì user ID là định danh nội bộ của IAM user, không dùng để ký request. Nó không đủ để xác thực truy cập."
+   },
+   {
+    "label": "E",
+    "text_vi": "Secondary key",
+    "is_correct": false,
+    "analysis_vi": "Sai vì AWS không có khái niệm secondary key trong xác thực. Đây là phương án gây nhiễu."
+   }
+  ],
+  "tips": [
+   "Cặp credential lập trình luôn là access key ID cộng secret access key.",
+   "Cẩn thận các thuật ngữ không có trong AWS IAM như primary/secondary key.",
+   "Không chia sẻ hay đưa secret key vào mã nguồn."
+  ],
+  "keywords": [
+   {
+    "term": "programmatic access",
+    "points_to": "Access key ID và secret access key"
+   }
+  ],
+  "related_services": [
+   "AWS IAM",
+   "AWS CLI"
+  ]
+ },
+ {
+  "id": "pe11-21",
+  "question_vi": "Điều khiển nào sau đây là điều khiển dùng chung (shared control) giữa khách hàng và AWS?",
+  "domain": "Domain 2: Security and Compliance",
+  "topic": "Shared controls",
+  "explanation_vi": "Câu hỏi kiểm tra ba loại điều khiển trong Shared Responsibility Model: inherited (khách hàng kế thừa từ AWS), shared (cả hai cùng áp dụng ở các lớp khác nhau) và customer specific. Shared controls gồm Patch Management, Configuration Management và Awareness and Training: AWS đào tạo nhân viên AWS, khách hàng đào tạo nhân viên của mình. Môi trường vật lý của data center là inherited control thuộc AWS, còn cấu hình EC2 và khóa mã hóa phía client là của khách hàng.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Cung cấp khóa cho mã hóa client-side của Amazon S3",
+    "is_correct": false,
+    "analysis_vi": "Sai vì với client-side encryption, khách hàng tự tạo và giữ khóa, đây là trách nhiệm hoàn toàn của khách hàng. AWS không tham gia."
+   },
+   {
+    "label": "B",
+    "text_vi": "Cấu hình Amazon EC2 instance",
+    "is_correct": false,
+    "analysis_vi": "Sai vì cấu hình instance (hệ điều hành guest, security group, ứng dụng) là việc của khách hàng. Cần phân biệt với Configuration Management của hạ tầng, nơi hai bên mỗi bên lo phần mình, nhưng EC2 instance cụ thể thuộc khách hàng."
+   },
+   {
+    "label": "C",
+    "text_vi": "Kiểm soát môi trường của data center vật lý AWS",
+    "is_correct": false,
+    "analysis_vi": "Sai vì điều hòa, điện, phòng chống cháy là inherited control do AWS chịu trách nhiệm hoàn toàn. Khách hàng chỉ kế thừa."
+   },
+   {
+    "label": "D",
+    "text_vi": "Nhận thức (Awareness and Training)",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì AWS đào tạo nhân viên AWS còn khách hàng đào tạo nhân viên của mình, nên là shared control. Cùng nhóm với Patch Management và Configuration Management."
+   }
+  ],
+  "tips": [
+   "Ba shared control cần nhớ: Patch Management, Configuration Management, Awareness and Training.",
+   "Inherited như physical and environmental thuộc AWS.",
+   "Khi một câu hỏi về shared thì tìm đáp án mà cả hai bên đều phải làm."
+  ],
+  "keywords": [
+   {
+    "term": "shared control",
+    "points_to": "Patch, Configuration, Awareness and Training"
+   }
+  ],
+  "related_services": [
+   "AWS Artifact"
+  ]
+ },
+ {
+  "id": "pe11-22",
+  "question_vi": "Loại lưu trữ AWS nào mang tính tạm thời (ephemeral) và bị xóa khi instance bị dừng hoặc chấm dứt?",
+  "domain": "Domain 3: Cloud Technology and Services",
+  "topic": "Lưu trữ tạm thời EC2",
+  "explanation_vi": "Câu hỏi kiểm tra các loại lưu trữ gắn với EC2. EC2 instance store là ổ đĩa vật lý gắn với host chạy instance, cho hiệu năng I/O cao nhưng dữ liệu mất khi instance stop, terminate hoặc host lỗi. EBS là block storage bền vững tồn tại độc lập với vòng đời instance (nếu không đặt xóa khi terminate), EFS là file system bền vững, S3 là object storage bền vững. Vì vậy ephemeral là dấu hiệu của instance store.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Amazon EBS",
+    "is_correct": false,
+    "analysis_vi": "Sai vì EBS là lưu trữ bền vững, dữ liệu vẫn còn sau khi stop và có thể giữ lại sau terminate nếu cấu hình. Dùng cho dữ liệu cần lâu dài."
+   },
+   {
+    "label": "B",
+    "text_vi": "Amazon EC2 instance store",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì instance store là lưu trữ tạm gắn với host vật lý, dữ liệu mất khi stop hoặc terminate. Phù hợp cache, buffer, dữ liệu tạm."
+   },
+   {
+    "label": "C",
+    "text_vi": "Amazon EFS",
+    "is_correct": false,
+    "analysis_vi": "Sai vì EFS là file system managed bền vững, tồn tại độc lập với instance. Dữ liệu không mất khi instance dừng."
+   },
+   {
+    "label": "D",
+    "text_vi": "Amazon S3",
+    "is_correct": false,
+    "analysis_vi": "Sai vì S3 là object storage rất bền (11 số chín) không phụ thuộc EC2. Dữ liệu không bị xóa khi instance dừng."
+   }
+  ],
+  "tips": [
+   "Ephemeral hoặc temporary storage luôn là instance store.",
+   "EBS, EFS, S3 đều bền vững.",
+   "Dữ liệu quan trọng không nên đặt trên instance store."
+  ],
+  "keywords": [
+   {
+    "term": "ephemeral",
+    "points_to": "EC2 instance store"
+   }
+  ],
+  "related_services": [
+   "Amazon EC2",
+   "Amazon EBS"
+  ]
+ },
+ {
+  "id": "pe11-23",
+  "question_vi": "Đâu là một lợi ích của consolidated billing trên AWS?",
+  "domain": "Domain 4: Billing, Pricing and Support",
+  "topic": "Lợi ích Consolidated Billing",
+  "explanation_vi": "Câu hỏi kiểm tra lợi ích của consolidated billing trong AWS Organizations. Mức sử dụng của các tài khoản được cộng gộp nên dễ đạt các bậc giá theo khối lượng (volume pricing), giúp giảm chi phí chung. Tính năng này cho một hóa đơn duy nhất thay vì nhiều hóa đơn, không cấp quyền truy cập giữa tài khoản (quyền do IAM xử lý) và không thay thế việc gắn tag để phân bổ chi phí. Đáp án đúng là volume pricing.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Đủ điều kiện hưởng giá theo khối lượng",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì mức dùng của mọi tài khoản trong tổ chức được cộng gộp để áp bậc giá rẻ hơn. Đây là lợi ích tài chính chính của consolidated billing."
+   },
+   {
+    "label": "B",
+    "text_vi": "Quyền truy cập dùng chung",
+    "is_correct": false,
+    "analysis_vi": "Sai vì consolidated billing không chia sẻ quyền truy cập giữa các tài khoản. Quyền do IAM và SCP quản lý, hoàn toàn khác với thanh toán."
+   },
+   {
+    "label": "C",
+    "text_vi": "Nhiều hóa đơn cho mỗi tài khoản",
+    "is_correct": false,
+    "analysis_vi": "Sai vì consolidated billing làm ngược lại: gộp thành một hóa đơn duy nhất cho tài khoản quản lý. Nhiều hóa đơn là tình trạng khi chưa dùng tính năng này."
+   },
+   {
+    "label": "D",
+    "text_vi": "Loại bỏ nhu cầu gắn tag",
+    "is_correct": false,
+    "analysis_vi": "Sai vì tag vẫn cần để phân bổ và theo dõi chi phí theo dự án hay phòng ban. Consolidated billing không thay thế cho tag."
+   }
+  ],
+  "tips": [
+   "Consolidated billing gắn với một hóa đơn và volume discounts.",
+   "Billing khác với quyền truy cập: không nhầm với IAM.",
+   "Tag vẫn cần để phân bổ chi phí."
+  ],
+  "keywords": [
+   {
+    "term": "consolidated billing",
+    "points_to": "AWS Organizations, volume pricing"
+   }
+  ],
+  "related_services": [
+   "AWS Organizations",
+   "AWS Cost Explorer"
+  ]
+ },
+ {
+  "id": "pe11-24",
+  "question_vi": "Những dịch vụ nào thuộc nền tảng serverless của AWS?",
+  "domain": "Domain 3: Cloud Technology and Services",
+  "topic": "Dịch vụ serverless",
+  "explanation_vi": "Câu hỏi kiểm tra nhận diện dịch vụ serverless, nghĩa là không cần quản lý máy chủ, tự co giãn và tính phí theo mức dùng. AWS Step Functions (điều phối workflow), Amazon DynamoDB (cơ sở dữ liệu NoSQL) và Amazon SNS (thông báo) đều là serverless. Các nhóm còn lại lẫn dịch vụ cần quản lý hạ tầng như EC2 (máy ảo) hay EMR (cụm Hadoop/Spark truyền thống) nên không đáp ứng toàn bộ. Chỉ cần một dịch vụ không serverless là loại cả đáp án.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Amazon EC2, Amazon S3, Amazon Athena",
+    "is_correct": false,
+    "analysis_vi": "Sai vì EC2 là máy ảo mà khách hàng phải quản lý hệ điều hành và dung lượng. S3 và Athena là serverless nhưng nhóm này lẫn EC2."
+   },
+   {
+    "label": "B",
+    "text_vi": "Amazon Kinesis, Amazon SQS, Amazon EMR",
+    "is_correct": false,
+    "analysis_vi": "Sai vì EMR chạy cụm Hadoop/Spark mà khách hàng cấu hình kích thước cụm (dù có EMR Serverless riêng). Nhóm này không toàn serverless."
+   },
+   {
+    "label": "C",
+    "text_vi": "AWS Step Functions, Amazon DynamoDB, Amazon SNS",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì cả ba không cần quản lý máy chủ, tự co giãn và tính phí theo mức dùng. Đây là nhóm dịch vụ serverless điển hình."
+   },
+   {
+    "label": "D",
+    "text_vi": "Amazon Athena, Amazon Cognito, Amazon EC2",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Athena và Cognito là serverless nhưng EC2 thì không. Chỉ một dịch vụ lạc nhóm là đủ loại đáp án."
+   }
+  ],
+  "tips": [
+   "Tìm dịch vụ không phải serverless (EC2, EMR cổ điển, RDS) để loại nhanh.",
+   "Serverless: Lambda, Fargate, DynamoDB, S3, SNS, SQS, Step Functions, Athena, Cognito.",
+   "Đặc trưng: không quản lý server, co giãn tự động, trả theo dùng."
+  ],
+  "keywords": [
+   {
+    "term": "serverless",
+    "points_to": "Lambda, DynamoDB, SNS, Step Functions"
+   }
+  ],
+  "related_services": [
+   "AWS Lambda",
+   "Amazon DynamoDB",
+   "AWS Step Functions"
+  ]
+ },
+ {
+  "id": "pe11-25",
+  "question_vi": "Mô hình định giá Amazon EC2 nào cho phép khách hàng dùng giấy phép phần mềm ràng buộc với máy chủ hiện có?",
+  "domain": "Domain 4: Billing, Pricing and Support",
+  "topic": "EC2 Dedicated Hosts và giấy phép",
+  "explanation_vi": "Câu hỏi kiểm tra Bring Your Own License. Nhiều giấy phép phần mềm (Windows Server, SQL Server, Oracle) tính theo socket, core hoặc máy chủ vật lý. EC2 Dedicated Hosts cho thuê hẳn một máy chủ vật lý, cho thấy số socket và core nên khách hàng dùng được giấy phép ràng buộc với máy chủ. Spot, Reserved và On-Demand chạy trên phần cứng dùng chung nên không đáp ứng yêu cầu ràng buộc giấy phép với máy chủ.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Spot Instances",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Spot là dung lượng dư với giá giảm mạnh nhưng có thể bị thu hồi, chạy trên phần cứng dùng chung. Không hỗ trợ giấy phép ràng buộc máy chủ."
+   },
+   {
+    "label": "B",
+    "text_vi": "Reserved Instances",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Reserved Instances là cam kết 1 hoặc 3 năm để giảm giá, không thay đổi mô hình tenancy. Phần cứng vẫn dùng chung."
+   },
+   {
+    "label": "C",
+    "text_vi": "Dedicated Hosts",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì khách hàng có máy chủ vật lý riêng và nhìn thấy socket, core, giúp dùng lại giấy phép per-socket hoặc per-core. Đây là lựa chọn BYOL chuẩn."
+   },
+   {
+    "label": "D",
+    "text_vi": "On-Demand Instances",
+    "is_correct": false,
+    "analysis_vi": "Sai vì On-Demand chỉ là cách trả tiền theo giờ hoặc giây, không bảo đảm máy chủ vật lý riêng. Không dùng được giấy phép ràng buộc máy chủ."
+   }
+  ],
+  "tips": [
+   "Server-bound licenses hoặc BYOL gắn với Dedicated Hosts.",
+   "Spot, Reserved, On-Demand là mô hình thanh toán, Dedicated là loại tenancy.",
+   "Dedicated Hosts khác Dedicated Instances ở khả năng nhìn thấy socket/core."
+  ],
+  "keywords": [
+   {
+    "term": "server-bound software licenses",
+    "points_to": "Dedicated Hosts"
+   }
+  ],
+  "related_services": [
+   "Amazon EC2",
+   "EC2 Dedicated Hosts"
+  ]
+ },
+ {
+  "id": "pe11-26",
+  "question_vi": "Biện pháp bảo mật nào sau đây bảo vệ quyền truy cập vào tài khoản AWS? (Chọn HAI)",
+  "domain": "Domain 2: Security and Compliance",
+  "topic": "Bảo vệ truy cập tài khoản",
+  "explanation_vi": "Câu hỏi kiểm tra nguyên tắc bảo vệ danh tính và quyền truy cập. Least privilege nghĩa là chỉ cấp quyền tối thiểu cần thiết nên hạn chế thiệt hại khi tài khoản bị lộ. MFA cho người dùng đặc quyền thêm lớp xác thực thứ hai ngoài mật khẩu. CloudTrail chỉ ghi nhật ký (phát hiện), CloudFront là CDN, còn dùng chung một IAM user vi phạm best practice và làm mất khả năng truy vết.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Bật AWS CloudTrail",
+    "is_correct": false,
+    "analysis_vi": "Sai vì CloudTrail ghi lại API call để kiểm toán và điều tra, thuộc nhóm phát hiện chứ không ngăn truy cập trái phép. Hữu ích nhưng không bảo vệ lúc đăng nhập."
+   },
+   {
+    "label": "B",
+    "text_vi": "Cấp quyền đặc quyền tối thiểu cho IAM user",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì giới hạn quyền ở mức cần thiết giảm rủi ro nếu thông tin xác thực bị lộ. Đây là nguyên tắc nền tảng của IAM."
+   },
+   {
+    "label": "C",
+    "text_vi": "Tạo một IAM user và chia sẻ cho nhiều lập trình viên",
+    "is_correct": false,
+    "analysis_vi": "Sai vì dùng chung tài khoản vi phạm best practice, mất khả năng truy vết từng người và khó thu hồi. Mỗi người nên có IAM user hoặc danh tính riêng."
+   },
+   {
+    "label": "D",
+    "text_vi": "Bật Amazon CloudFront",
+    "is_correct": false,
+    "analysis_vi": "Sai vì CloudFront là CDN phân phối nội dung, không bảo vệ truy cập vào tài khoản AWS. CloudFront thuộc nhóm dịch vụ mạng và phân phối nội dung, không thuộc nhóm bảo mật danh tính."
+   },
+   {
+    "label": "E",
+    "text_vi": "Kích hoạt xác thực đa yếu tố (MFA) cho người dùng đặc quyền",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì MFA yêu cầu yếu tố thứ hai nên mật khẩu bị lộ vẫn chưa đủ để chiếm tài khoản, nhất là với root và admin. Cách này đặc biệt quan trọng cho root và tài khoản quản trị vì chúng có quyền rất rộng."
+   }
+  ],
+  "tips": [
+   "Hai đáp án bảo vệ truy cập: least privilege và MFA.",
+   "Không bao giờ dùng chung IAM user hoặc root cho nhiều người.",
+   "CloudTrail giúp phát hiện và kiểm toán, không ngăn chặn."
+  ],
+  "keywords": [
+   {
+    "term": "privileged users",
+    "points_to": "MFA"
+   },
+   {
+    "term": "least privilege",
+    "points_to": "IAM"
+   }
+  ],
+  "related_services": [
+   "AWS IAM",
+   "AWS MFA",
+   "AWS CloudTrail"
+  ]
+ },
+ {
+  "id": "pe11-27",
+  "question_vi": "Dịch vụ AWS nào cho phép quản lý hạ tầng dưới dạng mã (infrastructure as code)?",
+  "domain": "Domain 3: Cloud Technology and Services",
+  "topic": "Infrastructure as code",
+  "explanation_vi": "Câu hỏi kiểm tra nhận diện AWS CloudFormation. CloudFormation cho phép mô tả hạ tầng bằng template (JSON hoặc YAML), tạo, cập nhật, xóa cả stack tài nguyên một cách lặp lại và nhất quán. CodePipeline và CodeDeploy là công cụ CI/CD cho phát hành phần mềm, Direct Connect là kết nối mạng riêng. Từ khóa infrastructure as code luôn trỏ tới CloudFormation (hoặc CDK ở mức cao hơn).",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "AWS CodePipeline",
+    "is_correct": false,
+    "analysis_vi": "Sai vì CodePipeline điều phối quy trình CI/CD (build, test, deploy) cho phần mềm. Nó không định nghĩa hạ tầng bằng template."
+   },
+   {
+    "label": "B",
+    "text_vi": "AWS CodeDeploy",
+    "is_correct": false,
+    "analysis_vi": "Sai vì CodeDeploy tự động triển khai ứng dụng lên EC2, Lambda hoặc on-premises. Nó triển khai code, không cấp phát hạ tầng bằng template."
+   },
+   {
+    "label": "C",
+    "text_vi": "AWS Direct Connect",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Direct Connect là đường kết nối mạng chuyên dụng từ on-premises tới AWS. Không liên quan đến mã hóa hạ tầng."
+   },
+   {
+    "label": "D",
+    "text_vi": "AWS CloudFormation",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì CloudFormation dùng template khai báo để tạo và quản lý tài nguyên AWS dưới dạng mã. Cho phép tái sử dụng và kiểm soát phiên bản hạ tầng."
+   }
+  ],
+  "tips": [
+   "Infrastructure as code gắn với CloudFormation (và CDK, Terraform bên ngoài).",
+   "Code* là CI/CD, không phải IaC.",
+   "CloudFormation dùng stack và template."
+  ],
+  "keywords": [
+   {
+    "term": "infrastructure as code",
+    "points_to": "AWS CloudFormation"
+   }
+  ],
+  "related_services": [
+   "AWS CloudFormation",
+   "AWS CDK"
+  ]
+ },
+ {
+  "id": "pe11-28",
+  "question_vi": "Lợi ích của việc triển khai ứng dụng trên nhiều Availability Zone là gì?",
+  "domain": "Domain 1: Cloud Concepts",
+  "topic": "Lợi ích Multi-AZ",
+  "explanation_vi": "Câu hỏi kiểm tra tính sẵn sàng cao. Mỗi Availability Zone là một hoặc nhiều data center tách biệt vật lý trong cùng một Region, có nguồn điện, mạng riêng. Triển khai nhiều AZ giúp ứng dụng chịu được sự cố ở một AZ nên tăng tính sẵn sàng (high availability). Multi-AZ không bảo vệ khi cả Region gặp thảm họa (cần multi-Region), không làm các AZ rộng về địa lý vì chúng trong cùng vùng và không tự động giảm độ trễ.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Rủi ro lỗi dịch vụ thấp hơn nếu thảm họa tự nhiên gây gián đoạn ở một AWS Region",
+    "is_correct": false,
+    "analysis_vi": "Sai vì các AZ cùng nằm trong một Region nên thảm họa diện rộng có thể ảnh hưởng cả Region. Chống thảm họa cấp Region cần triển khai multi-Region."
+   },
+   {
+    "label": "B",
+    "text_vi": "Ứng dụng có tính sẵn sàng cao hơn vì chịu được gián đoạn ở một Availability Zone",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì AZ độc lập về điện, mạng, làm mát nên mất một AZ thì các AZ còn lại tiếp tục phục vụ. Đây là lợi ích chính của multi-AZ."
+   },
+   {
+    "label": "C",
+    "text_vi": "Phạm vi phủ rộng hơn vì các AZ cách xa nhau về địa lý để phục vụ vùng rộng",
+    "is_correct": false,
+    "analysis_vi": "Sai vì các AZ trong một Region cách nhau vài chục km, không phục vụ vùng địa lý xa. Mở rộng phạm vi dùng nhiều Region hoặc edge location."
+   },
+   {
+    "label": "D",
+    "text_vi": "Độ trễ ứng dụng giảm giúp trải nghiệm người dùng tốt hơn",
+    "is_correct": false,
+    "analysis_vi": "Sai vì multi-AZ không chủ yếu giảm latency, thậm chí có thể thêm một chút độ trễ giữa các AZ. Giảm latency cần Region gần người dùng hoặc CloudFront."
+   }
+  ],
+  "tips": [
+   "Multi-AZ giải bài toán high availability; multi-Region giải bài toán disaster recovery và latency toàn cầu.",
+   "Từ natural disaster cho cả khu vực trỏ tới multi-Region.",
+   "AZ nằm trong cùng Region."
+  ],
+  "keywords": [
+   {
+    "term": "multiple Availability Zones",
+    "points_to": "High availability"
+   }
+  ],
+  "related_services": [
+   "Elastic Load Balancing",
+   "Amazon RDS Multi-AZ"
+  ]
+ },
+ {
+  "id": "pe11-29",
+  "question_vi": "Khách hàng cần chạy cơ sở dữ liệu MySQL có thể mở rộng dễ dàng. Nên dùng dịch vụ AWS nào?",
+  "domain": "Domain 3: Cloud Technology and Services",
+  "topic": "CSDL MySQL co giãn",
+  "explanation_vi": "Câu hỏi kiểm tra chọn cơ sở dữ liệu theo engine và khả năng co giãn. Amazon Aurora là cơ sở dữ liệu quan hệ do AWS xây dựng, tương thích MySQL và PostgreSQL, có hiệu năng cao, lưu trữ tự động tăng đến hàng chục TB và hỗ trợ read replica. Redshift là data warehouse phân tích, DynamoDB là NoSQL không dùng MySQL, ElastiCache là bộ nhớ đệm in-memory. Từ khóa MySQL kết hợp scale trỏ tới Aurora.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Amazon Aurora",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì Aurora tương thích MySQL, lưu trữ tự động mở rộng và có thể thêm read replica nhanh. Phù hợp CSDL MySQL cần co giãn."
+   },
+   {
+    "label": "B",
+    "text_vi": "Amazon Redshift",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Redshift là data warehouse cho phân tích dữ liệu lớn bằng SQL kiểu OLAP. Không dùng làm CSDL MySQL cho ứng dụng giao dịch."
+   },
+   {
+    "label": "C",
+    "text_vi": "Amazon DynamoDB",
+    "is_correct": false,
+    "analysis_vi": "Sai vì DynamoDB là NoSQL key-value, không phải MySQL. Muốn dùng MySQL phải chọn dịch vụ quan hệ."
+   },
+   {
+    "label": "D",
+    "text_vi": "Amazon ElastiCache",
+    "is_correct": false,
+    "analysis_vi": "Sai vì ElastiCache là cache in-memory (Redis, Memcached) để tăng tốc truy cập, không phải CSDL chính MySQL. Dùng ElastiCache đặt trước CSDL để giảm tải đọc thì hợp lý, nhưng nó không thay thế MySQL."
+   }
+  ],
+  "tips": [
+   "MySQL hoặc PostgreSQL với hiệu năng cao và dễ scale thường là Aurora.",
+   "Redshift cho phân tích, DynamoDB cho NoSQL, ElastiCache cho cache.",
+   "RDS cũng chạy MySQL, nhưng Aurora co giãn tốt hơn."
+  ],
+  "keywords": [
+   {
+    "term": "MySQL",
+    "points_to": "Amazon Aurora hoặc RDS"
+   },
+   {
+    "term": "easily scales",
+    "points_to": "Aurora"
+   }
+  ],
+  "related_services": [
+   "Amazon Aurora",
+   "Amazon RDS"
+  ]
+ },
+ {
+  "id": "pe11-30",
+  "question_vi": "Đâu là một nguyên tắc thiết kế kiến trúc AWS Cloud?",
+  "domain": "Domain 1: Cloud Concepts",
+  "topic": "Nguyên tắc thiết kế kiến trúc",
+  "explanation_vi": "Câu hỏi kiểm tra nguyên tắc thiết kế trên đám mây. Loose coupling (kết nối lỏng lẻo) tách các thành phần để chúng hoạt động độc lập, thường qua hàng đợi (SQS) hoặc ELB, nên một thành phần lỗi không kéo sập toàn hệ thống và dễ mở rộng. Các nguyên tắc khác của AWS: thiết kế cho sự cố, loại bỏ điểm lỗi đơn, co giãn ngang (horizontal scaling), tự động hóa. Single point of failure, monolith và vertical scaling đều đi ngược các nguyên tắc này.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Triển khai các điểm lỗi đơn (single points of failure)",
+    "is_correct": false,
+    "analysis_vi": "Sai vì AWS khuyến nghị loại bỏ điểm lỗi đơn bằng dự phòng và multi-AZ. Điểm lỗi đơn làm giảm độ tin cậy."
+   },
+   {
+    "label": "B",
+    "text_vi": "Triển khai kết nối lỏng lẻo (loose coupling)",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì các thành phần độc lập giao tiếp qua giao diện hoặc hàng đợi nên dễ mở rộng và chịu lỗi. Đây là nguyên tắc cốt lõi trong Well-Architected."
+   },
+   {
+    "label": "C",
+    "text_vi": "Triển khai thiết kế nguyên khối (monolithic)",
+    "is_correct": false,
+    "analysis_vi": "Sai vì monolith gắn chặt mọi chức năng, khó mở rộng và một lỗi có thể ảnh hưởng toàn hệ thống. AWS khuyến khích microservices hoặc tách rời."
+   },
+   {
+    "label": "D",
+    "text_vi": "Triển khai co giãn dọc (vertical scaling)",
+    "is_correct": false,
+    "analysis_vi": "Sai vì AWS ưu tiên co giãn ngang (thêm nhiều instance) vì vertical scaling có giới hạn và thường cần downtime. Horizontal scaling linh hoạt hơn."
+   }
+  ],
+  "tips": [
+   "Chọn đáp án mang nghĩa tốt: loose coupling, loại bỏ SPOF, scale ngang.",
+   "Các từ single points of failure, monolithic thường là bẫy sai.",
+   "Ghi nhớ Design for failure."
+  ],
+  "keywords": [
+   {
+    "term": "design principle",
+    "points_to": "Loose coupling"
+   }
+  ],
+  "related_services": [
+   "Amazon SQS",
+   "Elastic Load Balancing"
+  ]
+ },
+ {
+  "id": "pe11-31",
+  "question_vi": "Người dùng AWS Enterprise Support có quyền truy cập dịch vụ hoặc tính năng nào mà người dùng các gói AWS Support khác không có?",
+  "domain": "Domain 4: Billing, Pricing and Support",
+  "topic": "Đặc quyền Enterprise Support",
+  "explanation_vi": "Câu hỏi kiểm tra điểm khác biệt của gói Enterprise. Ngoài phản hồi nhanh nhất (15 phút cho hệ thống business-critical ngừng hoạt động), Enterprise có Technical Account Manager (TAM) chuyên trách và Concierge Support Team hỗ trợ về tài khoản, thanh toán và tối ưu chi phí. Trusted Advisor có ở mọi gói nhưng ở mức hạn chế với Basic và Developer, support case có từ Developer, còn Amazon Connect là dịch vụ tổng đài không liên quan đến support plan. Vì vậy Concierge team là tính năng riêng của Enterprise.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "AWS Trusted Advisor",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Trusted Advisor có ở mọi gói, chỉ khác phạm vi: Basic và Developer chỉ có một số kiểm tra cốt lõi, Business trở lên có đầy đủ. Không phải đặc quyền riêng của Enterprise."
+   },
+   {
+    "label": "B",
+    "text_vi": "AWS Support case",
+    "is_correct": false,
+    "analysis_vi": "Sai vì support case kỹ thuật có từ gói Developer trở lên, không riêng Enterprise. Chỉ Basic là không có."
+   },
+   {
+    "label": "C",
+    "text_vi": "Concierge team",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì Concierge Support Team chỉ có ở Enterprise, hỗ trợ các câu hỏi về tài khoản, thanh toán và tối ưu chi phí. Cùng với TAM là điểm khác biệt đặc trưng."
+   },
+   {
+    "label": "D",
+    "text_vi": "Amazon Connect",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Amazon Connect là dịch vụ contact center đám mây để khách hàng xây tổng đài của họ. Nó không phải tính năng của support plan."
+   }
+  ],
+  "tips": [
+   "Enterprise đi kèm TAM và Concierge, hai từ khóa đặc trưng.",
+   "Trusted Advisor và support case có ở nhiều gói, đừng chọn.",
+   "Nhớ Amazon Connect là tổng đài, không phải support."
+  ],
+  "keywords": [
+   {
+    "term": "not available to other plans",
+    "points_to": "TAM, Concierge"
+   }
+  ],
+  "related_services": [
+   "AWS Support",
+   "AWS Trusted Advisor"
+  ],
+  "answer_note": "AWS đã tái cấu trúc các gói Support từ tháng 12/2025: hiện có Business Support+, Enterprise Support và Unified Operations. Các gói Developer, Business (cũ) và Enterprise On-Ramp được ngừng dần (dự kiến từ 01/2027). Đề thi và đáp án ở đây dùng cấu trúc gói cũ nên vẫn giữ nguyên."
+ },
+ {
+  "id": "pe11-32",
+  "question_vi": "Một công ty sắp chuyển từ data center tại chỗ lên AWS Cloud. Đâu là một khác biệt về tài chính sau khi chuyển?",
+  "domain": "Domain 4: Billing, Pricing and Support",
+  "topic": "CapEx sang OpEx",
+  "explanation_vi": "Câu hỏi kiểm tra khác biệt tài chính khi dùng đám mây. Tại chỗ, công ty phải bỏ vốn lớn ban đầu mua máy chủ và hạ tầng (capital expense, capex). Trên AWS, công ty trả theo mức dùng thực tế, thành chi phí vận hành biến đổi (operational expense, opex), không cần đầu tư trước và dễ co giãn. Chi phí không hoàn toàn biến mất mà chuyển hình thức.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Chuyển từ chi phí vận hành biến đổi (opex) sang chi phí vốn trả trước (capex)",
+    "is_correct": false,
+    "analysis_vi": "Sai vì chiều chuyển ngược lại: AWS đi từ capex sang opex. Đây là đảo ngược lợi ích của đám mây."
+   },
+   {
+    "label": "B",
+    "text_vi": "Chuyển từ chi phí vốn trả trước (capex) sang chi phí vốn biến đổi (capex)",
+    "is_correct": false,
+    "analysis_vi": "Sai vì không có khái niệm capex biến đổi, chi phí theo mức dùng là opex. Phương án dùng sai thuật ngữ."
+   },
+   {
+    "label": "C",
+    "text_vi": "Chuyển từ chi phí vốn trả trước (capex) sang chi phí vận hành biến đổi (opex)",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì thay vì mua phần cứng trả trước, công ty thuê tài nguyên và trả theo dùng. Đây là chuyển dịch tài chính kinh điển khi lên đám mây."
+   },
+   {
+    "label": "D",
+    "text_vi": "Loại bỏ cả capex trả trước lẫn opex biến đổi",
+    "is_correct": false,
+    "analysis_vi": "Sai vì AWS không xóa chi phí vận hành, công ty vẫn trả tiền theo dùng. Chỉ chuyển dạng chi phí."
+   }
+  ],
+  "tips": [
+   "Cloud là chuyển từ CapEx sang OpEx.",
+   "Cảnh giác đáp án dùng từ eliminate (xóa bỏ hoàn toàn).",
+   "Đọc kỹ thuật ngữ capex/opex để không bị đáp án sai chữ lừa."
+  ],
+  "keywords": [
+   {
+    "term": "upfront capital expense",
+    "points_to": "CapEx"
+   },
+   {
+    "term": "variable operational expense",
+    "points_to": "OpEx"
+   }
+  ],
+  "related_services": [
+   "AWS Pricing Calculator"
+  ]
+ },
+ {
+  "id": "pe11-33",
+  "question_vi": "Khi phân tích chi phí hỗ trợ cô lập vật lý khối lượng công việc của khách hàng, mô hình lưu trữ tính toán nào cần được tính vào Total Cost of Ownership (TCO)?",
+  "domain": "Domain 4: Billing, Pricing and Support",
+  "topic": "Cô lập vật lý và Dedicated Hosts",
+  "explanation_vi": "Câu hỏi kiểm tra mô hình tenancy của EC2. Dedicated Hosts cung cấp máy chủ vật lý dành riêng cho một khách hàng, bảo đảm cô lập vật lý và đáp ứng yêu cầu tuân thủ hoặc giấy phép. Reserved Instances và On-Demand là cách tính tiền, mặc định chạy trên phần cứng dùng chung (multi-tenant), không bảo đảm cô lập vật lý. Do đó TCO phải tính chi phí Dedicated Hosts.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Dedicated Hosts",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì mỗi host là máy chủ vật lý dành riêng cho khách hàng, đảm bảo cô lập vật lý. Chi phí cao hơn nên cần đưa vào TCO."
+   },
+   {
+    "label": "B",
+    "text_vi": "Reserved Instances",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Reserved Instances chỉ là cam kết để giảm giá, hạ tầng vẫn có thể dùng chung. Không đảm bảo cô lập."
+   },
+   {
+    "label": "C",
+    "text_vi": "On-Demand Instances",
+    "is_correct": false,
+    "analysis_vi": "Sai vì On-Demand là cách thanh toán theo giờ hoặc giây, mặc định chạy trên phần cứng chia sẻ. Không đảm bảo cô lập vật lý."
+   },
+   {
+    "label": "D",
+    "text_vi": "No Upfront Reserved Instances",
+    "is_correct": false,
+    "analysis_vi": "Sai vì đây là biến thể Reserved Instances không trả trước, vẫn là cam kết giảm giá chứ không phải mô hình cô lập vật lý. Chọn dạng thanh toán không trả trước chỉ ảnh hưởng cách trả tiền, không làm thay đổi mức cô lập."
+   }
+  ],
+  "tips": [
+   "Physical isolation hoặc dedicated hardware trỏ tới Dedicated Hosts (hoặc Dedicated Instances).",
+   "Reserved, On-Demand, Spot là mô hình giá chứ không phải tenancy.",
+   "Cô lập vật lý thường đi kèm chi phí cao hơn."
+  ],
+  "keywords": [
+   {
+    "term": "physical isolation",
+    "points_to": "Dedicated Hosts"
+   }
+  ],
+  "related_services": [
+   "Amazon EC2",
+   "EC2 Dedicated Hosts"
+  ]
+ },
+ {
+  "id": "pe11-34",
+  "question_vi": "Nên dùng dịch vụ AWS nào để lưu trữ dữ liệu sao lưu dài hạn với chi phí thấp?",
+  "domain": "Domain 3: Cloud Technology and Services",
+  "topic": "Lưu trữ backup dài hạn",
+  "explanation_vi": "Câu hỏi kiểm tra chọn lưu trữ dài hạn giá rẻ. Amazon S3 Glacier (tên cũ Amazon Glacier) được thiết kế cho archive và backup lâu dài với giá rất thấp, đổi lại truy xuất mất thời gian. RDS là dịch vụ cơ sở dữ liệu, Snowball là thiết bị di chuyển dữ liệu vật lý quy mô lớn, EBS là block storage đắt hơn gắn với EC2. Từ khóa long-term và low-cost chỉ Glacier.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Amazon RDS",
+    "is_correct": false,
+    "analysis_vi": "Sai vì RDS là cơ sở dữ liệu quan hệ managed, không phải nơi lưu backup rẻ dài hạn. Chi phí cao theo instance."
+   },
+   {
+    "label": "B",
+    "text_vi": "Amazon Glacier",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì Glacier tối ưu cho lưu trữ dữ liệu ít truy cập với chi phí thấp nhất, phù hợp backup dài hạn. Truy xuất cần thời gian."
+   },
+   {
+    "label": "C",
+    "text_vi": "AWS Snowball",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Snowball là thiết bị vật lý để chuyển lượng lớn dữ liệu vào ra AWS, không phải dịch vụ lưu trữ lâu dài. Dùng cho di chuyển dữ liệu."
+   },
+   {
+    "label": "D",
+    "text_vi": "AWS EBS",
+    "is_correct": false,
+    "analysis_vi": "Sai vì EBS là block storage cho EC2, giá cao hơn nhiều so với lưu trữ archive. Không tối ưu cho backup dài hạn rẻ."
+   }
+  ],
+  "tips": [
+   "Từ khóa long-term, archive, low-cost trỏ tới Glacier.",
+   "Snowball là vận chuyển dữ liệu, không phải kho lưu trữ.",
+   "S3 cũng là đáp án khi cần truy xuất ngay."
+  ],
+  "keywords": [
+   {
+    "term": "long-term low-cost",
+    "points_to": "S3 Glacier"
+   }
+  ],
+  "related_services": [
+   "Amazon S3 Glacier",
+   "Amazon S3"
+  ],
+  "answer_note": "Amazon Glacier nay gọi là Amazon S3 Glacier (S3 Glacier Instant Retrieval, Flexible Retrieval, Deep Archive)."
+ },
+ {
+  "id": "pe11-35",
+  "question_vi": "Gói AWS Support TỐI THIỂU nào cung cấp hỗ trợ kỹ thuật qua điện thoại?",
+  "domain": "Domain 4: Billing, Pricing and Support",
+  "topic": "Support qua điện thoại",
+  "explanation_vi": "Câu hỏi kiểm tra bảng so sánh support plan. Hỗ trợ qua điện thoại 24/7 bắt đầu từ gói Business (kèm chat và email). Gói Developer chỉ có hỗ trợ qua email trong giờ làm việc, Basic không có hỗ trợ kỹ thuật theo case, còn Enterprise có phone nhưng không phải mức tối thiểu. Do hỏi MINIMUM nên chọn Business.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Enterprise",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Enterprise có phone nhưng không phải gói thấp nhất. Đề hỏi mức tối thiểu."
+   },
+   {
+    "label": "B",
+    "text_vi": "Business",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì Business là gói rẻ nhất có hỗ trợ qua điện thoại, chat và email 24/7. Từ gói này trở lên mới có phone."
+   },
+   {
+    "label": "C",
+    "text_vi": "Developer",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Developer chỉ hỗ trợ qua email trong giờ hành chính. Không có điện thoại."
+   },
+   {
+    "label": "D",
+    "text_vi": "Basic",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Basic không có support kỹ thuật theo case, chỉ có tài liệu và diễn đàn. Basic không có hỗ trợ kỹ thuật theo case, chỉ có tài liệu, diễn đàn và hỗ trợ thanh toán tài khoản."
+   }
+  ],
+  "tips": [
+   "Phone chỉ có từ Business trở lên.",
+   "Dùng bảng nhớ: Basic không case, Developer email, Business phone/chat, Enterprise TAM.",
+   "MINIMUM nghĩa là chọn gói thấp nhất đáp ứng."
+  ],
+  "keywords": [
+   {
+    "term": "phone calls",
+    "points_to": "Business Support"
+   }
+  ],
+  "related_services": [
+   "AWS Support"
+  ]
+ },
+ {
+  "id": "pe11-36",
+  "question_vi": "Mô hình giá Amazon EC2 nào có thể giảm giá tới 90%?",
+  "domain": "Domain 4: Billing, Pricing and Support",
+  "topic": "EC2 Spot Instances",
+  "explanation_vi": "Câu hỏi kiểm tra các mô hình giá của EC2. Spot Instances dùng dung lượng EC2 dư thừa với mức giảm lên tới 90% so với On-Demand, nhưng AWS có thể thu hồi instance khi cần lại dung lượng nên chỉ phù hợp công việc chịu gián đoạn. Reserved Instances giảm tối đa khoảng 72%, On-Demand là giá gốc, Dedicated Hosts thường đắt hơn. Mốc 90% là dấu hiệu nhận biết Spot.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Reserved Instances",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Reserved Instances giảm tối đa khoảng 72% với cam kết 1 hoặc 3 năm, thấp hơn mức 90% của Spot. Tiết kiệm lớn nhưng bị ràng buộc cam kết 1 hoặc 3 năm."
+   },
+   {
+    "label": "B",
+    "text_vi": "On-Demand",
+    "is_correct": false,
+    "analysis_vi": "Sai vì On-Demand là giá gốc không giảm giá, trả theo giờ hoặc giây không cam kết. Đây là mức giá cơ sở để so sánh, không phải mô hình giảm giá."
+   },
+   {
+    "label": "C",
+    "text_vi": "Dedicated Hosts",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Dedicated Hosts là máy chủ vật lý riêng nên thường đắt hơn, không nổi tiếng với mức giảm 90%. Dùng khi cần cô lập vật lý hoặc giấy phép ràng buộc máy chủ, không phải để tiết kiệm tối đa."
+   },
+   {
+    "label": "D",
+    "text_vi": "Spot Instances",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì Spot bán dung lượng dư với mức giảm tới 90% so với On-Demand. Đổi lại instance có thể bị thu hồi."
+   }
+  ],
+  "tips": [
+   "90% là Spot, 72% là Reserved.",
+   "Spot hợp với batch, big data, CI/CD, công việc chịu gián đoạn.",
+   "Không dùng Spot cho workload cần chạy liên tục."
+  ],
+  "keywords": [
+   {
+    "term": "up to 90%",
+    "points_to": "Spot Instances"
+   }
+  ],
+  "related_services": [
+   "Amazon EC2",
+   "EC2 Spot Instances"
+  ]
+ },
+ {
+  "id": "pe11-37",
+  "question_vi": "Dịch vụ AWS nào có thể dùng để phân phối lượng lớn nội dung video trực tuyến với độ trễ thấp nhất có thể? (Chọn HAI)",
+  "domain": "Domain 3: Cloud Technology and Services",
+  "topic": "Phân phối video độ trễ thấp",
+  "explanation_vi": "Câu hỏi kiểm tra dịch vụ phân phối nội dung. Amazon CloudFront là CDN, cache nội dung tại edge location gần người dùng nên giảm độ trễ cho video. Amazon S3 thường là origin lưu trữ tệp video cho CloudFront và cũng có thể phục vụ trực tiếp lượng lớn nội dung. EFS là file system dùng chung cho server, Glacier là lưu trữ lâu dài truy xuất chậm, còn appGateway không phải dịch vụ AWS thực.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "appGateway",
+    "is_correct": false,
+    "analysis_vi": "Sai vì đây không phải tên dịch vụ AWS hợp lệ (có thể là nhiễu cho API Gateway hoặc Gateway của ứng dụng). Không liên quan phân phối video."
+   },
+   {
+    "label": "B",
+    "text_vi": "Amazon S3",
+    "is_correct": true,
+    "analysis_vi": "Đúng theo đề gốc vì S3 lưu trữ video với độ bền cao và là origin chuẩn của CloudFront, có thể phục vụ nội dung quy mô lớn. Để độ trễ thấp nhất vẫn nên đặt CloudFront phía trước."
+   },
+   {
+    "label": "C",
+    "text_vi": "Amazon Elastic File System (EFS)",
+    "is_correct": false,
+    "analysis_vi": "Sai vì EFS là file system NFS cho các server, không phải dịch vụ phân phối nội dung toàn cầu cho người xem. Nếu cần phân phối video tới nhiều người xem thì nên dùng CloudFront hoặc S3."
+   },
+   {
+    "label": "D",
+    "text_vi": "Amazon Glacier",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Glacier là lưu trữ lâu dài, truy xuất mất thời gian nên không dùng để phát video thời gian thực. Glacier chỉ phù hợp cho dữ liệu ít truy cập, không phù hợp cho phát nội dung liên tục."
+   },
+   {
+    "label": "E",
+    "text_vi": "Amazon CloudFront",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì CloudFront cache nội dung tại edge location gần người dùng, giảm độ trễ khi phát video. Đây là dịch vụ CDN chuẩn."
+   }
+  ],
+  "tips": [
+   "Low latency content delivery luôn có CloudFront.",
+   "S3 thường đóng vai origin lưu trữ nội dung.",
+   "Glacier và EFS không phải nền tảng phân phối."
+  ],
+  "keywords": [
+   {
+    "term": "lowest possible latency",
+    "points_to": "CloudFront"
+   },
+   {
+    "term": "online video content",
+    "points_to": "CloudFront + S3 origin"
+   }
+  ],
+  "related_services": [
+   "Amazon CloudFront",
+   "Amazon S3"
+  ],
+  "answer_note": "Đáp án gốc (S3 và CloudFront) có thể gây tranh cãi: CloudFront mới là dịch vụ phân phối độ trễ thấp, S3 chỉ đóng vai origin lưu trữ. Giữ theo đề gốc vì S3 là lựa chọn hợp lý nhất trong các phương án còn lại."
+ },
+ {
+  "id": "pe11-38",
+  "question_vi": "AWS edge location có thể được dùng để làm gì? (Chọn HAI)",
+  "domain": "Domain 3: Cloud Technology and Services",
+  "topic": "Chức năng Edge Location",
+  "explanation_vi": "Câu hỏi kiểm tra vai trò edge location trong hạ tầng toàn cầu. Edge location là điểm hiện diện của CloudFront (và Route 53) được đặt gần người dùng cuối, dùng để phân phối nội dung từ vị trí gần nhất, giảm độ trễ. Nó cache phản hồi nên giảm lưu lượng về origin server. Edge location không dùng để host ứng dụng thông thường, chạy dịch vụ cơ sở dữ liệu NoSQL hay gửi thông báo.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Lưu trữ ứng dụng",
+    "is_correct": false,
+    "analysis_vi": "Sai vì ứng dụng chạy trong Region (EC2, Lambda), không chạy trên edge location thông thường. Edge chủ yếu cache nội dung (có Lambda@Edge nhưng không phải host ứng dụng đầy đủ)."
+   },
+   {
+    "label": "B",
+    "text_vi": "Phân phối nội dung gần người dùng hơn",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì edge location đặt gần người dùng cuối, phục vụ nội dung đã cache để giảm độ trễ. Đây là mục đích chính của CloudFront."
+   },
+   {
+    "label": "C",
+    "text_vi": "Chạy dịch vụ cache cơ sở dữ liệu NoSQL",
+    "is_correct": false,
+    "analysis_vi": "Sai vì dịch vụ cache như ElastiCache chạy trong VPC thuộc Region, không chạy ở edge. DAX là cache cho DynamoDB cũng nằm trong Region."
+   },
+   {
+    "label": "D",
+    "text_vi": "Giảm lưu lượng trên server bằng cách cache phản hồi",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì edge cache lại phản hồi nên nhiều yêu cầu được xử lý tại edge mà không về origin. Giảm tải cho server."
+   },
+   {
+    "label": "E",
+    "text_vi": "Gửi thông báo đến người dùng cuối",
+    "is_correct": false,
+    "analysis_vi": "Sai vì gửi thông báo là việc của Amazon SNS, dịch vụ trong Region. Edge location không đảm nhiệm."
+   }
+  ],
+  "tips": [
+   "Edge location gắn với CloudFront và caching.",
+   "Ứng dụng và cơ sở dữ liệu nằm trong Region, không ở edge.",
+   "Thông báo là SNS."
+  ],
+  "keywords": [
+   {
+    "term": "edge locations",
+    "points_to": "CloudFront"
+   }
+  ],
+  "related_services": [
+   "Amazon CloudFront",
+   "Amazon Route 53"
+  ]
+ },
+ {
+  "id": "pe11-39",
+  "question_vi": "Một công ty dự định di chuyển từ tại chỗ lên AWS Cloud. Công cụ hoặc dịch vụ AWS nào cung cấp báo cáo chi tiết về mức tiết kiệm chi phí ước tính sau khi di chuyển?",
+  "domain": "Domain 4: Billing, Pricing and Support",
+  "topic": "Ước tính tiết kiệm khi migrate",
+  "explanation_vi": "Câu hỏi kiểm tra công cụ ước tính chi phí trước khi chuyển lên đám mây. AWS TCO Calculator so sánh chi phí chạy trên tại chỗ với chạy trên AWS và tạo báo cáo mức tiết kiệm ước tính. Cost Explorer phân tích chi phí đã phát sinh, Budgets đặt ngưỡng cảnh báo, Migration Hub theo dõi tiến độ di chuyển. Do đó TCO Calculator là đáp án.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "AWS Total Cost of Ownership (TCO) Calculator",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì công cụ này so sánh chi phí on-premises với AWS và xuất báo cáo tiết kiệm ước tính. Dùng trong giai đoạn lập kế hoạch di chuyển."
+   },
+   {
+    "label": "B",
+    "text_vi": "Cost Explorer",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Cost Explorer xem và phân tích chi phí và mức dùng AWS đã phát sinh, không ước tính chi phí di chuyển từ tại chỗ. Nó phù hợp khi đã dùng AWS và muốn xem xu hướng chi tiêu thực tế."
+   },
+   {
+    "label": "C",
+    "text_vi": "AWS Budgets",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Budgets đặt ngân sách và gửi cảnh báo khi chi phí vượt ngưỡng. Nó không so sánh với chi phí on-premises."
+   },
+   {
+    "label": "D",
+    "text_vi": "AWS Migration Hub",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Migration Hub theo dõi tiến trình di chuyển ứng dụng từ nhiều công cụ. Nó không tạo báo cáo TCO."
+   }
+  ],
+  "tips": [
+   "Từ khóa TCO và on-premises trỏ tới TCO Calculator (nay là Pricing Calculator và Migration Evaluator).",
+   "Cost Explorer xem quá khứ, Budgets cảnh báo, Migration Hub theo dõi.",
+   "Estimating cost trước khi dùng thường là Pricing Calculator."
+  ],
+  "keywords": [
+   {
+    "term": "estimated cost savings after migration",
+    "points_to": "TCO Calculator"
+   }
+  ],
+  "related_services": [
+   "AWS Pricing Calculator",
+   "AWS Migration Evaluator"
+  ],
+  "answer_note": "AWS TCO Calculator đã ngừng hoạt động; hiện nay dùng AWS Pricing Calculator và AWS Migration Evaluator để ước tính chi phí và tiết kiệm khi di chuyển."
+ },
+ {
+  "id": "pe11-40",
+  "question_vi": "Dịch vụ AWS nào cung cấp góc nhìn được cá nhân hóa về tình trạng của các dịch vụ AWS cụ thể đang vận hành khối lượng công việc của khách hàng?",
+  "domain": "Domain 4: Billing, Pricing and Support",
+  "topic": "AWS Health Dashboard",
+  "explanation_vi": "Câu hỏi kiểm tra dịch vụ theo dõi tình trạng sức khỏe dịch vụ. Personal Health Dashboard (nay là AWS Health Dashboard, phần Your account health) hiển thị cảnh báo và hướng dẫn khắc phục khi sự kiện AWS ảnh hưởng tới tài nguyên của riêng tài khoản bạn. Service Health Dashboard chỉ hiển thị tình trạng chung của toàn bộ dịch vụ, không cá nhân hóa. X-Ray theo dõi request ứng dụng, CloudWatch giám sát metric của tài nguyên.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "AWS Service Health Dashboard",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Service Health Dashboard hiển thị tình trạng chung của dịch vụ theo Region cho mọi khách hàng, không cá nhân hóa cho tài nguyên của bạn. Muốn biết tác động lên tài nguyên của riêng mình thì phải xem Personal Health Dashboard."
+   },
+   {
+    "label": "B",
+    "text_vi": "AWS X-Ray",
+    "is_correct": false,
+    "analysis_vi": "Sai vì X-Ray truy vết request qua các thành phần ứng dụng để gỡ lỗi hiệu năng. Không báo tình trạng dịch vụ AWS."
+   },
+   {
+    "label": "C",
+    "text_vi": "AWS Personal Health Dashboard",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì cung cấp góc nhìn cá nhân hóa về sự kiện AWS ảnh hưởng tới tài nguyên của bạn, kèm hướng xử lý. Nay được gộp vào AWS Health Dashboard."
+   },
+   {
+    "label": "D",
+    "text_vi": "Amazon CloudWatch",
+    "is_correct": false,
+    "analysis_vi": "Sai vì CloudWatch giám sát metric, log của tài nguyên bạn, không báo tình trạng nền tảng AWS. CloudWatch tập trung vào tài nguyên và ứng dụng của bạn, không phản ánh sự cố phía nền tảng AWS."
+   }
+  ],
+  "tips": [
+   "Từ khóa personalized view of service health trỏ tới Personal Health Dashboard.",
+   "Service Health Dashboard là chung, Personal là riêng cho tài khoản.",
+   "Tên mới là AWS Health Dashboard."
+  ],
+  "keywords": [
+   {
+    "term": "customized view",
+    "points_to": "Personal Health Dashboard"
+   }
+  ],
+  "related_services": [
+   "AWS Health Dashboard",
+   "AWS Health"
+  ],
+  "answer_note": "Personal Health Dashboard và Service Health Dashboard nay đã được hợp nhất thành AWS Health Dashboard (phần Your account health và Service health)."
+ },
+ {
+  "id": "pe11-41",
+  "question_vi": "Một trong những lợi thế của việc chuyển hạ tầng từ data center tại chỗ lên AWS Cloud là gì?",
+  "domain": "Domain 1: Cloud Concepts",
+  "topic": "Lợi ích chuyển lên cloud",
+  "explanation_vi": "Câu hỏi kiểm tra lợi ích khái quát của đám mây. Khi AWS lo hạ tầng vật lý, vá lỗi nền tảng và vận hành data center, doanh nghiệp giảm gánh nặng quản trị hạ tầng và tập trung nguồn lực vào hoạt động kinh doanh cốt lõi (undifferentiated heavy lifting). Doanh nghiệp vẫn phải trả chi phí theo mức dùng, vẫn phải vá lỗi phần mình chịu trách nhiệm, và không đặt server trong data center của khách hàng của mình.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Cho phép doanh nghiệp loại bỏ hóa đơn IT",
+    "is_correct": false,
+    "analysis_vi": "Sai vì dùng AWS vẫn phát sinh hóa đơn theo mức dùng. Chi phí chỉ chuyển từ CapEx sang OpEx, không biến mất."
+   },
+   {
+    "label": "B",
+    "text_vi": "Cho phép doanh nghiệp đặt máy chủ trong data center của từng khách hàng",
+    "is_correct": false,
+    "analysis_vi": "Sai vì AWS vận hành hạ tầng trong các Region của mình. Đặt phần cứng tại khách hàng thuộc về mô hình như AWS Outposts, không phải lợi thế chung của cloud."
+   },
+   {
+    "label": "C",
+    "text_vi": "Cho phép doanh nghiệp tập trung vào hoạt động kinh doanh",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì AWS quản lý hạ tầng nên đội IT bớt việc vận hành và dồn sức cho sản phẩm, khách hàng. Đây là lợi ích kinh điển của điện toán đám mây."
+   },
+   {
+    "label": "D",
+    "text_vi": "Cho phép doanh nghiệp để máy chủ không được vá lỗi",
+    "is_correct": false,
+    "analysis_vi": "Sai vì khách hàng vẫn chịu trách nhiệm vá hệ điều hành và ứng dụng trên EC2 theo Shared Responsibility Model. Để máy chủ không vá là rủi ro bảo mật, không phải lợi ích."
+   }
+  ],
+  "tips": [
+   "Đáp án tích cực về tập trung vào kinh doanh thường là đúng.",
+   "Loại các câu có ý eliminate hoặc leave unpatched.",
+   "Nhớ AWS không xóa chi phí, chỉ đổi cách chi trả."
+  ],
+  "keywords": [
+   {
+    "term": "focus on business activities",
+    "points_to": "Lợi ích của cloud"
+   }
+  ],
+  "related_services": [
+   "AWS Cloud"
+  ]
+ },
+ {
+  "id": "pe11-42",
+  "question_vi": "Người dùng AWS với gói Basic Support có thể nhận hỗ trợ kỹ thuật từ AWS bằng cách nào?",
+  "domain": "Domain 4: Billing, Pricing and Support",
+  "topic": "Hỗ trợ với gói Basic",
+  "explanation_vi": "Câu hỏi kiểm tra quyền lợi của gói Basic. Basic miễn phí, gồm tài liệu, whitepaper, hỗ trợ về thanh toán và tài khoản, AWS Health Dashboard, Trusted Advisor ở mức kiểm tra cốt lõi và quyền truy cập diễn đàn thảo luận (AWS re:Post). Support engineer và TAM chỉ có ở các gói trả phí cao hơn, còn Trusted Advisor là công cụ chứ không phải kênh hỗ trợ kỹ thuật. Vì vậy kênh duy nhất trong danh sách là diễn đàn.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Kỹ sư hỗ trợ cấp cao của AWS",
+    "is_correct": false,
+    "analysis_vi": "Sai vì cần gói Developer trở lên mới tạo support case để làm việc với support engineer. Basic không có."
+   },
+   {
+    "label": "B",
+    "text_vi": "Technical Account Manager",
+    "is_correct": false,
+    "analysis_vi": "Sai vì TAM chỉ có ở gói Enterprise (và một phần Enterprise On-Ramp). Basic không có."
+   },
+   {
+    "label": "C",
+    "text_vi": "AWS Trusted Advisor",
+    "is_correct": false,
+    "analysis_vi": "Sai vì đây là công cụ khuyến nghị, không phải kênh nhận hỗ trợ kỹ thuật từ con người, và Basic chỉ có các kiểm tra cốt lõi. Do đó không thể xem nó là kênh nhận hỗ trợ kỹ thuật như đề yêu cầu."
+   },
+   {
+    "label": "D",
+    "text_vi": "Diễn đàn thảo luận AWS",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì diễn đàn cộng đồng nằm trong quyền lợi của Basic để hỏi đáp kỹ thuật. Đây là kênh hỗ trợ kỹ thuật khả dụng với Basic."
+   }
+  ],
+  "tips": [
+   "Basic không có support case kỹ thuật; chỉ tài liệu và diễn đàn.",
+   "TAM và Concierge là Enterprise.",
+   "Support engineer cần gói trả phí."
+  ],
+  "keywords": [
+   {
+    "term": "Basic Support",
+    "points_to": "Diễn đàn, tài liệu"
+   }
+  ],
+  "related_services": [
+   "AWS Support",
+   "AWS re:Post"
+  ]
+ },
+ {
+  "id": "pe11-43",
+  "question_vi": "Làm thế nào để người dùng phòng chống gián đoạn dịch vụ AWS khi thiên tai ảnh hưởng đến cả một khu vực địa lý?",
+  "domain": "Domain 1: Cloud Concepts",
+  "topic": "Chống thảm họa cấp Region",
+  "explanation_vi": "Câu hỏi kiểm tra chiến lược khả dụng theo phạm vi sự cố. Availability Zone nằm trong cùng một Region, nên thiên tai quy mô lớn có thể ảnh hưởng nhiều AZ. Để chịu được thảm họa ảnh hưởng cả khu vực địa lý, cần triển khai ứng dụng ở nhiều Region ở cách xa nhau. Hybrid hay AWS Artifact không giải quyết bài toán này.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Triển khai ứng dụng trên nhiều Availability Zone trong cùng một AWS Region",
+    "is_correct": false,
+    "analysis_vi": "Sai vì các AZ cùng Region ở gần nhau, nên thảm họa diện rộng có thể ảnh hưởng nhiều AZ. Multi-AZ chỉ bảo vệ trước sự cố cục bộ ở một AZ."
+   },
+   {
+    "label": "B",
+    "text_vi": "Dùng mô hình triển khai hybrid trong cùng khu vực địa lý",
+    "is_correct": false,
+    "analysis_vi": "Sai vì hybrid vẫn nằm trong cùng khu vực địa lý, thảm họa tương tự vẫn ảnh hưởng. Hybrid nói về kết hợp on-premises với cloud."
+   },
+   {
+    "label": "C",
+    "text_vi": "Triển khai ứng dụng trên nhiều AWS Region",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì các Region cách xa nhau và độc lập, nên thảm họa ở một khu vực không ảnh hưởng Region khác. Đây là kiến trúc disaster recovery cấp Region."
+   },
+   {
+    "label": "D",
+    "text_vi": "Lưu artifact ứng dụng bằng AWS Artifact và sao chép sang nhiều Region",
+    "is_correct": false,
+    "analysis_vi": "Sai vì AWS Artifact là cổng tài liệu tuân thủ, không lưu artifact ứng dụng. Đây là cách dùng sai dịch vụ."
+   }
+  ],
+  "tips": [
+   "Entire geographic area trỏ tới multi-Region.",
+   "Multi-AZ chỉ là high availability trong Region.",
+   "AWS Artifact là tài liệu compliance, không phải kho lưu trữ."
+  ],
+  "keywords": [
+   {
+    "term": "entire geographic area",
+    "points_to": "Multi-Region"
+   }
+  ],
+  "related_services": [
+   "AWS Global Infrastructure",
+   "Amazon Route 53"
+  ]
+ },
+ {
+  "id": "pe11-44",
+  "question_vi": "Hoạt động nào là trách nhiệm của khách hàng trên AWS Cloud theo shared responsibility model?",
+  "domain": "Domain 2: Security and Compliance",
+  "topic": "Trách nhiệm khách hàng với backup",
+  "explanation_vi": "Câu hỏi kiểm tra ranh giới trách nhiệm. AWS chịu trách nhiệm hạ tầng toàn cầu: kết nối mạng từ AWS ra internet, vá và sửa lỗi hạ tầng cloud, an ninh vật lý data center. Khách hàng chịu trách nhiệm dữ liệu và cấu hình của mình, trong đó có việc bảo đảm các EBS volume được sao lưu (snapshot) khi cần. AWS cung cấp tính năng snapshot nhưng khách hàng phải quyết định sao lưu.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Đảm bảo kết nối mạng từ AWS ra internet",
+    "is_correct": false,
+    "analysis_vi": "Sai vì kết nối mạng của hạ tầng toàn cầu do AWS lo. Khách hàng chỉ cấu hình VPC, security group."
+   },
+   {
+    "label": "B",
+    "text_vi": "Vá và sửa lỗi trong hạ tầng AWS Cloud",
+    "is_correct": false,
+    "analysis_vi": "Sai vì hạ tầng bên dưới (hypervisor, phần cứng, mạng nền) do AWS vá. Khách hàng chỉ vá hệ điều hành guest và ứng dụng của mình."
+   },
+   {
+    "label": "C",
+    "text_vi": "Đảm bảo an ninh vật lý của các data center",
+    "is_correct": false,
+    "analysis_vi": "Sai vì an ninh vật lý là phần AWS chịu hoàn toàn. Khách hàng không có quyền vào data center."
+   },
+   {
+    "label": "D",
+    "text_vi": "Đảm bảo các volume Amazon EBS được sao lưu",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì dữ liệu và việc backup trên EBS do khách hàng quyết định, thường qua snapshot hoặc AWS Backup. AWS cung cấp công cụ chứ không tự sao lưu hộ."
+   }
+  ],
+  "tips": [
+   "Dữ liệu, backup, cấu hình là của khách hàng.",
+   "Mạng nền, vá hạ tầng, vật lý là của AWS.",
+   "Câu hỏi này đảo từ khóa nhưng nguyên tắc vẫn là security IN the cloud."
+  ],
+  "keywords": [
+   {
+    "term": "customer responsibility",
+    "points_to": "Backup dữ liệu EBS"
+   }
+  ],
+  "related_services": [
+   "Amazon EBS",
+   "AWS Backup"
+  ]
+ },
+ {
+  "id": "pe11-45",
+  "question_vi": "Trong kịch bản nào nên dùng Amazon EC2 Spot Instances?",
+  "domain": "Domain 3: Cloud Technology and Services",
+  "topic": "Khi nào dùng Spot",
+  "explanation_vi": "Câu hỏi kiểm tra tình huống phù hợp của Spot Instances. Spot rẻ hơn nhiều nhưng AWS có thể thu hồi bất cứ lúc nào, nên chỉ phù hợp công việc không thường xuyên, chịu gián đoạn, linh hoạt thời gian như batch processing, phân tích dữ liệu, CI/CD. Website chính, ứng dụng yêu cầu SLA 99.999% hay cơ sở dữ liệu quan trọng cần ổn định liên tục, không hợp với Spot.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Công ty muốn chuyển website chính từ web server tại chỗ lên AWS",
+    "is_correct": false,
+    "analysis_vi": "Sai vì website chính cần hoạt động ổn định liên tục, Spot có thể bị thu hồi gây gián đoạn. Nên dùng On-Demand hoặc Reserved."
+   },
+   {
+    "label": "B",
+    "text_vi": "Công ty có nhiều dịch vụ ứng dụng với SLA yêu cầu uptime 99.999%",
+    "is_correct": false,
+    "analysis_vi": "Sai vì SLA rất cao không chấp nhận bị thu hồi instance. Cần kiến trúc multi-AZ trên On-Demand hoặc Reserved."
+   },
+   {
+    "label": "C",
+    "text_vi": "Cơ sở dữ liệu legacy dùng nhiều đang chạy tại chỗ",
+    "is_correct": false,
+    "analysis_vi": "Sai vì cơ sở dữ liệu cần tính liên tục và nhất quán, nên không chạy trên instance có thể bị thu hồi. Rủi ro mất instance giữa chừng sẽ gây mất dữ liệu hoặc gián đoạn nghiêm trọng."
+   },
+   {
+    "label": "D",
+    "text_vi": "Công ty có nhiều công việc không thường xuyên, có thể gián đoạn, đang dùng On-Demand",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì job chịu gián đoạn tận dụng được giá Spot thấp tới 90%. Nếu bị thu hồi chỉ cần chạy lại."
+   }
+  ],
+  "tips": [
+   "Spot hợp với interruptible, batch, flexible workloads.",
+   "Uptime cao, database, website chính thì không dùng Spot.",
+   "Giảm chi phí cho job đang dùng On-Demand là kịch bản kinh điển."
+  ],
+  "keywords": [
+   {
+    "term": "interruptible jobs",
+    "points_to": "Spot Instances"
+   }
+  ],
+  "related_services": [
+   "Amazon EC2",
+   "EC2 Spot Instances"
+  ]
+ },
+ {
+  "id": "pe11-46",
+  "question_vi": "Khách hàng triển khai ứng dụng mới và cần chọn AWS Region. Những yếu tố nào có thể ảnh hưởng quyết định? (Chọn HAI)",
+  "domain": "Domain 1: Cloud Concepts",
+  "topic": "Tiêu chí chọn Region",
+  "explanation_vi": "Câu hỏi kiểm tra các yếu tố chọn Region: độ trễ tới người dùng, tuân thủ và chủ quyền dữ liệu, dịch vụ khả dụng và chi phí. Chọn Region gần người dùng giúp giảm độ trễ, còn luật về lưu trữ dữ liệu (data sovereignty) có thể bắt buộc dữ liệu nằm ở một quốc gia nhất định. Ngôn ngữ giao diện, chi phí làm mát hay khoảng cách đến văn phòng khách hàng không phải tiêu chí lựa chọn Region.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Giảm độ trễ tới người dùng",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì Region gần người dùng làm giảm latency, cải thiện trải nghiệm. Đây là một trong bốn tiêu chí chọn Region."
+   },
+   {
+    "label": "B",
+    "text_vi": "Giao diện ứng dụng hiển thị bằng ngôn ngữ địa phương",
+    "is_correct": false,
+    "analysis_vi": "Sai vì ngôn ngữ giao diện do ứng dụng quyết định, không phụ thuộc Region AWS. Vì vậy yếu tố này không ảnh hưởng đến quyết định chọn Region của khách hàng."
+   },
+   {
+    "label": "C",
+    "text_vi": "Tuân thủ chủ quyền dữ liệu",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì quy định pháp lý có thể yêu cầu dữ liệu lưu trong một quốc gia hay khu vực. Do đó phải chọn Region phù hợp."
+   },
+   {
+    "label": "D",
+    "text_vi": "Chi phí làm mát ở vùng khí hậu nóng hơn",
+    "is_correct": false,
+    "analysis_vi": "Sai vì chi phí làm mát do AWS chịu, khách hàng chỉ thấy giá dịch vụ. Không phải tiêu chí chọn Region."
+   },
+   {
+    "label": "E",
+    "text_vi": "Gần văn phòng của khách hàng để tiện đến thăm trực tiếp",
+    "is_correct": false,
+    "analysis_vi": "Sai vì khách hàng quản lý AWS qua internet, không cần đến data center. AWS cũng không cho thăm trực tiếp."
+   }
+  ],
+  "tips": [
+   "Bốn tiêu chí: compliance, latency, service availability, pricing.",
+   "Loại các đáp án vô lý (cooling, thăm trực tiếp).",
+   "Data sovereignty là từ khóa tuân thủ."
+  ],
+  "keywords": [
+   {
+    "term": "data sovereignty",
+    "points_to": "Chọn Region theo quy định"
+   },
+   {
+    "term": "Reduced latency",
+    "points_to": "Region gần người dùng"
+   }
+  ],
+  "related_services": [
+   "AWS Global Infrastructure"
+  ]
+ },
+ {
+  "id": "pe11-47",
+  "question_vi": "Dịch vụ AWS nào cung cấp cảnh báo khi một sự kiện AWS có thể ảnh hưởng đến tài nguyên AWS của công ty?",
+  "domain": "Domain 4: Billing, Pricing and Support",
+  "topic": "Cảnh báo sự kiện AWS",
+  "explanation_vi": "Câu hỏi kiểm tra dịch vụ thông báo sự kiện ảnh hưởng tài nguyên của riêng bạn. Personal Health Dashboard (nay là AWS Health Dashboard) cảnh báo và hướng dẫn khi có sự kiện AWS như bảo trì, sự cố ảnh hưởng đến tài nguyên của tài khoản. Service Health Dashboard chỉ cho thấy tình trạng chung. Trusted Advisor đưa khuyến nghị theo best practices, còn Infrastructure Event Management là dịch vụ trả phí hỗ trợ lên kế hoạch cho sự kiện lớn của khách hàng.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "AWS Personal Health Dashboard",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì gửi cảnh báo cá nhân hóa khi sự kiện AWS ảnh hưởng tài nguyên của bạn. Đây là nguồn thông tin sự kiện chính thức cho khách hàng."
+   },
+   {
+    "label": "B",
+    "text_vi": "AWS Service Health Dashboard",
+    "is_correct": false,
+    "analysis_vi": "Sai vì chỉ hiển thị tình trạng chung của dịch vụ, không phản ánh tài nguyên cụ thể của bạn và không cảnh báo riêng. Nếu cần biết sự kiện có ảnh hưởng tài nguyên của mình hay không thì phải dùng phiên bản Personal."
+   },
+   {
+    "label": "C",
+    "text_vi": "AWS Trusted Advisor",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Trusted Advisor đưa khuyến nghị tối ưu chi phí, bảo mật, hiệu năng. Nó không cảnh báo sự kiện của AWS."
+   },
+   {
+    "label": "D",
+    "text_vi": "AWS Infrastructure Event Management",
+    "is_correct": false,
+    "analysis_vi": "Sai vì đây là dịch vụ có phí hỗ trợ khách hàng chuẩn bị cho sự kiện lớn như ra mắt sản phẩm, không phải dịch vụ cảnh báo sự kiện của AWS. Đây là dịch vụ tư vấn trả phí chứ không phải công cụ thông báo tự động."
+   }
+  ],
+  "tips": [
+   "Alerts về event ảnh hưởng tài nguyên của bạn là Personal Health Dashboard.",
+   "Service Health Dashboard là tổng quát.",
+   "Tên hiện hành là AWS Health Dashboard."
+  ],
+  "keywords": [
+   {
+    "term": "alerts when an AWS event may impact",
+    "points_to": "Personal Health Dashboard"
+   }
+  ],
+  "related_services": [
+   "AWS Health Dashboard",
+   "AWS Health"
+  ],
+  "answer_note": "Personal Health Dashboard nay là AWS Health Dashboard (your account health); Service Health Dashboard cũng được hợp nhất vào đó."
+ },
+ {
+  "id": "pe11-48",
+  "question_vi": "Kịch bản khôi phục thảm họa nào có xác suất ngừng hoạt động thấp nhất?",
+  "domain": "Domain 1: Cloud Concepts",
+  "topic": "Chiến lược disaster recovery",
+  "explanation_vi": "Câu hỏi kiểm tra bốn chiến lược DR theo thứ tự RTO và RPO tốt dần, chi phí tăng dần: Backup and restore, Pilot light, Warm standby, Multi-site active-active. Multi-site active-active chạy đầy đủ tải ở hai hoặc nhiều Region cùng lúc nên khi một site lỗi, site còn lại tiếp tục phục vụ gần như không gián đoạn, nhưng chi phí cao nhất. Warm standby cần thời gian tăng quy mô, pilot light cần bật thêm tài nguyên, backup và restore chậm nhất.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Sao lưu và khôi phục",
+    "is_correct": false,
+    "analysis_vi": "Sai vì đây là chiến lược rẻ nhất nhưng RTO lớn nhất do phải khôi phục từ backup. Thời gian ngừng hoạt động dài."
+   },
+   {
+    "label": "B",
+    "text_vi": "Pilot light",
+    "is_correct": false,
+    "analysis_vi": "Sai vì chỉ giữ phần lõi chạy sẵn, khi sự cố phải bật và mở rộng thêm tài nguyên nên vẫn có downtime. Chi phí thấp hơn warm standby nhưng thời gian khôi phục lâu hơn."
+   },
+   {
+    "label": "C",
+    "text_vi": "Warm standby",
+    "is_correct": false,
+    "analysis_vi": "Sai vì có môi trường thu nhỏ luôn chạy, nhưng cần tăng quy mô khi sự cố nên vẫn có thời gian chuyển đổi ngắn. Đắt hơn pilot light nhưng thời gian khôi phục nhanh hơn, tuy vậy vẫn không bằng active-active."
+   },
+   {
+    "label": "D",
+    "text_vi": "Multi-site active-active",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì cả hai site phục vụ cùng lúc ở quy mô đầy đủ nên gần như không có downtime khi một site lỗi. Đổi lại chi phí cao nhất."
+   }
+  ],
+  "tips": [
+   "Thứ tự: backup/restore, pilot light, warm standby, multi-site (nhanh hơn và đắt hơn dần).",
+   "Lowest downtime luôn là active-active.",
+   "Cân nhắc đánh đổi chi phí và RTO."
+  ],
+  "keywords": [
+   {
+    "term": "lowest probability of down time",
+    "points_to": "Multi-site active-active"
+   }
+  ],
+  "related_services": [
+   "AWS Elastic Disaster Recovery",
+   "Amazon Route 53"
+  ]
+ },
+ {
+  "id": "pe11-49",
+  "question_vi": "PRIMARY purpose của dịch vụ nào là quản lý phiên bản mã nguồn (version control)?",
+  "domain": "Domain 3: Cloud Technology and Services",
+  "topic": "Quản lý phiên bản mã nguồn",
+  "explanation_vi": "Câu hỏi kiểm tra nhận diện dịch vụ quản lý mã nguồn. AWS CodeCommit là dịch vụ kho Git do AWS quản lý, lưu trữ và quản lý phiên bản mã nguồn. Amazon CodeStar là dịch vụ quản lý dự án phát triển tích hợp nhiều công cụ (không phải version control), AWS CLI là công cụ dòng lệnh, Amazon Cognito quản lý xác thực người dùng ứng dụng. Từ khóa version control chỉ CodeCommit.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Amazon CodeStar",
+    "is_correct": false,
+    "analysis_vi": "Sai vì CodeStar giúp thiết lập và quản lý dự án phát triển với nhiều dịch vụ Code*. Nó có thể dùng CodeCommit nhưng mục đích chính không phải version control."
+   },
+   {
+    "label": "B",
+    "text_vi": "AWS Command Line Interface (AWS CLI)",
+    "is_correct": false,
+    "analysis_vi": "Sai vì CLI dùng điều khiển dịch vụ AWS bằng lệnh. Nó không quản lý phiên bản mã nguồn."
+   },
+   {
+    "label": "C",
+    "text_vi": "Amazon Cognito",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Cognito cung cấp đăng ký, đăng nhập và quản lý danh tính người dùng cho ứng dụng. Không liên quan source control."
+   },
+   {
+    "label": "D",
+    "text_vi": "AWS CodeCommit",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì CodeCommit là kho Git được quản lý, lưu trữ mã nguồn và lịch sử thay đổi. Đây là dịch vụ version control của AWS."
+   }
+  ],
+  "tips": [
+   "Version control, Git trỏ tới CodeCommit.",
+   "CodeStar là quản lý dự án, không phải kho code.",
+   "Cognito dành cho xác thực người dùng ứng dụng."
+  ],
+  "keywords": [
+   {
+    "term": "software version control",
+    "points_to": "AWS CodeCommit"
+   }
+  ],
+  "related_services": [
+   "AWS CodeCommit",
+   "AWS CodePipeline"
+  ],
+  "answer_note": "AWS CodeCommit từng ngừng nhận khách hàng mới (07/2024) rồi mở lại cho khách hàng mới từ tháng 11/2025. Về kiến thức thi, nó vẫn là dịch vụ kho mã nguồn Git được quản lý."
+ },
+ {
+  "id": "pe11-50",
+  "question_vi": "Khách hàng có thể tăng cường bảo mật đăng nhập tài khoản AWS bằng cách nào? (Chọn HAI)",
+  "domain": "Domain 2: Security and Compliance",
+  "topic": "Tăng bảo mật đăng nhập",
+  "explanation_vi": "Câu hỏi kiểm tra các biện pháp bảo vệ đăng nhập. Bật MFA thêm một lớp xác thực ngoài mật khẩu, còn cấu hình password policy mạnh buộc người dùng đặt mật khẩu dài, phức tạp và đổi định kỳ. Certificate Manager quản lý chứng chỉ TLS, Cognito quản lý danh tính người dùng cuối của ứng dụng (không phải đăng nhập tài khoản AWS), còn Organizations quản lý nhiều tài khoản. Phải chọn đủ hai đáp án đúng.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Cấu hình AWS Certificate Manager",
+    "is_correct": false,
+    "analysis_vi": "Sai vì ACM cấp chứng chỉ SSL/TLS cho website, bảo vệ đường truyền, không bảo vệ đăng nhập tài khoản AWS. ACM không liên quan đến việc ai đăng nhập vào tài khoản."
+   },
+   {
+    "label": "B",
+    "text_vi": "Bật xác thực đa yếu tố (MFA)",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì MFA yêu cầu yếu tố thứ hai nên mật khẩu bị lộ vẫn chưa đủ để đăng nhập. Biện pháp quan trọng nhất cho root và admin."
+   },
+   {
+    "label": "C",
+    "text_vi": "Dùng Amazon Cognito để quản lý truy cập",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Cognito phục vụ xác thực người dùng cuối của ứng dụng web/mobile, không phải đăng nhập vào tài khoản AWS bằng IAM. Muốn bảo vệ tài khoản AWS cần dùng IAM cùng MFA, không dùng Cognito."
+   },
+   {
+    "label": "D",
+    "text_vi": "Cấu hình chính sách mật khẩu mạnh",
+    "is_correct": true,
+    "analysis_vi": "Đúng vì password policy ép độ dài, độ phức tạp, thời hạn, chống dò mật khẩu. Nâng cao độ mạnh của credential đăng nhập."
+   },
+   {
+    "label": "E",
+    "text_vi": "Bật AWS Organizations",
+    "is_correct": false,
+    "analysis_vi": "Sai vì Organizations quản lý nhiều tài khoản tập trung, không trực tiếp tăng bảo mật đăng nhập của từng tài khoản. Đây là công cụ quản trị nhiều tài khoản, không tăng bảo mật đăng nhập trực tiếp."
+   }
+  ],
+  "tips": [
+   "Bảo mật đăng nhập: MFA và password policy.",
+   "Cognito dành cho người dùng ứng dụng, IAM cho người dùng AWS.",
+   "ACM là cho TLS."
+  ],
+  "keywords": [
+   {
+    "term": "account logons",
+    "points_to": "MFA, password policy"
+   }
+  ],
+  "related_services": [
+   "AWS IAM",
+   "AWS MFA"
+  ]
+ }
+]

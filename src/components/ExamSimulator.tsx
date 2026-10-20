@@ -27,6 +27,8 @@ import { saveExamAttempt, getAllExamSessions, saveExamSession, clearExamSession,
 import { fetchSessions } from '../utils/sync';
 import { ExamPicker } from './ExamPicker';
 import { ResultSummary } from './ResultSummary';
+import { ExplanationPanel } from './ExplanationPanel';
+import { useExplanations } from '../utils/explanations';
 
 interface ExamSimulatorProps {
   exams: ExamSet[];
@@ -75,6 +77,12 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
     const secondsLeft = s.remainingSeconds ?? Math.ceil((s.endsAt - Date.now()) / 1000);
     return secondsLeft > 0;
   };
+
+  // Detailed explanations (Supabase): whole exam on the result screen, current question in practice mode
+  const detailedIds = isExamCompleted && currentExam ? currentExam.questions.map((q) => q.id) : [];
+  const detailed = useExplanations(detailedIds, isExamCompleted);
+  const drillQuestionId = currentExam?.questions[currentQuestionIndex]?.id;
+  const drill = useExplanations(drillQuestionId !== undefined ? [drillQuestionId] : [], isExamActive && !isExamCompleted && examMode === 'practice');
 
   // ---- In-progress sessions map: supports multiple exams at once ----
   const [savedSessions, setSavedSessions] = useState<Record<string, ExamSession>>(() => {
@@ -536,25 +544,33 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
                 </div>
 
                 {/* Explanation */}
-                <div className="p-4 rounded-2xl bg-slate-950/70 border border-white/[0.06] text-xs sm:text-sm space-y-1.5">
-                  <div className="font-bold text-amber-400 flex items-center gap-1.5">
-                    <AlertCircle className="w-4 h-4" />
-                    <span>Giải thích chi tiết:</span>
-                  </div>
-                  <p className="text-slate-200 leading-relaxed">
-                    {langMode === 'en' ? q.explanation : q.explanationVi || q.explanation}
-                  </p>
-                  {langMode === 'bilingual' && q.explanation && q.explanationVi && (
-                    <p className="text-xs text-slate-400 italic pt-1 border-t border-white/[0.04]">
-                      EN: {q.explanation}
-                    </p>
-                  )}
-                  {q.referenceLecture && (
-                    <div className="text-xs text-slate-400 pt-1 font-mono">
-                      Tham khảo: {q.referenceSection} &bull; {q.referenceLecture}
+                {detailed.get(q.id) ? (
+                  <ExplanationPanel
+                    data={detailed.get(q.id)!}
+                    chosenLabels={userSelected.map((i) => String.fromCharCode(65 + i))}
+                  />
+                ) : (
+                  <div className="p-4 rounded-2xl bg-slate-950/70 border border-white/[0.06] text-xs sm:text-sm space-y-1.5">
+                    <div className="font-bold text-amber-400 flex items-center gap-1.5">
+                      <AlertCircle className="w-4 h-4" />
+                      <span>Giải thích chi tiết:</span>
                     </div>
-                  )}
-                </div>
+                    <p className="text-slate-200 leading-relaxed">
+                      {langMode === 'en' ? q.explanation : q.explanationVi || q.explanation}
+                    </p>
+                    {langMode === 'bilingual' && q.explanation && q.explanationVi && (
+                      <p className="text-xs text-slate-400 italic pt-1 border-t border-white/[0.04]">
+                        EN: {q.explanation}
+                      </p>
+                    )}
+                    {q.referenceLecture && (
+                      <div className="text-xs text-slate-400 pt-1 font-mono">
+                        Tham khảo: {q.referenceSection} &bull; {q.referenceLecture}
+                      </div>
+                    )}
+                  </div>
+
+                )}
               </div>
             );
           })}
@@ -870,6 +886,9 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
 
           {/* Instant Drill Explanation (Only in practice mode) */}
           {examMode === 'practice' && selectedForCurrent.length > 0 && (
+            drill.get(currentQ.id) ? (
+              <div className="mt-4"><ExplanationPanel data={drill.get(currentQ.id)!} chosenLabels={selectedForCurrent.map((i) => String.fromCharCode(65 + i))} /></div>
+            ) : (
             <div className="p-4 rounded-2xl bg-slate-950/80 border border-white/[0.08] text-xs sm:text-sm space-y-1.5 mt-4">
               <div className="font-bold text-amber-400 flex items-center gap-1.5">
                 <AlertCircle className="w-4 h-4" />
@@ -884,6 +903,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
                 </p>
               )}
             </div>
+            )
           )}
 
           {/* Question Navigation Footer */}
