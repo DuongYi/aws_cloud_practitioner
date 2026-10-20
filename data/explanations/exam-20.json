@@ -463,59 +463,54 @@
   "question_vi": "Theo AWS Well-Architected Framework, nên thực hiện các bước quản lý thay đổi nào để đạt độ tin cậy trên AWS Cloud? (Chọn hai.)",
   "domain": "Domain 1: Cloud Concepts",
   "topic": "Well-Architected: Reliability",
-  "explanation_vi": "Câu hỏi kiểm tra thực hành quản lý thay đổi thuộc trụ cột Reliability. Theo đáp án gốc, AWS Config tạo inventory tài nguyên và theo dõi thay đổi cấu hình, giúp biết hạ tầng đang như thế nào. Lưu ý đề hiển thị Choose two nhưng dữ liệu chỉ đánh dấu một đáp án đúng (A), trong khi phương án C về CloudTrail ghi API call vào log có thể audit cũng là thực hành hợp lý. Các phương án còn lại sai: service limit không dùng để chặn người dùng thay đổi, ACM không phải whitelist tài nguyên và GuardDuty không xác thực thay đổi cấu hình.",
+  "explanation_vi": "Trụ cột Reliability của Well-Architected Framework yêu cầu quản lý thay đổi một cách có kiểm soát: biết mình đang có tài nguyên nào và theo dõi được ai đã thay đổi gì. AWS Config ghi nhận và đánh giá cấu hình tài nguyên, tạo inventory và lịch sử thay đổi. AWS CloudTrail ghi lại mọi API call vào log có thể kiểm toán. Hai dịch vụ này cùng giúp phát hiện, truy vết và khắc phục thay đổi gây lỗi. Cần chọn đủ hai đáp án đúng.",
   "options": [
    {
     "label": "A",
     "text_vi": "Dùng AWS Config để tạo inventory tài nguyên AWS",
     "is_correct": true,
-    "analysis_vi": "Theo đáp án gốc đây là lựa chọn đúng vì Config ghi nhận cấu hình và thay đổi của tài nguyên, tạo nền tảng để quản lý thay đổi có kiểm soát. Nó trả lời được câu hỏi tài nguyên nào đang tồn tại và cấu hình ra sao."
+    "analysis_vi": "Đúng. AWS Config tạo inventory tài nguyên và lưu lịch sử cấu hình, giúp biết trạng thái hiện tại và những thay đổi theo thời gian, nền tảng của quản lý thay đổi."
    },
    {
     "label": "B",
     "text_vi": "Dùng service limit để ngăn người dùng tạo hoặc thay đổi tài nguyên",
     "is_correct": false,
-    "analysis_vi": "Service quota chủ yếu bảo vệ khỏi tạo quá nhiều tài nguyên ngoài ý muốn và bảo vệ tài khoản, không phải công cụ phân quyền. Việc cho phép hay chặn thao tác phải dùng IAM policy hoặc SCP."
+    "analysis_vi": "Sai. Service limit (quota) giới hạn số lượng tài nguyên để tránh dùng quá mức, không dùng để chặn người dùng thay đổi tài nguyên. Việc kiểm soát ai được làm gì là việc của IAM."
    },
    {
     "label": "C",
     "text_vi": "Dùng AWS CloudTrail để ghi API call vào log file có thể audit",
-    "is_correct": false,
-    "analysis_vi": "CloudTrail ghi lại mọi API call để truy vết ai đã thay đổi gì, một thực hành hợp lý cho quản lý thay đổi. Dữ liệu của đề chỉ đánh dấu A là đúng nên phương án này được tính là sai theo đáp án gốc, xem answer_note."
+    "is_correct": true,
+    "analysis_vi": "Đúng. CloudTrail ghi mọi API call thành log có thể kiểm toán, cho biết ai đã thay đổi tài nguyên nào, khi nào, hỗ trợ điều tra sự cố do thay đổi."
    },
    {
     "label": "D",
     "text_vi": "Dùng AWS Certificate Manager để whitelist tài nguyên và dịch vụ được phê duyệt",
     "is_correct": false,
-    "analysis_vi": "ACM cấp và quản lý chứng chỉ SSL/TLS, không có chức năng whitelist tài nguyên. Muốn giới hạn dịch vụ được dùng thì cần SCP trong AWS Organizations hoặc IAM policy."
+    "analysis_vi": "Sai. AWS Certificate Manager cấp và quản lý chứng chỉ SSL/TLS. Nó không dùng để whitelist tài nguyên hay dịch vụ được phê duyệt."
    },
    {
     "label": "E",
     "text_vi": "Dùng Amazon GuardDuty để xác thực thay đổi cấu hình tài nguyên",
     "is_correct": false,
-    "analysis_vi": "GuardDuty phát hiện mối đe dọa và hành vi bất thường, không kiểm tra tính đúng đắn của thay đổi cấu hình. Việc đánh giá cấu hình so với quy tắc thuộc về AWS Config rules."
+    "analysis_vi": "Sai. GuardDuty phát hiện mối đe dọa bảo mật từ log và hành vi bất thường, không dùng để xác thực các thay đổi cấu hình tài nguyên."
    }
   ],
   "tips": [
-   "Config nghĩ đến cấu hình và inventory, CloudTrail nghĩ đến API audit.",
-   "Đọc kỹ số đáp án: đề này nói chọn hai nhưng dữ liệu chỉ có một đáp án, hãy cẩn thận khi gặp trong thi thật.",
-   "Loại ngay các đáp án gán sai chức năng như ACM whitelist hay GuardDuty validate config."
+   "Quản lý thay đổi trong Reliability: Config (cấu hình hiện tại và lịch sử), CloudTrail (ai đã làm gì).",
+   "Loại các dịch vụ chứng chỉ (ACM) và phát hiện đe dọa (GuardDuty) vì không liên quan tới theo dõi thay đổi."
   ],
   "keywords": [
    {
     "term": "change management",
-    "points_to": "AWS Config / CloudTrail"
-   },
-   {
-    "term": "inventory of AWS resources",
-    "points_to": "AWS Config"
+    "points_to": "AWS Config, AWS CloudTrail"
    }
   ],
   "related_services": [
    "AWS Config",
    "AWS CloudTrail"
   ],
-  "answer_note": "Đề ghi Choose two nhưng dữ liệu gốc chỉ có một đáp án đúng là A. Theo AWS, cả AWS Config (A) và AWS CloudTrail (C) đều là thực hành quản lý thay đổi hợp lý trong trụ cột Reliability, nên đáp án đầy đủ rất có thể là A và C."
+  "answer_note": "Trong file đề gốc đáp án ghi là 'Ac' (chữ c viết thường) nên bị đọc thiếu. Đáp án đúng gồm hai phương án A và C."
  },
  {
   "id": "pe20-11",

@@ -1,0 +1,849 @@
+[
+ {
+  "id": "exam-core-diagnostic-2:101",
+  "question_vi": "Bạn cần chặn một địa chỉ IP độc hại cụ thể (198.51.100.5) truy cập vào mọi máy chủ trong một subnet của VPC. Tính năng nào cho phép tạo rule DENY tường minh?",
+  "domain": "Domain 2: Security and Compliance",
+  "topic": "Chặn IP bằng NACL",
+  "explanation_vi": "Câu hỏi kiểm tra khả năng deny tường minh trong VPC. Network ACL (NACL) hoạt động ở mức subnet và hỗ trợ cả rule allow lẫn deny, đánh giá theo số thứ tự từ thấp tới cao, nên có thể tạo rule deny cho một IP hay dải CIDR để chặn mọi instance trong subnet. Security Group chỉ có rule allow nên không thể chặn riêng một IP. Route table và Internet Gateway quyết định đường đi, không lọc traffic theo rule deny.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Security Group",
+    "is_correct": false,
+    "analysis_vi": "Security Group là firewall stateful ở mức instance và chỉ có rule allow; mọi thứ không được allow đều bị chặn ngầm. Nó không thể tạo rule deny cho một IP cụ thể, và cũng chỉ áp dụng cho từng instance gắn vào nó."
+   },
+   {
+    "label": "B",
+    "text_vi": "Network Access Control List (NACL)",
+    "is_correct": true,
+    "analysis_vi": "NACL áp dụng cho cả subnet và cho phép rule deny tường minh. Một rule deny cho 198.51.100.5/32 với số thứ tự thấp sẽ chặn IP đó trên mọi server trong subnet."
+   },
+   {
+    "label": "C",
+    "text_vi": "Route Table",
+    "is_correct": false,
+    "analysis_vi": "Route table chứa các route quyết định traffic của subnet đi đâu. Nó không có khái niệm allow hay deny theo IP nguồn. Nó dùng để định tuyến chứ không dùng để chặn."
+   },
+   {
+    "label": "D",
+    "text_vi": "Internet Gateway",
+    "is_correct": false,
+    "analysis_vi": "Internet Gateway là cổng cho phép VPC giao tiếp với internet. Nó không lọc traffic theo IP, nên không thể dùng để chặn một IP cụ thể."
+   }
+  ],
+  "tips": [
+   "Cần deny một IP hay dải IP thì chọn NACL.",
+   "Security Group chỉ có allow nên không chặn riêng được một nguồn.",
+   "Nhớ NACL stateless, nên cần rule cho cả chiều vào và chiều ra."
+  ],
+  "keywords": [
+   {
+    "term": "explicit DENY",
+    "points_to": "NACL"
+   },
+   {
+    "term": "subnet",
+    "points_to": "NACL hoạt động mức subnet"
+   },
+   {
+    "term": "specific malicious IP",
+    "points_to": "Chặn theo IP nguồn"
+   }
+  ],
+  "related_services": [
+   "Amazon VPC",
+   "Network ACL",
+   "Security Groups"
+  ]
+ },
+ {
+  "id": "exam-core-diagnostic-2:102",
+  "question_vi": "Lớp lưu trữ Amazon S3 nào tự động tối ưu chi phí bằng cách di chuyển dữ liệu giữa các tầng truy cập thường xuyên và không thường xuyên mà không có phí truy xuất hay công việc vận hành?",
+  "domain": "Domain 3: Cloud Technology and Services",
+  "topic": "S3 Intelligent-Tiering",
+  "explanation_vi": "Câu hỏi kiểm tra các storage class của S3. S3 Intelligent-Tiering theo dõi pattern truy cập và tự động chuyển object giữa các tầng (frequent, infrequent, archive instant...) mà không có phí truy xuất, chỉ có phí monitoring nhỏ theo số object. Phù hợp khi mẫu truy cập không biết trước hoặc thay đổi. Các lớp IA và Glacier yêu cầu bạn tự chọn hoặc dùng lifecycle và có phí truy xuất.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "S3 Standard-IA",
+    "is_correct": false,
+    "analysis_vi": "Standard-IA rẻ hơn cho dữ liệu ít truy cập nhưng bạn tự chọn lớp này và bị tính phí truy xuất mỗi lần đọc. Nó không tự di chuyển giữa các tầng."
+   },
+   {
+    "label": "B",
+    "text_vi": "S3 One Zone-IA",
+    "is_correct": false,
+    "analysis_vi": "One Zone-IA lưu chỉ trong một AZ để rẻ hơn, kém bền hơn nếu AZ hỏng, và có phí truy xuất. Nó không có tính năng tự động tối ưu giữa các tầng."
+   },
+   {
+    "label": "C",
+    "text_vi": "S3 Intelligent-Tiering",
+    "is_correct": true,
+    "analysis_vi": "Intelligent-Tiering tự chuyển object theo mức truy cập thực tế mà không có phí truy xuất và không cần vận hành thêm. Đúng với mô tả đề."
+   },
+   {
+    "label": "D",
+    "text_vi": "S3 Glacier Flexible Retrieval",
+    "is_correct": false,
+    "analysis_vi": "Glacier Flexible Retrieval là lớp lưu trữ lưu trữ lâu dài giá thấp, truy xuất mất vài phút tới vài giờ và có phí truy xuất. Không phù hợp cho dữ liệu cần tự động chuyển qua lại với truy cập thường xuyên."
+   }
+  ],
+  "tips": [
+   "Automatically moves, no retrieval fees thì Intelligent-Tiering.",
+   "Pattern truy cập không đoán được thì Intelligent-Tiering.",
+   "Biết chắc dữ liệu ít truy cập thì Standard-IA hoặc Glacier rẻ hơn."
+  ],
+  "keywords": [
+   {
+    "term": "automatically optimizes",
+    "points_to": "Intelligent-Tiering"
+   },
+   {
+    "term": "no retrieval fees",
+    "points_to": "Đặc trưng của Intelligent-Tiering"
+   },
+   {
+    "term": "operational overhead",
+    "points_to": "Không cần lifecycle thủ công"
+   }
+  ],
+  "related_services": [
+   "Amazon S3",
+   "S3 Lifecycle",
+   "Amazon S3 Glacier"
+  ]
+ },
+ {
+  "id": "exam-core-diagnostic-2:103",
+  "question_vi": "Một công ty yêu cầu module mã hóa phần cứng vật lý chuyên dụng, trong đó khách hàng giữ quyền sở hữu và quản lý độc quyền các khóa mã hóa (FIPS 140-2 Level 3). Dịch vụ nào đáp ứng?",
+  "domain": "Domain 2: Security and Compliance",
+  "topic": "HSM chuyên dụng CloudHSM",
+  "explanation_vi": "Câu hỏi kiểm tra khác biệt giữa KMS và CloudHSM. AWS CloudHSM cung cấp HSM phần cứng chuyên dụng, single-tenant, trong VPC của bạn; chỉ bạn kiểm soát khóa và AWS không có quyền truy cập vào khóa. KMS là dịch vụ quản lý khóa nhiều khách hàng, AWS vận hành hạ tầng HSM nên mức độc quyền thấp hơn. Dấu hiệu dedicated hardware và exclusive control chỉ ra CloudHSM.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "AWS Key Management Service (AWS KMS)",
+    "is_correct": false,
+    "analysis_vi": "KMS là dịch vụ quản lý khóa được quản lý, tích hợp với nhiều dịch vụ AWS và dùng HSM dùng chung (multi-tenant) do AWS vận hành. Phù hợp đa số nhu cầu, nhưng không phải HSM chuyên dụng do khách hàng quản lý độc quyền."
+   },
+   {
+    "label": "B",
+    "text_vi": "AWS CloudHSM",
+    "is_correct": true,
+    "analysis_vi": "CloudHSM cấp HSM chuyên dụng đạt FIPS 140-2 Level 3 trong đó khách hàng toàn quyền tạo và quản lý khóa. Khớp với dedicated hardware và exclusive ownership."
+   },
+   {
+    "label": "C",
+    "text_vi": "AWS Secrets Manager",
+    "is_correct": false,
+    "analysis_vi": "Secrets Manager lưu và xoay vòng secret như mật khẩu, API key. Nó không phải module mã hóa phần cứng."
+   },
+   {
+    "label": "D",
+    "text_vi": "AWS Certificate Manager (ACM)",
+    "is_correct": false,
+    "analysis_vi": "ACM cấp phát và quản lý chứng chỉ SSL/TLS cho website và dịch vụ AWS. Nó không cung cấp HSM để lưu khóa mã hóa của khách hàng."
+   }
+  ],
+  "tips": [
+   "Dedicated hardware, exclusive control, FIPS 140-2 Level 3 thì chọn CloudHSM.",
+   "Cần quản lý khóa đơn giản, tích hợp sẵn thì dùng KMS.",
+   "ACM là chứng chỉ, Secrets Manager là secret, không phải khóa phần cứng."
+  ],
+  "keywords": [
+   {
+    "term": "dedicated physical hardware",
+    "points_to": "CloudHSM"
+   },
+   {
+    "term": "exclusive ownership",
+    "points_to": "Single-tenant"
+   },
+   {
+    "term": "FIPS 140-2 Level 3",
+    "points_to": "Chuẩn chứng nhận HSM"
+   }
+  ],
+  "related_services": [
+   "AWS CloudHSM",
+   "AWS KMS"
+  ]
+ },
+ {
+  "id": "exam-core-diagnostic-2:104",
+  "question_vi": "Chiến lược di chuyển lên cloud nào chuyển ứng dụng lên cloud với KHÔNG thay đổi kiến trúc hay code, thường gọi là \"lift and shift\"?",
+  "domain": "Domain 1: Cloud Concepts",
+  "topic": "Chiến lược migration Rehost",
+  "explanation_vi": "Câu hỏi kiểm tra các chiến lược migration (6 Rs). Rehost là lift and shift: chuyển nguyên ứng dụng sang cloud, không sửa code hay kiến trúc, thường thực hiện bằng công cụ như AWS Application Migration Service. Replatform chỉnh nhẹ để tận dụng dịch vụ managed, Repurchase chuyển sang sản phẩm SaaS, Refactor thiết kế lại để cloud-native. Mức thay đổi tăng dần từ Rehost tới Refactor.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Replatform",
+    "is_correct": false,
+    "analysis_vi": "Replatform (lift, tinker and shift) thực hiện chỉnh sửa nhỏ, ví dụ chuyển database sang RDS, để hưởng lợi từ cloud. Vì có thay đổi nên không phải không sửa gì."
+   },
+   {
+    "label": "B",
+    "text_vi": "Repurchase",
+    "is_correct": false,
+    "analysis_vi": "Repurchase thay ứng dụng cũ bằng sản phẩm khác, thường là SaaS, như chuyển CRM sang Salesforce. Đây là thay thế hoàn toàn chứ không phải lift and shift."
+   },
+   {
+    "label": "C",
+    "text_vi": "Rehost",
+    "is_correct": true,
+    "analysis_vi": "Rehost chuyển nguyên trạng ứng dụng lên cloud mà không đổi code hay kiến trúc. Đây chính là lift and shift."
+   },
+   {
+    "label": "D",
+    "text_vi": "Refactor",
+    "is_correct": false,
+    "analysis_vi": "Refactor thiết kế lại ứng dụng theo hướng cloud-native như microservices, serverless, thay đổi lớn nhất và tốn công nhất. Ngược hẳn với zero modifications."
+   }
+  ],
+  "tips": [
+   "Lift and shift là Rehost.",
+   "Mức thay đổi tăng dần: Rehost, Replatform, Refactor.",
+   "Repurchase là mua sản phẩm thay thế, thường là SaaS."
+  ],
+  "keywords": [
+   {
+    "term": "lift and shift",
+    "points_to": "Rehost"
+   },
+   {
+    "term": "zero modifications",
+    "points_to": "Không thay đổi code"
+   },
+   {
+    "term": "migration strategy",
+    "points_to": "6 Rs"
+   }
+  ],
+  "related_services": [
+   "AWS Application Migration Service",
+   "AWS Migration Hub"
+  ]
+ },
+ {
+  "id": "exam-core-diagnostic-2:105",
+  "question_vi": "Metric Billing của Amazon CloudWatch được lưu trữ ở đâu?",
+  "domain": "Domain 4: Billing, Pricing and Support",
+  "topic": "CloudWatch Billing metric",
+  "explanation_vi": "Câu hỏi kiểm tra một chi tiết vận hành về cảnh báo chi phí. Dữ liệu metric billing (EstimatedCharges) được tổng hợp và lưu duy nhất ở Region US East (N. Virginia), us-east-1, bất kể bạn dùng tài nguyên ở Region nào. Vì vậy để tạo billing alarm trong CloudWatch, bạn phải chuyển console sang us-east-1 và bật Receive Billing Alerts. Đây là kiến thức nền cho các câu về billing alarm.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Ở tất cả các Region như nhau",
+    "is_correct": false,
+    "analysis_vi": "Billing metric không được sao chép khắp các Region. Dữ liệu chỉ nằm ở một Region duy nhất nên bạn không tạo billing alarm ở Region khác được."
+   },
+   {
+    "label": "B",
+    "text_vi": "Chỉ ở us-east-1 (N. Virginia)",
+    "is_correct": true,
+    "analysis_vi": "Đúng: metric billing chỉ có ở us-east-1 và tổng hợp chi phí toàn cầu của tài khoản. Phải ở đây mới tạo được billing alarm."
+   },
+   {
+    "label": "C",
+    "text_vi": "Ở Region nơi management account được tạo",
+    "is_correct": false,
+    "analysis_vi": "Vị trí tạo tài khoản không quyết định nơi lưu metric billing. Dữ liệu luôn nằm ở us-east-1 dù tài khoản được tạo ở đâu."
+   },
+   {
+    "label": "D",
+    "text_vi": "Ở us-west-2 (Oregon)",
+    "is_correct": false,
+    "analysis_vi": "us-west-2 là một Region thông thường, không có vai trò đặc biệt với billing metric. Đây là phương án gây nhiễu."
+   }
+  ],
+  "tips": [
+   "Billing alarm thì nhớ us-east-1.",
+   "Metric billing là chi phí ước tính toàn tài khoản, không theo Region.",
+   "Muốn cảnh báo linh hoạt hơn có thể dùng AWS Budgets, không phụ thuộc Region."
+  ],
+  "keywords": [
+   {
+    "term": "Billing metric",
+    "points_to": "CloudWatch EstimatedCharges"
+   },
+   {
+    "term": "Only in",
+    "points_to": "us-east-1"
+   },
+   {
+    "term": "management account",
+    "points_to": "Tài khoản chính của Organizations"
+   }
+  ],
+  "related_services": [
+   "Amazon CloudWatch",
+   "AWS Budgets",
+   "AWS Billing and Cost Management"
+  ]
+ },
+ {
+  "id": "exam-core-diagnostic-2:106",
+  "question_vi": "Một công ty bán lẻ sắp ra mắt ứng dụng mua sắm di động phục vụ hơn 300.000 người tiêu dùng. Công ty cần dịch vụ cho phép khách hàng đăng ký, đăng nhập bằng tài khoản Google hoặc Apple, và tải ảnh hồ sơ lên Amazon S3 một cách an toàn. Công ty nên dùng dịch vụ nào?",
+  "domain": "Domain 2: Security and Compliance",
+  "topic": "Xác thực người dùng ứng dụng",
+  "explanation_vi": "Câu hỏi kiểm tra chọn dịch vụ identity cho người dùng cuối của ứng dụng. Amazon Cognito cung cấp User Pools để đăng ký, đăng nhập và federation với Google, Apple, Facebook, và Identity Pools để cấp thông tin xác thực AWS tạm thời cho phép tải file lên S3. Nó mở rộng tới hàng triệu người dùng. IAM, IAM Identity Center và Directory Service phục vụ nhân viên hay hạ tầng nội bộ chứ không phải khách hàng của app.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "AWS Identity and Access Management (IAM)",
+    "is_correct": false,
+    "analysis_vi": "IAM quản lý danh tính và quyền cho người vận hành và dịch vụ trong tài khoản AWS. Không nên tạo IAM user cho 300.000 người dùng cuối vì không đăng ký, không social sign-in và vượt giới hạn quản lý."
+   },
+   {
+    "label": "B",
+    "text_vi": "AWS IAM Identity Center",
+    "is_correct": false,
+    "analysis_vi": "IAM Identity Center cho nhân viên đăng nhập một lần (SSO) vào nhiều tài khoản AWS và ứng dụng doanh nghiệp. Nó hướng tới workforce, không dành cho người dùng khách hàng của ứng dụng di động."
+   },
+   {
+    "label": "C",
+    "text_vi": "Amazon Cognito",
+    "is_correct": true,
+    "analysis_vi": "Cognito xử lý đăng ký, đăng nhập, social sign-in (Google, Apple) và cấp quyền truy cập S3 tạm thời qua Identity Pools, mở rộng cho hàng triệu người dùng. Đáp ứng đủ yêu cầu."
+   },
+   {
+    "label": "D",
+    "text_vi": "AWS Directory Service",
+    "is_correct": false,
+    "analysis_vi": "Directory Service cung cấp Active Directory được quản lý cho mạng doanh nghiệp. Nó không dành cho đăng ký và đăng nhập của người dùng ứng dụng đại chúng."
+   }
+  ],
+  "tips": [
+   "Customer-facing app, social sign-in, mobile thì chọn Cognito.",
+   "Nhân viên đăng nhập nhiều account thì IAM Identity Center; người dùng ứng dụng thì Cognito.",
+   "Không bao giờ tạo IAM user cho người tiêu dùng cuối."
+  ],
+  "keywords": [
+   {
+    "term": "sign in with Google or Apple",
+    "points_to": "Cognito User Pools / federation"
+   },
+   {
+    "term": "300,000 consumers",
+    "points_to": "Quy mô lớn, customer identity"
+   },
+   {
+    "term": "upload to Amazon S3",
+    "points_to": "Cognito Identity Pools"
+   }
+  ],
+  "related_services": [
+   "Amazon Cognito",
+   "AWS IAM",
+   "AWS IAM Identity Center"
+  ]
+ },
+ {
+  "id": "exam-core-diagnostic-2:107",
+  "question_vi": "Một doanh nghiệp quản lý 50 tài khoản AWS trong AWS Organization. Công ty muốn nhân viên dùng một bộ thông tin đăng nhập doanh nghiệp để vào cổng truy cập và dễ dàng chuyển giữa các tài khoản AWS được cấp quyền và các ứng dụng SaaS bên thứ ba như Salesforce và Microsoft 365. Nên triển khai dịch vụ nào?",
+  "domain": "Domain 2: Security and Compliance",
+  "topic": "SSO đa tài khoản",
+  "explanation_vi": "Câu hỏi kiểm tra Single Sign-On cho workforce. AWS IAM Identity Center (trước đây là AWS SSO) quản lý tập trung quyền truy cập tới nhiều tài khoản trong AWS Organizations và các ứng dụng SaaS qua một cổng AWS access portal, kết nối được với identity source như AD hoặc IdP bên ngoài. STS cấp credential tạm thời nhưng không là cổng đăng nhập. Cognito dành cho khách hàng của ứng dụng.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "AWS IAM Identity Center",
+    "is_correct": true,
+    "analysis_vi": "Identity Center cung cấp SSO tập trung cho nhiều account trong Organization và ứng dụng SaaS qua access portal. Khớp với 50 accounts, một bộ credential, Salesforce, Microsoft 365."
+   },
+   {
+    "label": "B",
+    "text_vi": "AWS Security Token Service (STS)",
+    "is_correct": false,
+    "analysis_vi": "STS phát hành thông tin xác thực tạm thời cho IAM role hoặc federated user. Nó là cơ chế nền, không có cổng đăng nhập và quản lý tập trung để chuyển giữa các account và SaaS."
+   },
+   {
+    "label": "C",
+    "text_vi": "AWS Secrets Manager",
+    "is_correct": false,
+    "analysis_vi": "Secrets Manager lưu và xoay vòng secret như mật khẩu database. Nó không cung cấp SSO cho nhân viên."
+   },
+   {
+    "label": "D",
+    "text_vi": "Amazon Cognito",
+    "is_correct": false,
+    "analysis_vi": "Cognito phục vụ xác thực người dùng cuối của ứng dụng web và di động. Nó không dùng để cấp quyền truy cập vào nhiều tài khoản AWS cho nhân viên doanh nghiệp."
+   }
+  ],
+  "tips": [
+   "Multiple accounts, AWS Organizations, SSO, access portal thì IAM Identity Center.",
+   "Workforce thì Identity Center, customers thì Cognito.",
+   "Tên cũ AWS Single Sign-On vẫn xuất hiện trong đề."
+  ],
+  "keywords": [
+   {
+    "term": "single set of corporate credentials",
+    "points_to": "SSO"
+   },
+   {
+    "term": "50 AWS accounts inside an AWS Organization",
+    "points_to": "IAM Identity Center"
+   },
+   {
+    "term": "Salesforce and Microsoft 365",
+    "points_to": "SaaS application access"
+   }
+  ],
+  "related_services": [
+   "AWS IAM Identity Center",
+   "AWS Organizations",
+   "AWS STS"
+  ],
+  "answer_note": "AWS Single Sign-On (AWS SSO) đã được đổi tên thành AWS IAM Identity Center; đề dùng tên mới nên đáp án A vẫn đúng."
+ },
+ {
+  "id": "exam-core-diagnostic-2:108",
+  "question_vi": "Một công ty đang đánh giá bốn chiến lược disaster recovery (DR) cho khối lượng công việc đưa từ on-premises lên AWS. Công ty có ngân sách chặt và muốn chọn chiến lược có tổng chi phí vận hành liên tục THẤP NHẤT. Nên chọn chiến lược nào?",
+  "domain": "Domain 1: Cloud Concepts",
+  "topic": "Chi phí chiến lược DR",
+  "explanation_vi": "Câu hỏi kiểm tra so sánh bốn chiến lược DR theo chi phí. Backup and Restore không chạy compute hay database ở Region dự phòng, chỉ lưu backup (ví dụ S3), nên chi phí liên tục thấp nhất; đổi lại RTO và RPO dài nhất. Thứ tự chi phí tăng dần là Backup and Restore, Pilot Light, Warm Standby, Multi-Site Active-Active. Khi đề nhấn mạnh ngân sách thấp và có thể chấp nhận khôi phục chậm thì chọn Backup and Restore.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Multi-Site Active-Active",
+    "is_correct": false,
+    "analysis_vi": "Chạy toàn bộ môi trường ở nhiều site cùng lúc nên chi phí cao nhất, nhưng gần như không downtime. Chỉ chọn khi cần RTO, RPO rất thấp."
+   },
+   {
+    "label": "B",
+    "text_vi": "Warm Standby",
+    "is_correct": false,
+    "analysis_vi": "Giữ môi trường thu nhỏ luôn chạy, scale khi có sự cố. Chi phí liên tục cao hơn Pilot Light và Backup and Restore."
+   },
+   {
+    "label": "C",
+    "text_vi": "Pilot Light",
+    "is_correct": false,
+    "analysis_vi": "Chỉ giữ lõi (như database replica) chạy, còn ứng dụng tắt. Rẻ hơn Warm Standby nhưng vẫn có tài nguyên chạy liên tục nên đắt hơn Backup and Restore."
+   },
+   {
+    "label": "D",
+    "text_vi": "Backup and Restore",
+    "is_correct": true,
+    "analysis_vi": "Không có tài nguyên compute chạy ở site dự phòng cho tới khi thảm họa xảy ra, nên chi phí thấp nhất. Phải chấp nhận thời gian khôi phục dài."
+   }
+  ],
+  "tips": [
+   "Chi phí thấp nhất đi cùng RTO và RPO dài nhất.",
+   "Chi phí tăng dần: Backup and Restore, Pilot Light, Warm Standby, Active-Active.",
+   "Đề nhấn mạnh budget chặt thì chọn Backup and Restore."
+  ],
+  "keywords": [
+   {
+    "term": "LOWEST overall ongoing cost",
+    "points_to": "Backup and Restore"
+   },
+   {
+    "term": "no compute running",
+    "points_to": "Chỉ lưu backup"
+   },
+   {
+    "term": "DR strategies",
+    "points_to": "RTO/RPO"
+   }
+  ],
+  "related_services": [
+   "Amazon S3",
+   "AWS Backup",
+   "AWS Elastic Disaster Recovery"
+  ]
+ },
+ {
+  "id": "exam-core-diagnostic-2:109",
+  "question_vi": "Một doanh nghiệp dự định di chuyển hàng trăm máy ảo từ data center VMware tại chỗ sang các instance Amazon EC2 mà không đổi code và với downtime tối thiểu. Dịch vụ AWS nào cung cấp sao chép dữ liệu liên tục ở mức block, tự động, không gián đoạn và cutover để thực hiện lift-and-shift này?",
+  "domain": "Domain 3: Cloud Technology and Services",
+  "topic": "Migration lift-and-shift MGN",
+  "explanation_vi": "Câu hỏi kiểm tra chọn công cụ rehost server. AWS Application Migration Service (MGN) cài agent trên server nguồn, sao chép liên tục ở mức block vào vùng staging chi phí thấp trên AWS, rồi cutover sang EC2 với downtime tối thiểu, không đổi code. Discovery Service và Migration Evaluator phục vụ giai đoạn đánh giá, DMS chuyên di chuyển database. Hàng trăm VM và zero code changes là kịch bản của MGN.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "AWS Application Discovery Service",
+    "is_correct": false,
+    "analysis_vi": "Discovery Service thu thập dữ liệu cấu hình, mức sử dụng, dependency của server tại chỗ để lập kế hoạch. Nó không sao chép hay di chuyển máy ảo."
+   },
+   {
+    "label": "B",
+    "text_vi": "AWS Application Migration Service (AWS MGN)",
+    "is_correct": true,
+    "analysis_vi": "MGN sao chép liên tục ở mức block, tự động và cho cutover nhanh với downtime tối thiểu, đúng yêu cầu lift-and-shift hàng trăm VM sang EC2."
+   },
+   {
+    "label": "C",
+    "text_vi": "AWS Migration Evaluator",
+    "is_correct": false,
+    "analysis_vi": "Migration Evaluator phân tích hiện trạng để xây dựng business case và ước tính chi phí khi lên AWS. Nó là công cụ đánh giá, không thực hiện migration."
+   },
+   {
+    "label": "D",
+    "text_vi": "AWS Database Migration Service (AWS DMS)",
+    "is_correct": false,
+    "analysis_vi": "DMS di chuyển dữ liệu database với thay đổi tối thiểu thời gian dừng. Nó không sao chép toàn bộ máy ảo ở mức block để chạy trên EC2."
+   }
+  ],
+  "tips": [
+   "Continuous block-level replication và rehost thì chọn MGN.",
+   "Lập kế hoạch và đánh giá thì Discovery Service hoặc Migration Evaluator; thực hiện thì MGN hoặc DMS.",
+   "VM hoặc server nguyên cái thì MGN, chỉ dữ liệu database thì DMS."
+  ],
+  "keywords": [
+   {
+    "term": "block-level replication",
+    "points_to": "MGN"
+   },
+   {
+    "term": "VMware",
+    "points_to": "Server nguồn ảo hóa"
+   },
+   {
+    "term": "zero code changes",
+    "points_to": "Rehost"
+   }
+  ],
+  "related_services": [
+   "AWS Application Migration Service",
+   "AWS DMS",
+   "AWS Application Discovery Service"
+  ]
+ },
+ {
+  "id": "exam-core-diagnostic-2:110",
+  "question_vi": "Một trường đại học cần cho sinh viên kỹ thuật dùng một ứng dụng desktop mô phỏng CAD 3D độc quyền trên laptop Apple Mac và Chromebook cá nhân. Trường muốn phân phối ứng dụng qua trình duyệt web hiện đại mà không phải cấp và quản lý cả hệ điều hành desktop ảo cho từng sinh viên. Dịch vụ AWS nào phù hợp?",
+  "domain": "Domain 3: Cloud Technology and Services",
+  "topic": "Streaming ứng dụng AppStream",
+  "explanation_vi": "Câu hỏi kiểm tra phân biệt AppStream 2.0 và WorkSpaces. AppStream 2.0 stream từng ứng dụng desktop tới trình duyệt HTML5 trên bất kỳ thiết bị nào, ứng dụng chạy trên AWS nên máy sinh viên không cần cấu hình mạnh và không cần quản lý cả hệ điều hành ảo. WorkSpaces cấp desktop ảo hoàn chỉnh cho mỗi người dùng. Device Farm dùng để test, Connect là contact center.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Amazon WorkSpaces",
+    "is_correct": false,
+    "analysis_vi": "WorkSpaces cấp desktop ảo đầy đủ (VDI) cho từng người dùng, nghĩa là phải quản lý cả hệ điều hành mỗi người, trái với yêu cầu của đề."
+   },
+   {
+    "label": "B",
+    "text_vi": "Amazon AppStream 2.0",
+    "is_correct": true,
+    "analysis_vi": "AppStream 2.0 stream ứng dụng desktop tới trình duyệt, không cần cấp desktop hoàn chỉnh. Phù hợp ứng dụng CAD cho nhiều thiết bị."
+   },
+   {
+    "label": "C",
+    "text_vi": "AWS Device Farm",
+    "is_correct": false,
+    "analysis_vi": "Device Farm là dịch vụ kiểm thử ứng dụng trên thiết bị và trình duyệt thật. Nó không phân phối ứng dụng cho người dùng cuối."
+   },
+   {
+    "label": "D",
+    "text_vi": "Amazon Connect",
+    "is_correct": false,
+    "analysis_vi": "Amazon Connect là tổng đài (contact center) trên cloud. Nó không liên quan tới việc phân phối ứng dụng desktop."
+   }
+  ],
+  "tips": [
+   "Một ứng dụng qua trình duyệt, không cần desktop đầy đủ thì AppStream 2.0.",
+   "Cần cả desktop hoàn chỉnh cho mỗi nhân viên thì WorkSpaces.",
+   "Dấu hiệu BYOD (Mac, Chromebook) đi với streaming ứng dụng."
+  ],
+  "keywords": [
+   {
+    "term": "without provisioning full virtual desktop",
+    "points_to": "AppStream 2.0"
+   },
+   {
+    "term": "any modern web browser",
+    "points_to": "HTML5 streaming"
+   },
+   {
+    "term": "proprietary desktop application",
+    "points_to": "Application streaming"
+   }
+  ],
+  "related_services": [
+   "Amazon AppStream 2.0",
+   "Amazon WorkSpaces"
+  ]
+ },
+ {
+  "id": "exam-core-diagnostic-2:111",
+  "question_vi": "Trụ cột nào của AWS Well-Architected Framework có nguyên tắc thiết kế \"Perform operations as code\" và tập trung vào việc vận hành, giám sát hệ thống để liên tục cải thiện quy trình?",
+  "domain": "Domain 1: Cloud Concepts",
+  "topic": "Well-Architected: Operational Excellence",
+  "explanation_vi": "Câu hỏi kiểm tra ghép nguyên tắc với trụ cột. Operational Excellence tập trung vào chạy và giám sát hệ thống để tạo giá trị kinh doanh và liên tục cải tiến quy trình. Các nguyên tắc gồm thực hiện vận hành bằng code, thay đổi nhỏ có thể đảo ngược thường xuyên, tinh chỉnh quy trình, dự đoán lỗi và học từ sự cố vận hành. Các trụ cột khác có nguyên tắc riêng, nên đọc kỹ mô tả để khỏi nhầm.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Security",
+    "is_correct": false,
+    "analysis_vi": "Security tập trung bảo vệ dữ liệu, hệ thống: nguyên tắc như mạnh về identity, truy vết, bảo vệ dữ liệu. Perform operations as code không thuộc trụ cột này."
+   },
+   {
+    "label": "B",
+    "text_vi": "Reliability",
+    "is_correct": false,
+    "analysis_vi": "Reliability lo khả năng phục hồi và hoạt động đúng như mong đợi: tự động phục hồi, test recovery, scale ngang. Không phải trụ cột tập trung vào cải tiến quy trình vận hành."
+   },
+   {
+    "label": "C",
+    "text_vi": "Operational Excellence",
+    "is_correct": true,
+    "analysis_vi": "Operational Excellence gồm nguyên tắc perform operations as code, tập trung vào vận hành, giám sát và cải tiến liên tục. Khớp hoàn toàn với đề."
+   },
+   {
+    "label": "D",
+    "text_vi": "Performance Efficiency",
+    "is_correct": false,
+    "analysis_vi": "Performance Efficiency tập trung dùng tài nguyên tính toán hiệu quả như serverless, thử nghiệm thường xuyên. Nó không phải trụ cột về quy trình vận hành."
+   }
+  ],
+  "tips": [
+   "Operations as code, vận hành, cải tiến liên tục thì Operational Excellence.",
+   "Học thuộc từ khóa mỗi trụ cột: Security (bảo vệ), Reliability (phục hồi), Cost (chi phí), Performance (hiệu quả), Sustainability (bền vững).",
+   "Hiện có 6 trụ cột, gồm cả Sustainability."
+  ],
+  "keywords": [
+   {
+    "term": "Perform operations as code",
+    "points_to": "Operational Excellence"
+   },
+   {
+    "term": "running and monitoring systems",
+    "points_to": "Operational Excellence"
+   },
+   {
+    "term": "continually improve processes",
+    "points_to": "Cải tiến liên tục"
+   }
+  ],
+  "related_services": [
+   "AWS Well-Architected Tool",
+   "AWS CloudFormation"
+  ]
+ },
+ {
+  "id": "exam-core-diagnostic-2:112",
+  "question_vi": "Theo AWS Cloud Adoption Framework (CAF), góc nhìn (perspective) nào đóng vai trò cầu nối giữa công nghệ và kinh doanh, tập trung vào quản lý thay đổi tổ chức, mức thành thạo cloud và nâng cao kỹ năng cho nhân viên?",
+  "domain": "Domain 1: Cloud Concepts",
+  "topic": "Perspective CAF: People",
+  "explanation_vi": "Câu hỏi kiểm tra các perspective của AWS CAF. People Perspective là cầu nối giữa công nghệ và kinh doanh, lo cơ cấu tổ chức, văn hóa, lãnh đạo, khoảng trống kỹ năng và đào tạo để đội ngũ trở nên thành thạo cloud. Business lo chiến lược và giá trị, Governance lo quản lý rủi ro và danh mục, Operations lo vận hành dịch vụ cloud. CAF còn có Platform và Security.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Business Perspective",
+    "is_correct": false,
+    "analysis_vi": "Business perspective đảm bảo đầu tư cloud gắn với kết quả kinh doanh. Nó không tập trung vào kỹ năng và quản lý thay đổi của nhân sự."
+   },
+   {
+    "label": "B",
+    "text_vi": "People Perspective",
+    "is_correct": true,
+    "analysis_vi": "People perspective xử lý thay đổi tổ chức, văn hóa, cloud fluency và đào tạo nâng kỹ năng, là cầu nối giữa công nghệ và kinh doanh. Khớp mô tả."
+   },
+   {
+    "label": "C",
+    "text_vi": "Governance Perspective",
+    "is_correct": false,
+    "analysis_vi": "Governance perspective quản lý rủi ro, tuân thủ và danh mục dự án cloud. Nó không tập trung vào kỹ năng và văn hóa của nhân viên."
+   },
+   {
+    "label": "D",
+    "text_vi": "Operations Perspective",
+    "is_correct": false,
+    "analysis_vi": "Operations perspective bảo đảm vận hành khối lượng công việc cloud ổn định, giám sát và sự cố. Nó không bàn tới upskilling hay quản lý thay đổi tổ chức."
+   }
+  ],
+  "tips": [
+   "Skills gap, training, culture, change management thì People.",
+   "Sáu perspective: Business, People, Governance, Platform, Security, Operations.",
+   "Business, People, Governance là nhóm hướng business; Platform, Security, Operations là nhóm hướng kỹ thuật."
+  ],
+  "keywords": [
+   {
+    "term": "organizational change management",
+    "points_to": "People Perspective"
+   },
+   {
+    "term": "upskilling",
+    "points_to": "Đào tạo kỹ năng"
+   },
+   {
+    "term": "bridge between technology and business",
+    "points_to": "People Perspective"
+   }
+  ],
+  "related_services": [
+   "AWS Cloud Adoption Framework"
+  ]
+ },
+ {
+  "id": "exam-core-diagnostic-2:113",
+  "question_vi": "Một doanh nghiệp muốn giao phần quản lý vận hành hằng ngày hạ tầng AWS, gồm quản lý vá OS, giám sát liên tục, quản lý backup, xử lý sự cố và thực thi thay đổi, cho một đội chuyên gia AWS 24/7/365. Dịch vụ nào của AWS đáp ứng yêu cầu này?",
+  "domain": "Domain 4: Billing, Pricing and Support",
+  "topic": "Vận hành thuê ngoài AMS",
+  "explanation_vi": "Câu hỏi kiểm tra phân biệt các dịch vụ hỗ trợ và tư vấn của AWS. AWS Managed Services (AMS) vận hành và duy trì hạ tầng AWS thay khách hàng 24/7, xử lý patching, giám sát, incident, change và backup. Professional Services là đội tư vấn cho chiến lược và migration, Enterprise Support là hỗ trợ kỹ thuật và TAM chứ không vận hành thay, re:Post là cộng đồng hỏi đáp. Từ khóa offload day-to-day operations chỉ ra AMS.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "AWS Professional Services",
+    "is_correct": false,
+    "analysis_vi": "Professional Services là đội tư vấn của AWS giúp lập kế hoạch, thiết kế, di chuyển theo dự án. Họ không vận hành thay khách hàng liên tục hằng ngày."
+   },
+   {
+    "label": "B",
+    "text_vi": "AWS Managed Services (AMS)",
+    "is_correct": true,
+    "analysis_vi": "AMS tiếp nhận vận hành hạ tầng: patch, giám sát, incident, change, backup 24/7/365 bởi chuyên gia AWS. Đúng với việc offload day-to-day operations."
+   },
+   {
+    "label": "C",
+    "text_vi": "AWS Support Enterprise Plan",
+    "is_correct": false,
+    "analysis_vi": "Enterprise Support cung cấp hỗ trợ kỹ thuật, TAM và hướng dẫn kiến trúc, nhưng khách hàng vẫn tự vận hành hạ tầng. Gói này không thực thi thay đổi và vận hành thay bạn."
+   },
+   {
+    "label": "D",
+    "text_vi": "AWS re:Post",
+    "is_correct": false,
+    "analysis_vi": "re:Post là diễn đàn hỏi đáp cộng đồng do AWS vận hành. Nó không phải dịch vụ vận hành hạ tầng."
+   }
+  ],
+  "tips": [
+   "Offload operations, 24/7 managed thì AMS.",
+   "Tư vấn dự án thì Professional Services; hỗ trợ kỹ thuật thì AWS Support.",
+   "TAM tư vấn nhưng không vận hành thay."
+  ],
+  "keywords": [
+   {
+    "term": "offload day-to-day operational management",
+    "points_to": "AWS Managed Services"
+   },
+   {
+    "term": "24/7/365",
+    "points_to": "Dịch vụ vận hành liên tục"
+   },
+   {
+    "term": "OS patch management",
+    "points_to": "Hoạt động AMS đảm nhận"
+   }
+  ],
+  "related_services": [
+   "AWS Managed Services",
+   "AWS Professional Services",
+   "AWS Support"
+  ]
+ },
+ {
+  "id": "exam-core-diagnostic-2:114",
+  "question_vi": "Một thí sinh có ngôn ngữ mẹ đẻ không phải tiếng Anh chuẩn bị đăng ký thi AWS Certified Cloud Practitioner bằng tiếng Anh. Thí sinh có thể yêu cầu điều chỉnh thi (accommodation) chính thức nào trong cổng AWS Certification để kéo dài thời gian làm bài thêm 30 phút (từ 90 lên 120 phút)?",
+  "domain": "Domain 1: Cloud Concepts",
+  "topic": "Điều chỉnh thi ESL +30",
+  "explanation_vi": "Câu hỏi về chính sách thi chứng chỉ AWS, nằm ngoài blueprint kỹ thuật nhưng thường gặp trong tài liệu luyện thi. Thí sinh không có tiếng Anh là ngôn ngữ mẹ đẻ có thể xin ESL +30 Minutes accommodation trong mục Exam Accommodations của cổng AWS Certification, trước khi đặt lịch thi với Pearson VUE. Khi được duyệt, thời gian thi tăng từ 90 lên 120 phút. Các tên khác trong đáp án không phải chương trình chính thức.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "AWS Translator Allowance",
+    "is_correct": false,
+    "analysis_vi": "Đây không phải một accommodation chính thức của AWS Certification. Tên nghe hợp lý nhưng không tồn tại như một lựa chọn trong cổng."
+   },
+   {
+    "label": "B",
+    "text_vi": "ESL +30 Minutes Accommodation",
+    "is_correct": true,
+    "analysis_vi": "Đây là accommodation chính thức cho người không dùng tiếng Anh là ngôn ngữ mẹ đẻ, cộng thêm 30 phút và xin qua cổng AWS Certification trước khi đặt lịch."
+   },
+   {
+    "label": "C",
+    "text_vi": "AWS Pearson Special Time Credit",
+    "is_correct": false,
+    "analysis_vi": "Pearson VUE là đơn vị tổ chức thi nhưng không có chương trình tín dụng thời gian với tên này. Là phương án gây nhiễu."
+   },
+   {
+    "label": "D",
+    "text_vi": "Builder ID Extended Session Pass",
+    "is_correct": false,
+    "analysis_vi": "AWS Builder ID là tài khoản định danh cho nhà phát triển, không liên quan tới việc kéo dài thời gian thi. Tên này không phải accommodation chính thức."
+   }
+  ],
+  "tips": [
+   "Cụm ESL +30 Minutes là thuật ngữ chính thức, hãy nhớ nguyên văn.",
+   "Phải xin trước khi đặt lịch thi với Pearson VUE.",
+   "Với đáp án có tên nghe lạ, hãy nghi ngờ nếu bạn chưa từng thấy trong tài liệu chính thức."
+  ],
+  "keywords": [
+   {
+    "term": "not English native",
+    "points_to": "ESL"
+   },
+   {
+    "term": "additional 30 minutes",
+    "points_to": "ESL +30 Minutes"
+   },
+   {
+    "term": "AWS Certification portal",
+    "points_to": "Nơi yêu cầu accommodation"
+   }
+  ],
+  "related_services": [
+   "AWS Certification",
+   "Pearson VUE"
+  ]
+ },
+ {
+  "id": "exam-core-diagnostic-2:115",
+  "question_vi": "Một thí sinh vừa nhận thông báo đã đạt kỳ thi AWS Certified Cloud Practitioner (CLF-C02). Quyền lợi chính thức nào được cung cấp tự động trong mục Benefits của cổng AWS Certification để hỗ trợ việc học tiếp?",
+  "domain": "Domain 1: Cloud Concepts",
+  "topic": "Quyền lợi sau khi đạt chứng chỉ",
+  "explanation_vi": "Câu hỏi về chính sách chứng chỉ AWS, ngoài nội dung kỹ thuật của blueprint. Mỗi lần đạt một kỳ thi chứng chỉ AWS, thí sinh nhận một voucher giảm 50% cho kỳ thi tiếp theo, nhận trong mục Benefits của cổng AWS Certification và áp dụng khi đăng ký thi. Các quyền lợi như voucher miễn phí cho kỳ thi Professional, gói Enterprise Support miễn phí hay 500 USD credit không phải chế độ chuẩn.",
+  "options": [
+   {
+    "label": "A",
+    "text_vi": "Voucher miễn phí cho bất kỳ kỳ thi AWS cấp Professional",
+    "is_correct": false,
+    "analysis_vi": "Không có quyền lợi miễn phí thi Professional chỉ vì đạt Cloud Practitioner. Quyền lợi chuẩn là giảm giá chứ không miễn phí."
+   },
+   {
+    "label": "B",
+    "text_vi": "Voucher giảm giá 50% cho kỳ thi chứng chỉ AWS tiếp theo",
+    "is_correct": true,
+    "analysis_vi": "Đây là quyền lợi chuẩn: sau mỗi kỳ thi đạt, thí sinh nhận voucher giảm 50% cho kỳ thi kế tiếp, lấy trong mục Benefits và dùng khi thanh toán."
+   },
+   {
+    "label": "C",
+    "text_vi": "Truy cập miễn phí gói AWS Enterprise Support trong một năm",
+    "is_correct": false,
+    "analysis_vi": "Enterprise Support là gói trả phí đắt đỏ và không được tặng cho người đạt chứng chỉ. Đây là phương án phóng đại gây nhiễu."
+   },
+   {
+    "label": "D",
+    "text_vi": "500 USD AWS Promotional Cloud Credits",
+    "is_correct": false,
+    "analysis_vi": "Chứng chỉ không đi kèm credit cloud 500 USD tự động. Credit khuyến mại đến từ các chương trình khác như AWS Activate."
+   }
+  ],
+  "tips": [
+   "Nhớ quyền lợi chuẩn: voucher giảm 50% cho kỳ thi tiếp theo.",
+   "Đáp án nghe quá hào phóng (miễn phí, Enterprise Support) thường là bẫy.",
+   "Voucher dùng được cho kỳ thi tiếp theo ở các cấp độ khác nhau."
+  ],
+  "keywords": [
+   {
+    "term": "Benefits section",
+    "points_to": "Cổng AWS Certification"
+   },
+   {
+    "term": "50% off",
+    "points_to": "Voucher giảm giá"
+   },
+   {
+    "term": "passed",
+    "points_to": "Quyền lợi sau khi đạt"
+   }
+  ],
+  "related_services": [
+   "AWS Certification"
+  ]
+ }
+]

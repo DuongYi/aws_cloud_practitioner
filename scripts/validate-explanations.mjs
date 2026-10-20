@@ -6,7 +6,7 @@ import { join } from 'node:path';
 const [outDir, inDir] = process.argv.slice(2);
 const DOMAINS = ['Domain 1: Cloud Concepts', 'Domain 2: Security and Compliance', 'Domain 3: Cloud Technology and Services', 'Domain 4: Billing, Pricing and Support'];
 let bad = 0, total = 0, notes = 0;
-for (const f of readdirSync(outDir).filter((x) => /^exam-\d+\.json$/.test(x))) {
+for (const f of readdirSync(outDir).filter((x) => /^(exam-\d+|old-[\w-]+)\.json$/.test(x))) {
   const out = JSON.parse(readFileSync(join(outDir, f), 'utf8'));
   const input = inDir ? JSON.parse(readFileSync(join(inDir, f), 'utf8')) : null;
   const err = (id, m) => { bad++; console.log(`${f} ${id}: ${m}`); };

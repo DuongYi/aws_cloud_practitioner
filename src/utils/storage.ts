@@ -1,6 +1,5 @@
 import { ExamSet, ExamAttempt, ExamSession } from '../types';
 import { DEFAULT_EXAMS } from '../data/defaultExams';
-import { DUMP_EXAMS } from '../data/dumpExams';
 import { pushSession, removeSession, pushAttempt, pushBookmark, pushCustomExam, pushLecture, removeCustomExam } from './sync';
 
 const STORAGE_KEYS = {
@@ -43,9 +42,15 @@ export const deleteCustomExam = (examId: string): void => {
   }
 };
 
+// The imported question bank is large, so it is fetched on demand instead of being bundled into the first load.
+let dumpExams: ExamSet[] = [];
+export const loadDumpExams = async (): Promise<void> => {
+  if (dumpExams.length === 0) dumpExams = (await import('../data/dumpExams')).DUMP_EXAMS;
+};
+
 export const getAllExams = (): ExamSet[] => {
   const custom = getStoredCustomExams();
-  return [...DEFAULT_EXAMS, ...DUMP_EXAMS, ...custom];
+  return [...DEFAULT_EXAMS, ...dumpExams, ...custom];
 };
 
 export const getExamAttempts = (): ExamAttempt[] => {

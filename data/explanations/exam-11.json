@@ -439,37 +439,36 @@
   "question_vi": "Vì sao nên dùng Elastic Load Balancers với ứng dụng?",
   "domain": "Domain 3: Cloud Technology and Services",
   "topic": "Lợi ích Elastic Load Balancing",
-  "explanation_vi": "Câu hỏi kiểm tra vai trò của Elastic Load Balancing (ELB), vốn phân phối lưu lượng đến nhiều target (như EC2 instance) ở nhiều Availability Zone. Vì lưu lượng thay đổi liên tục, ELB tự mở rộng dung lượng của chính nó để xử lý biến động và chỉ gửi lưu lượng đến target khỏe mạnh qua health check. Nhờ đó ứng dụng sẵn sàng cao và chịu tải tốt. Đề có các lựa chọn bị chia cắt câu chữ, nhưng đáp án C là đáp án đúng về nội dung.",
+  "explanation_vi": "Elastic Load Balancing phân phối lưu lượng đến nhiều target và xử lý được lưu lượng mạng thay đổi liên tục, nên đây là lợi ích chính khi đặt ELB trước ứng dụng. ELB cũng kiểm tra sức khỏe của target và chỉ gửi lưu lượng tới target khỏe mạnh. Việc điều chỉnh số lượng instance là nhiệm vụ của Auto Scaling, không phải của ELB. ELB là dịch vụ trả phí theo giờ và theo lượng dữ liệu xử lý.",
   "options": [
    {
     "label": "A",
-    "text_vi": "Cho phép chuyển đổi từ Application Load (Balancer)",
+    "text_vi": "Cho phép chuyển đổi từ Application Load Balancer sang Classic Load Balancer",
     "is_correct": false,
-    "analysis_vi": "Sai vì ELB không có chức năng chuyển đổi giữa các loại load balancer. Mỗi loại như ALB, NLB, CLB là một tài nguyên riêng và phải tạo lại nếu muốn đổi."
+    "analysis_vi": "Các loại load balancer là các dịch vụ riêng, không có tính năng chuyển đổi qua lại giữa chúng. Hơn nữa Classic Load Balancer là thế hệ cũ, AWS khuyến nghị dùng ALB hoặc NLB cho workload mới."
    },
    {
     "label": "B",
-    "text_vi": "Balancers sang Classic Load Balancers (phần đứt câu của A)",
-    "is_correct": false,
-    "analysis_vi": "Sai vì đây là phần nối tiếp bị cắt của A và vẫn nói về việc chuyển đổi loại load balancer, không phải lợi ích của ELB. Classic Load Balancer còn là thế hệ cũ, AWS khuyên dùng ALB hoặc NLB."
+    "text_vi": "Xử lý được lưu lượng mạng thay đổi liên tục",
+    "is_correct": true,
+    "analysis_vi": "Đúng. ELB tự mở rộng năng lực xử lý của chính nó theo lưu lượng và phân phối đều đến các target khỏe mạnh, nên ứng dụng vẫn ổn định khi lưu lượng biến động."
    },
    {
     "label": "C",
-    "text_vi": "Chúng có khả năng xử lý các thay đổi liên tục của mô hình lưu lượng mạng",
-    "is_correct": true,
-    "analysis_vi": "Đúng vì ELB tự động co giãn để phân phối lưu lượng biến động giữa nhiều target và nhiều AZ. Đây là lợi ích chính khi dùng ELB cho tính sẵn sàng và khả năng mở rộng."
+    "text_vi": "Tự động điều chỉnh dung lượng",
+    "is_correct": false,
+    "analysis_vi": "Cách diễn đạt này dễ nhầm với Auto Scaling, dịch vụ mới là thứ thêm hoặc bớt EC2 instance theo nhu cầu. ELB chỉ phân phối lưu lượng đến các instance đang có, nó không tự tạo thêm instance."
    },
    {
     "label": "D",
-    "text_vi": "Tự động điều chỉnh dung lượng; được cung cấp miễn phí",
+    "text_vi": "Được cung cấp miễn phí",
     "is_correct": false,
-    "analysis_vi": "Sai vì ELB tính phí theo giờ và theo mức dùng (LCU), không miễn phí. Vế đầu nói về tự điều chỉnh dung lượng có phần đúng nhưng vế sau miễn phí làm cả đáp án sai."
+    "analysis_vi": "Elastic Load Balancing tính phí theo thời gian chạy và lượng dữ liệu xử lý, không miễn phí. Đây là bẫy thường gặp khi đề đưa ra một lợi ích nghe hấp dẫn nhưng sai về chi phí."
    }
   ],
   "tips": [
-   "Cảnh giác đáp án chứa hai ý, chỉ cần một ý sai (như miễn phí) là loại.",
-   "ELB gắn với từ khóa phân phối lưu lượng, health check, multi-AZ.",
-   "Phân biệt ELB (phân phối tải) với Auto Scaling (thêm bớt instance)."
+   "ELB lo phân phối lưu lượng và kiểm tra sức khỏe; thêm bớt instance là việc của Auto Scaling.",
+   "Thấy 'miễn phí' hay 'chuyển đổi giữa các loại ELB' thì nghi ngờ ngay, đó thường là đáp án nhiễu."
   ],
   "keywords": [
    {
@@ -481,7 +480,7 @@
    "Elastic Load Balancing",
    "Amazon EC2 Auto Scaling"
   ],
-  "answer_note": "Đề gốc bị chia cắt phương án A và B do lỗi định dạng; đáp án đúng vẫn là C. Ngoài ra Classic Load Balancer là thế hệ cũ, nên dùng ALB hoặc NLB."
+  "answer_note": "Đề gốc bị tách sai phương án A (chữ bị ngắt xuống dòng) và gộp hai phương án C, D thành một. Nội dung đã được khôi phục thành 4 phương án và đáp án đúng là xử lý được lưu lượng thay đổi liên tục."
  },
  {
   "id": "pe11-10",

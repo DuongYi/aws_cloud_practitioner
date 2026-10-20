@@ -39,6 +39,9 @@ interface ExamSimulatorProps {
   onSelectExam?: (examId: string, replace: boolean) => void;
 }
 
+/** Numeric ids (older built-in exams) repeat across exams, so they are namespaced by exam id. */
+const explanationKey = (examId: string, qid: string | number): string => (typeof qid === 'number' ? `${examId}:${qid}` : String(qid));
+
 export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAttempt, langMode, routeExamId, active, onSelectExam }) => {
   const [selectedExamId, setSelectedExamId] = useState<string>(
     exams.find((e) => e.id === routeExamId)?.id || exams[0]?.id || ''
@@ -74,15 +77,16 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
     if (!s) return false;
     // A paused exam or practice exam session is saved intentionally and valid until resumed or discarded
     if (s.paused || s.mode === 'practice') return true;
-    const secondsLeft = s.remainingSeconds ?? Math.ceil((s.endsAt - Date.now()) / 1000);
-    return secondsLeft > 0;
+    // A running (not paused) timed exam keeps counting down while the user is away, so judge it by the wall clock.
+    return Math.ceil((s.endsAt - Date.now()) / 1000) > 0;
   };
 
   // Detailed explanations (Supabase): whole exam on the result screen, current question in practice mode
-  const detailedIds = isExamCompleted && currentExam ? currentExam.questions.map((q) => q.id) : [];
+  const detailedIds = isExamCompleted && currentExam ? currentExam.questions.map((q) => explanationKey(currentExam.id, q.id)) : [];
   const detailed = useExplanations(detailedIds, isExamCompleted);
   const drillQuestionId = currentExam?.questions[currentQuestionIndex]?.id;
-  const drill = useExplanations(drillQuestionId !== undefined ? [drillQuestionId] : [], isExamActive && !isExamCompleted && examMode === 'practice');
+  const drillKey = drillQuestionId !== undefined && currentExam ? explanationKey(currentExam.id, drillQuestionId) : undefined;
+  const drill = useExplanations(drillKey !== undefined ? [drillKey] : [], isExamActive && !isExamCompleted && examMode === 'practice');
 
   // ---- In-progress sessions map: supports multiple exams at once ----
   const [savedSessions, setSavedSessions] = useState<Record<string, ExamSession>>(() => {
@@ -503,7 +507,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
                     }`}>
                       {isCorrect ? '✓ Đúng' : '✗ Sai'}
                     </span>
-                    <span className="font-mono text-slate-400">Câu hỏi #{q.id}</span>
+                    <span className="font-mono text-slate-400">Câu {currentExam.questions.findIndex((x) => x.id === q.id) + 1}</span>
                   </div>
                   <span className="rounded-md bg-slate-950 px-2 py-0.5 font-mono text-slate-400 text-[11px] border border-white/[0.06]">
                     {q.domain}
@@ -544,9 +548,9 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
                 </div>
 
                 {/* Explanation */}
-                {detailed.get(q.id) ? (
+                {detailed.get(explanationKey(currentExam.id, q.id)) ? (
                   <ExplanationPanel
-                    data={detailed.get(q.id)!}
+                    data={detailed.get(explanationKey(currentExam.id, q.id))!}
                     chosenLabels={userSelected.map((i) => String.fromCharCode(65 + i))}
                   />
                 ) : (
@@ -886,8 +890,8 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
 
           {/* Instant Drill Explanation (Only in practice mode) */}
           {examMode === 'practice' && selectedForCurrent.length > 0 && (
-            drill.get(currentQ.id) ? (
-              <div className="mt-4"><ExplanationPanel data={drill.get(currentQ.id)!} chosenLabels={selectedForCurrent.map((i) => String.fromCharCode(65 + i))} /></div>
+            drill.get(explanationKey(currentExam.id, currentQ.id)) ? (
+              <div className="mt-4"><ExplanationPanel data={drill.get(explanationKey(currentExam.id, currentQ.id))!} chosenLabels={selectedForCurrent.map((i) => String.fromCharCode(65 + i))} /></div>
             ) : (
             <div className="p-4 rounded-2xl bg-slate-950/80 border border-white/[0.08] text-xs sm:text-sm space-y-1.5 mt-4">
               <div className="font-bold text-amber-400 flex items-center gap-1.5">

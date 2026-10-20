@@ -1460,42 +1460,41 @@
   "question_vi": "Dịch vụ nào cung cấp kết nối mạng trong kiến trúc hybrid có AWS Cloud?",
   "domain": "Domain 3: Cloud Technology and Services",
   "topic": "Kết nối hybrid",
-  "explanation_vi": "Câu hỏi kiểm tra dịch vụ mạng cho hybrid. Đáp án theo đề gốc là A vì Amazon VPC là mạng ảo cách ly, điểm đến mà kết nối từ on-premises (VPN, Direct Connect) gắn vào. Tuy nhiên Direct Connect là dịch vụ trực tiếp kết nối mạng on-premises với AWS, nên cũng rất phù hợp. Directory Service là dịch vụ thư mục và API Gateway là cổng API, đều không là dịch vụ kết nối mạng.",
+  "explanation_vi": "Kiến trúc hybrid kết hợp hạ tầng tại chỗ với AWS Cloud, nên cần một đường kết nối mạng giữa hai phía. AWS Direct Connect cung cấp đường kết nối chuyên dụng, riêng tư từ trung tâm dữ liệu của khách hàng tới AWS, với băng thông ổn định và độ trễ thấp hơn đi qua Internet. Amazon VPC là mạng ảo bên trong AWS, bản thân nó không nối tới hạ tầng tại chỗ nếu thiếu Direct Connect hoặc VPN.",
   "options": [
    {
     "label": "A",
     "text_vi": "Amazon VPC",
-    "is_correct": true,
-    "analysis_vi": "VPC là mạng ảo của bạn trong AWS, nơi gắn VPN hoặc Direct Connect để nối với mạng tại chỗ. Theo đáp án gốc, đây là nền tảng kết nối của kiến trúc hybrid."
+    "is_correct": false,
+    "analysis_vi": "Sai. VPC là mạng riêng ảo nằm trong AWS. Muốn nối VPC với hạ tầng tại chỗ vẫn phải dùng thêm Direct Connect hoặc Site-to-Site VPN, nên VPC không phải dịch vụ cung cấp kết nối hybrid."
    },
    {
     "label": "B",
     "text_vi": "AWS Direct Connect",
-    "is_correct": false,
-    "analysis_vi": "Direct Connect nối trực tiếp mạng on-premises với AWS, nên cũng hợp lý trong hybrid. Tuy nhiên đề gốc chọn VPC làm đáp án."
+    "is_correct": true,
+    "analysis_vi": "Đúng. Direct Connect tạo đường kết nối mạng chuyên dụng từ data center của bạn tới AWS, là thành phần chính của kiến trúc hybrid khi cần băng thông ổn định và độ trễ thấp."
    },
    {
     "label": "C",
     "text_vi": "AWS Directory Service",
     "is_correct": false,
-    "analysis_vi": "Directory Service cung cấp Active Directory được quản lý để xác thực. Nó không cung cấp kết nối mạng."
+    "analysis_vi": "Sai. AWS Directory Service cung cấp thư mục Active Directory được quản lý để xác thực người dùng. Nó liên quan tới danh tính, không phải kết nối mạng."
    },
    {
     "label": "D",
     "text_vi": "Amazon API Gateway",
     "is_correct": false,
-    "analysis_vi": "API Gateway tạo, công bố và quản lý API cho ứng dụng. Nó là cổng API chứ không phải dịch vụ kết nối mạng on-premises với đám mây."
+    "analysis_vi": "Sai. API Gateway là dịch vụ tạo và quản lý API cho ứng dụng. Nó không cung cấp đường kết nối mạng giữa tại chỗ và AWS."
    }
   ],
   "tips": [
-   "Khi đề hỏi về kết nối hybrid, so sánh Direct Connect, VPN và VPC.",
-   "Loại dịch vụ thư mục và API.",
-   "Với đề thi thật, nếu có Direct Connect lẫn VPC thì đọc kỹ ý đề."
+   "'Hybrid network connectivity' thường là Direct Connect (đường riêng) hoặc Site-to-Site VPN (qua Internet, mã hóa).",
+   "VPC là nơi đặt tài nguyên trong AWS, không phải đường nối ra ngoài."
   ],
   "keywords": [
    {
     "term": "hybrid architecture",
-    "points_to": "VPC cộng Direct Connect hoặc VPN"
+    "points_to": "AWS Direct Connect / Site-to-Site VPN"
    }
   ],
   "related_services": [
@@ -1503,7 +1502,7 @@
    "AWS Direct Connect",
    "AWS Site-to-Site VPN"
   ],
-  "answer_note": "Đáp án gốc chọn A (Amazon VPC), nhưng Direct Connect (B) cũng là dịch vụ cung cấp kết nối mạng hybrid và thường được xem là đáp án phù hợp hơn. Giữ is_correct theo đề gốc."
+  "answer_note": "Đề gốc đánh dấu Amazon VPC. Dịch vụ cung cấp kết nối mạng riêng giữa hạ tầng tại chỗ và AWS trong kiến trúc hybrid là AWS Direct Connect (hoặc Site-to-Site VPN), nên đáp án đã được chỉnh thành B."
  },
  {
   "id": "pe17-29",

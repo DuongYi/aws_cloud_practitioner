@@ -20,14 +20,14 @@ const key = env.SUPABASE_SECRET_KEY;
 if (!url || !key) throw new Error('Missing SUPABASE_URL or SUPABASE_SECRET_KEY in .env.local');
 
 const dir = join(root, 'data', 'explanations');
-const files = readdirSync(dir).filter((f) => /^exam-\d+\.json$/.test(f)).sort((a, b) => parseInt(a.slice(5)) - parseInt(b.slice(5)));
+const files = readdirSync(dir).filter((f) => /^(exam-\d+|old-[\w-]+)\.json$/.test(f)).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
 
 let total = 0;
 for (const f of files) {
-  const examNo = f.match(/\d+/)[0];
+  const examId = f.startsWith('old-') ? f.slice(4, -5) : `dump-exam-${f.match(/\d+/)[0]}`;
   const rows = JSON.parse(readFileSync(join(dir, f), 'utf8')).map((q) => ({
     question_id: q.id,
-    exam_id: `dump-exam-${examNo}`,
+    exam_id: examId,
     question_vi: q.question_vi,
     domain: q.domain ?? null,
     topic: q.topic ?? null,

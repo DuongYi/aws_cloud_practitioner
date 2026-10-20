@@ -1569,36 +1569,35 @@
   "question_vi": "Dịch vụ nào sau đây thuộc trách nhiệm của khách hàng trong việc duy trì cấu hình hệ điều hành, vá bảo mật và mạng?",
   "domain": "Domain 2: Security and Compliance",
   "topic": "Shared Responsibility, IaaS",
-  "explanation_vi": "Câu hỏi kiểm tra mức độ trách nhiệm theo loại dịch vụ. Với dịch vụ hạ tầng như Amazon EC2, khách hàng quản lý guest OS, cấu hình, vá bảo mật, firewall và mạng, còn AWS chỉ lo hạ tầng vật lý và ảo hóa. Với dịch vụ managed như ElastiCache hay container managed như Fargate, AWS đảm nhận nhiều hơn, đặc biệt là OS và vá lỗi. Vì vậy dịch vụ khớp mô tả là EC2. Nhớ: càng managed, khách hàng càng ít việc vận hành.",
+  "explanation_vi": "Câu hỏi hỏi dịch vụ mà khách hàng phải tự duy trì cấu hình hệ điều hành, vá bảo mật và mạng. Amazon EC2 là IaaS: AWS lo hạ tầng vật lý và ảo hóa, còn khách hàng chịu trách nhiệm toàn bộ phần từ hệ điều hành guest trở lên, gồm vá lỗi, cấu hình, firewall và ứng dụng. Các dịch vụ managed như ElastiCache hay Fargate chuyển phần quản lý hệ điều hành sang AWS, khách hàng chỉ lo dữ liệu, cấu hình dịch vụ và quyền truy cập.",
   "options": [
    {
     "label": "A",
     "text_vi": "Amazon EC2",
-    "is_correct": false,
-    "analysis_vi": "Khách hàng tự quản lý hệ điều hành guest, bản vá, cấu hình security group và mạng cho instance. Đây là dịch vụ có phần trách nhiệm của khách lớn nhất trong ba lựa chọn."
+    "is_correct": true,
+    "analysis_vi": "Đúng. Với EC2 bạn nhận một máy ảo trống: tự chọn AMI, tự vá hệ điều hành, tự cấu hình security group và phần mềm. Đây là ví dụ kinh điển của trách nhiệm khách hàng trong mô hình IaaS."
    },
    {
     "label": "B",
     "text_vi": "Amazon ElastiCache",
-    "is_correct": true,
-    "analysis_vi": "ElastiCache là dịch vụ cache managed, AWS vá và duy trì OS cũng như engine bên dưới. Khách chủ yếu cấu hình cluster, truy cập mạng và dữ liệu."
+    "is_correct": false,
+    "analysis_vi": "Sai. ElastiCache là dịch vụ cache được quản lý, AWS vá hệ điều hành và phần mềm engine bên dưới. Khách hàng chỉ lo cấu hình cluster, quyền truy cập và dữ liệu."
    },
    {
     "label": "C",
     "text_vi": "AWS Fargate",
     "is_correct": false,
-    "analysis_vi": "Fargate chạy container serverless, AWS quản lý hạ tầng và OS chạy container. Khách chỉ lo image, ứng dụng và cấu hình quyền."
+    "analysis_vi": "Sai. Fargate là compute serverless cho container, AWS quản lý máy chủ và hệ điều hành host. Khách hàng chỉ lo image container, ứng dụng và quyền truy cập, không phải vá OS của host."
    }
   ],
   "tips": [
-   "OS configuration, patching, networking của guest là dấu hiệu của EC2 (IaaS).",
-   "Dịch vụ managed như RDS, ElastiCache, Fargate giảm trách nhiệm vận hành OS cho khách.",
-   "Hãy kiểm tra lại đáp án gốc khi thấy mâu thuẫn với nguyên tắc cơ bản."
+   "Thấy 'vá hệ điều hành' hoặc 'guest OS' thì nghĩ ngay tới EC2 (IaaS): khách hàng chịu trách nhiệm.",
+   "Dịch vụ managed (RDS, ElastiCache, Fargate, Lambda) thì AWS lo hệ điều hành."
   ],
   "keywords": [
    {
     "term": "operating system configuration, security patching",
-    "points_to": "Amazon EC2 (khách quản lý guest OS)"
+    "points_to": "Amazon EC2, IaaS, trách nhiệm khách hàng"
    }
   ],
   "related_services": [
@@ -1606,7 +1605,7 @@
    "Amazon ElastiCache",
    "AWS Fargate"
   ],
-  "answer_note": "Đề gốc đánh dấu B (Amazon ElastiCache) là đúng, nhưng theo Shared Responsibility Model của AWS thì khách hàng chịu trách nhiệm vá OS và cấu hình guest cho Amazon EC2 (đáp án A), còn ElastiCache là dịch vụ managed do AWS vá OS. Nhiều khả năng đáp án gốc bị sai hoặc đề bị lỗi."
+  "answer_note": "Đề gốc đánh dấu Amazon ElastiCache, nhưng ElastiCache là dịch vụ managed do AWS vá hệ điều hành. Theo Shared Responsibility Model, khách hàng tự quản lý hệ điều hành guest, bản vá và cấu hình mạng của Amazon EC2, nên đáp án đã được chỉnh thành Amazon EC2."
  },
  {
   "id": "pe15-32",
@@ -2008,48 +2007,51 @@
   "question_vi": "Chương trình AWS Compliance mang lại lợi ích nào sau đây cho khách hàng AWS? (Chọn hai)",
   "domain": "Domain 2: Security and Compliance",
   "topic": "AWS Compliance Program",
-  "explanation_vi": "Câu hỏi kiểm tra vai trò của chương trình tuân thủ AWS. AWS duy trì tài liệu về các khung tuân thủ phổ biến (B) và mở rộng sang khung mới khi chúng trở nên phù hợp với tải công việc của khách (E). AWS cũng được kiểm toán độc lập về bảo mật vật lý và dữ liệu của hạ tầng, nhưng điều này không có nghĩa tải công việc của khách tự động tuân thủ. Đề gốc đánh dấu A và B, trong đó A mâu thuẫn với nguyên tắc rằng khách hàng vẫn chịu trách nhiệm về tuân thủ phần của mình.",
+  "explanation_vi": "Chương trình AWS Compliance giúp khách hàng tin cậy hạ tầng của AWS: AWS được kiểm toán độc lập, duy trì tài liệu và chứng nhận cho các khung tuân thủ phổ biến (SOC, ISO 27001, PCI DSS...), và cam kết duy trì bảo mật vật lý cũng như bảo vệ dữ liệu ở phần mình chịu trách nhiệm. Chương trình này không biến workload của khách hàng thành tự động tuân thủ: theo Shared Responsibility Model, cách khách hàng cấu hình và sử dụng dịch vụ vẫn quyết định workload có tuân thủ hay không. Cần chọn đủ hai đáp án đúng.",
   "options": [
    {
     "label": "A",
     "text_vi": "Xác nhận tải công việc được lưu trữ tự động tuân thủ các control của khung tuân thủ được hỗ trợ",
-    "is_correct": true,
-    "analysis_vi": "AWS tuân thủ ở hạ tầng, nhưng khách hàng vẫn phải cấu hình đúng dịch vụ để workload của mình đạt tuân thủ. Phát biểu về tự động tuân thủ là quá mức."
+    "is_correct": false,
+    "analysis_vi": "Sai. AWS chỉ chịu trách nhiệm tuân thủ ở phần hạ tầng của mình. Workload của khách hàng có tuân thủ hay không còn tùy cách khách hàng cấu hình, quản lý quyền truy cập và dữ liệu, nên không có chuyện tự động tuân thủ."
    },
    {
     "label": "B",
     "text_vi": "AWS chịu trách nhiệm duy trì tài liệu khung tuân thủ phổ biến",
     "is_correct": true,
-    "analysis_vi": "AWS xuất bản báo cáo và tài liệu qua AWS Artifact và trang compliance. Khách hàng dùng chúng làm bằng chứng khi kiểm toán."
+    "analysis_vi": "Đúng. AWS công bố và duy trì tài liệu, báo cáo kiểm toán cho các khung tuân thủ phổ biến (qua AWS Artifact), giúp khách hàng dùng làm bằng chứng cho kiểm toán của mình."
    },
    {
     "label": "C",
     "text_vi": "Đảm bảo khách hàng rằng AWS duy trì bảo mật vật lý và bảo vệ dữ liệu",
-    "is_correct": false,
-    "analysis_vi": "Các báo cáo kiểm toán độc lập như SOC và ISO xác nhận AWS đáp ứng control về hạ tầng. Đây là lợi ích rõ ràng của chương trình."
+    "is_correct": true,
+    "analysis_vi": "Đúng. Các chứng nhận và báo cáo kiểm toán xác nhận AWS duy trì bảo mật vật lý của trung tâm dữ liệu và biện pháp bảo vệ dữ liệu ở phần thuộc trách nhiệm của AWS, đem lại sự an tâm cho khách hàng."
    },
    {
     "label": "D",
     "text_vi": "Đảm bảo dùng các khung tuân thủ mà nhà cung cấp cloud khác đang dùng",
     "is_correct": false,
-    "analysis_vi": "Không có chương trình nào của AWS bảo đảm đồng bộ với khung tuân thủ của nhà cung cấp khác. Mục tiêu là đáp ứng nhu cầu khách hàng."
+    "analysis_vi": "Sai. Chương trình không nhằm đồng bộ với các khung tuân thủ của nhà cung cấp cloud khác. AWS theo đuổi các chuẩn công nghiệp được công nhận rộng rãi, không phải bám theo đối thủ."
    },
    {
     "label": "E",
     "text_vi": "Sẽ áp dụng các khung tuân thủ mới khi chúng trở nên phù hợp với tải công việc của khách",
     "is_correct": false,
-    "analysis_vi": "AWS liên tục mở rộng danh sách chứng nhận và chương trình để phù hợp với nhu cầu thị trường và khách hàng."
+    "analysis_vi": "Sai trong ngữ cảnh câu này. AWS có bổ sung chứng nhận mới theo nhu cầu thị trường, nhưng đây không phải lợi ích cốt lõi của chương trình và không phải đáp án trong hai đáp án chuẩn của câu."
    }
   ],
   "tips": [
-   "AWS chịu trách nhiệm tuân thủ của hạ tầng, khách hàng chịu trách nhiệm tuân thủ của workload.",
-   "Cẩn thận phát biểu automatically compliant vì quá tuyệt đối.",
-   "AWS Artifact là nơi lấy tài liệu tuân thủ."
+   "'Compliance program' = bằng chứng AWS đã được kiểm toán (qua AWS Artifact), không phải bảo đảm workload của bạn tuân thủ.",
+   "Gặp đáp án nói 'tự động tuân thủ' thì loại: tuân thủ ở tầng workload luôn là trách nhiệm của khách hàng."
   ],
   "keywords": [
    {
-    "term": "AWS Compliance program",
-    "points_to": "Chứng nhận, báo cáo kiểm toán, AWS Artifact"
+    "term": "automatically compliant",
+    "points_to": "Bẫy: tuân thủ workload là việc của khách hàng"
+   },
+   {
+    "term": "compliance framework documentation",
+    "points_to": "AWS Artifact"
    }
   ],
   "related_services": [
@@ -2057,7 +2059,7 @@
    "AWS Config",
    "AWS Audit Manager"
   ],
-  "answer_note": "Đề gốc đánh dấu A và B. Phương án A dễ gây hiểu nhầm vì tuân thủ của khách vẫn phụ thuộc vào cách họ cấu hình, theo Shared Responsibility Model. Các phương án B, C, E đều mô tả đúng lợi ích của chương trình, nên đáp án chuẩn có thể khác với đáp án gốc."
+  "answer_note": "Đề gốc đánh dấu A và B, nhưng A nói AWS 'tự động làm cho workload của khách tuân thủ', điều này sai vì tuân thủ của workload phụ thuộc vào cách khách hàng cấu hình. Theo tài liệu AWS, hai lợi ích đúng là B và C, nên đáp án đã được chỉnh."
  },
  {
   "id": "pe15-41",
@@ -2112,49 +2114,48 @@
   "question_vi": "Trong mô hình trách nhiệm chia sẻ của AWS, kiểm soát vận hành nào sau đây người dùng thừa hưởng hoàn toàn từ AWS?",
   "domain": "Domain 2: Security and Compliance",
   "topic": "Inherited controls",
-  "explanation_vi": "Câu hỏi kiểm tra khái niệm inherited controls, tức các control khách hàng thừa hưởng hoàn toàn từ AWS mà không phải tự thực hiện. Đó là các control vật lý và môi trường, trong đó có bảo mật và quản lý data center (A). Patch management và configuration management là shared control, còn quản lý người dùng và truy cập (IAM) thuộc về khách hàng. Nhớ: inherited là thứ khách hàng không phải làm, thường liên quan đến vật lý.",
+  "explanation_vi": "Trong Shared Responsibility Model có ba loại kiểm soát: inherited (thừa hưởng hoàn toàn từ AWS), shared (hai bên cùng áp dụng) và customer specific (chỉ khách hàng). Kiểm soát vật lý và môi trường, như bảo vệ trung tâm dữ liệu, là ví dụ điển hình của inherited control: khách hàng không phải làm gì thêm. Vá lỗi và quản lý cấu hình là shared control, còn quản lý người dùng và quyền truy cập thuộc trách nhiệm của khách hàng.",
   "options": [
    {
     "label": "A",
     "text_vi": "Quản lý bảo mật data center",
-    "is_correct": false,
-    "analysis_vi": "Bảo vệ vật lý, điện, làm mát do AWS đảm nhận hoàn toàn. Khách hàng thừa hưởng control này mà không cần làm gì."
+    "is_correct": true,
+    "analysis_vi": "Đúng. An ninh vật lý của data center (kiểm soát ra vào, camera, bảo vệ, điện, làm mát) hoàn toàn do AWS đảm nhiệm. Khách hàng thừa hưởng mà không phải làm gì thêm."
    },
    {
     "label": "B",
     "text_vi": "Quản lý bản vá",
     "is_correct": false,
-    "analysis_vi": "Patch management là shared control: AWS vá hạ tầng và khách vá guest OS. Vì khách vẫn có phần việc nên không phải thừa hưởng hoàn toàn."
+    "analysis_vi": "Sai. Quản lý bản vá là shared control: AWS vá hạ tầng và dịch vụ của mình, còn khách hàng vá hệ điều hành guest và ứng dụng của họ."
    },
    {
     "label": "C",
     "text_vi": "Quản lý cấu hình",
     "is_correct": false,
-    "analysis_vi": "Configuration management cũng là shared control: AWS cấu hình hạ tầng, khách cấu hình guest OS và ứng dụng. Do đó chưa thể gọi là thừa hưởng hoàn toàn."
+    "analysis_vi": "Sai. Quản lý cấu hình cũng là shared control: AWS cấu hình thiết bị hạ tầng, khách hàng cấu hình hệ điều hành guest, database và ứng dụng của mình."
    },
    {
     "label": "D",
     "text_vi": "Quản lý người dùng và truy cập",
-    "is_correct": true,
-    "analysis_vi": "Tạo người dùng, cấp quyền và bật MFA là việc của khách hàng. AWS chỉ cung cấp công cụ IAM."
+    "is_correct": false,
+    "analysis_vi": "Sai. Quản lý người dùng và quyền truy cập (IAM) là trách nhiệm của khách hàng, AWS chỉ cung cấp công cụ. Đây không phải kiểm soát thừa hưởng."
    }
   ],
   "tips": [
-   "Inherited controls: physical and environmental.",
-   "Shared controls: patch, configuration, training.",
-   "Customer-specific: IAM, dữ liệu, bảo mật ứng dụng."
+   "Inherited = vật lý và môi trường (data center). Shared = patch, configuration, awareness và training. Customer specific = IAM, dữ liệu, ứng dụng.",
+   "Thấy 'fully inherit' thì chọn thứ gì thuộc về tòa nhà và phần cứng."
   ],
   "keywords": [
    {
-    "term": "fully inherit from AWS",
-    "points_to": "Physical and environmental controls"
+    "term": "fully inherit",
+    "points_to": "Kiểm soát vật lý và môi trường của AWS"
    }
   ],
   "related_services": [
    "AWS Artifact",
    "AWS IAM"
   ],
-  "answer_note": "Đề gốc đánh dấu D (User and access management) là đáp án đúng, nhưng theo AWS thì quản lý người dùng và truy cập là trách nhiệm của khách hàng, còn kiểm soát thừa hưởng hoàn toàn từ AWS là kiểm soát vật lý và môi trường, tức đáp án A (Security management of data center). Nhiều khả năng đáp án gốc bị sai."
+  "answer_note": "Đề gốc đánh dấu 'Quản lý người dùng và truy cập', nhưng đó là trách nhiệm của khách hàng. Kiểm soát thừa hưởng hoàn toàn từ AWS là kiểm soát vật lý và môi trường, tức quản lý bảo mật data center, nên đáp án đã được chỉnh thành A."
  },
  {
   "id": "pe15-43",

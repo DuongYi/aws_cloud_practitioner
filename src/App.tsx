@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, lazy, Suspense } from 'react';
 import { Header } from './components/Header';
 import { ExecutiveDashboard } from './components/ExecutiveDashboard';
 import { StudySections } from './components/StudySections';
-import { CheatSheetView } from './components/CheatSheetView';
 import { ExamSimulator } from './components/ExamSimulator';
-import { ExamManager } from './components/ExamManager';
-import { SECTIONS_DATA } from './data/sections';
+import type { SectionItem } from './types';
 import { supabase } from './utils/supabase';
 import { useRoute, navigate, buildPath, Tab } from './utils/router';
 import { syncAll } from './utils/sync';
@@ -14,6 +12,7 @@ import {
   applySyncedData,
   getStoredCustomExams, 
   getAllExams, 
+  loadDumpExams,
   getCompletedLectures, 
   toggleCompletedLecture, 
   getBookmarkedFacts, 
@@ -23,7 +22,22 @@ import {
 import { motion, useReducedMotion } from 'motion/react';
 import { Award, ShieldCheck, Heart, Sparkles } from 'lucide-react';
 
+const CheatSheetView = lazy(() => import('./components/CheatSheetView').then((m) => ({ default: m.CheatSheetView })));
+const ExamManager = lazy(() => import('./components/ExamManager').then((m) => ({ default: m.ExamManager })));
+
+const PageSkeleton = () => (
+  <div className="space-y-4 px-4 py-8 sm:px-6 lg:px-8" role="status" aria-label="Đang tải">
+    <div className="skeleton h-40 w-full" />
+    <div className="skeleton h-24 w-2/3" />
+    <div className="skeleton h-64 w-full" />
+  </div>
+);
+
 export default function App() {
+  // Large static content is loaded after the shell renders
+  const [sections, setSections] = useState<SectionItem[]>([]);
+  const [examsReady, setExamsReady] = useState(false);
+
   const route = useRoute();
   const activeTab = route.tab;
 
@@ -135,6 +149,14 @@ export default function App() {
     return () => sub.subscription.unsubscribe();
   }, []);
 
+  useEffect(() => {
+    import('./data/sections').then((m) => setSections(m.SECTIONS_DATA));
+    loadDumpExams().then(() => {
+      setAllExamsList(getAllExams());
+      setExamsReady(true);
+    });
+  }, []);
+
   const handleToggleCompleted = (lectureId: string) => {
     const updated = toggleCompletedLecture(lectureId);
     setCompletedLectures(updated);
@@ -151,12 +173,12 @@ export default function App() {
   };
 
   const totalLecturesCount = useMemo(() => {
-    return SECTIONS_DATA.reduce((acc, sec) => acc + sec.lectures.length, 0);
-  }, []);
+    return sections.reduce((acc, sec) => acc + sec.lectures.length, 0);
+  }, [sections]);
 
   const totalCoreFactsCount = useMemo(() => {
-    return SECTIONS_DATA.reduce((acc, sec) => acc + sec.quickExamFacts.length, 0);
-  }, []);
+    return sections.reduce((acc, sec) => acc + sec.quickExamFacts.length, 0);
+  }, [sections]);
 
   const switchTab = (tab: Tab | 'history') => {
     const target: Tab = tab === 'history' ? 'study' : tab;
@@ -188,9 +210,9 @@ export default function App() {
       <main id="main" className="mx-auto w-full max-w-[1440px] flex-1 pb-16 relative z-10">
         
         {/* Executive Readiness Dashboard (Displayed on Study & Home view) */}
-        {activeTab === 'study' && (
+        {activeTab === 'study' && sections.length > 0 && (
           <ExecutiveDashboard
-            sections={SECTIONS_DATA}
+            sections={sections}
             completedLectures={completedLectures}
             examAttempts={examAttempts}
             onNavigateTab={switchTab}
@@ -203,9 +225,11 @@ export default function App() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
         >
-          {activeTab === 'study' && (
+          {activeTab === 'study' && sections.length === 0 && <PageSkeleton />}
+
+          {activeTab === 'study' && sections.length > 0 && (
             <StudySections
-              sections={SECTIONS_DATA}
+              sections={sections}
               searchQuery={searchQuery}
               langMode={langMode}
               completedLectures={completedLectures}
@@ -217,28 +241,35 @@ export default function App() {
             />
           )}
 
-          {activeTab === 'cheatsheet' && <CheatSheetView />}
+          {activeTab === 'cheatsheet' && (
+            <Suspense fallback={<PageSkeleton />}>
+              <CheatSheetView />
+            </Suspense>
+          )}
 
           {activeTab === 'manage' && (
-            <ExamManager
-              customExams={getStoredCustomExams()}
-              onExamsUpdated={handleRefreshExams}
-              onSelectExamToTake={() => switchTab('exam')}
-            />
+            <Suspense fallback={<PageSkeleton />}>
+              <ExamManager
+                customExams={getStoredCustomExams()}
+                onExamsUpdated={handleRefreshExams}
+                onSelectExamToTake={() => switchTab('exam')}
+              />
+            </Suspense>
           )}
         </motion.div>
 
         {/* Kept mounted once opened so an exam in progress keeps its answers and timer while browsing other tabs */}
         {examMounted && (
           <div hidden={activeTab !== 'exam'}>
-            <ExamSimulator
+            {!examsReady && activeTab === 'exam' && <PageSkeleton />}
+            {examsReady && <ExamSimulator
               exams={allExamsList}
               langMode={langMode}
               onFinishAttempt={handleRefreshExams}
               active={route.tab === 'exam'}
               routeExamId={route.tab === 'exam' ? route.id : undefined}
               onSelectExam={(id, replace) => navigate(buildPath('exam', id), { replace })}
-            />
+            />}
           </div>
         )}
       </main>
@@ -263,7 +294,7 @@ export default function App() {
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 text-xs font-mono tabular-nums text-slate-400">
             <span className="rounded-xl border border-white/[0.06] bg-slate-900/90 px-3 py-1.5 text-slate-300">
-              {SECTIONS_DATA.length} chuyên đề • {totalLecturesCount} bài học • {totalCoreFactsCount} điểm cốt lõi • {allExamsList.length} bộ đề
+              {sections.length} chuyên đề • {totalLecturesCount} bài học • {totalCoreFactsCount} điểm cốt lõi • {allExamsList.length} bộ đề
             </span>
           </div>
 

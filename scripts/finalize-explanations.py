@@ -28,7 +28,7 @@ def fix_note(qid, note):
     return note
 
 stats = dict(trimmed=0, notes_fixed=0, text_fixed=0)
-for f in sorted(glob.glob(os.path.join(src, 'exam-*.json'))):
+for f in sorted(sorted(glob.glob(os.path.join(src, 'exam-*.json')) + glob.glob(os.path.join(src, 'old-*.json')))):
     data = json.load(open(f))
     for q in data:
         for o in q['options']:

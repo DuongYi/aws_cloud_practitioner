@@ -8468,13 +8468,13 @@
    {
     "question": "Why is it beneficial to use Elastic Load Balancers with applications?",
     "options": [
-     "They allow for the conversion from Application Load.",
-     "Balancers to Classic Load Balancers.",
+     "They allow for the conversion from Application Load Balancers to Classic Load Balancers.",
      "They are capable of handling constant changes in network traffic patterns.",
-     "They automatically adjust capacity. They are provided at no charge to users."
+     "They automatically adjust capacity.",
+     "They are provided at no charge to users."
     ],
     "correctAnswers": [
-     2
+     1
     ],
     "isMultipleResponse": false,
     "domain": "Domain 3: Cloud Technology and Services",
@@ -12017,7 +12017,7 @@
      "AWS Fargate"
     ],
     "correctAnswers": [
-     1
+     0
     ],
     "isMultipleResponse": false,
     "domain": "Domain 2: Security and Compliance",
@@ -12164,8 +12164,8 @@
      "It will adopt new compliance frameworks as they become relevant to customer workloads."
     ],
     "correctAnswers": [
-     0,
-     1
+     1,
+     2
     ],
     "isMultipleResponse": true,
     "domain": "Domain 2: Security and Compliance",
@@ -12197,7 +12197,7 @@
      "User and access management"
     ],
     "correctAnswers": [
-     3
+     0
     ],
     "isMultipleResponse": false,
     "domain": "Domain 2: Security and Compliance",
@@ -13623,7 +13623,7 @@
      "Amazon API Gateway"
     ],
     "correctAnswers": [
-     0
+     1
     ],
     "isMultipleResponse": false,
     "domain": "Domain 3: Cloud Technology and Services",
@@ -15810,9 +15810,10 @@
      "Use Amazon GuardDuty to validate configuration changes made to AWS resources"
     ],
     "correctAnswers": [
-     0
+     0,
+     2
     ],
-    "isMultipleResponse": false,
+    "isMultipleResponse": true,
     "domain": "Domain 1: Cloud Concepts",
     "explanation": "",
     "id": "pe20-10"
