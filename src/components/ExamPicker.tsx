@@ -460,10 +460,14 @@ export const ExamPicker: React.FC<ExamPickerProps> = ({
                         <span className="font-mono font-bold text-slate-200 tabular-nums">
                           {ex.questions.length} câu
                         </span>
-                        <span className="flex items-center gap-1 font-mono tabular-nums text-slate-400">
-                          <Clock className="h-3 w-3 text-orange-400" aria-hidden="true" />
-                          {ex.timeLimitMinutes} phút
-                        </span>
+                        {examMode === 'practice' ? (
+                          <span className="text-slate-400">Không tính giờ</span>
+                        ) : (
+                          <span className="flex items-center gap-1 font-mono tabular-nums text-slate-400">
+                            <Clock className="h-3 w-3 text-orange-400" aria-hidden="true" />
+                            {ex.timeLimitMinutes} phút
+                          </span>
+                        )}
                       </div>
 
                       {/* Status indicator */}
@@ -533,7 +537,7 @@ export const ExamPicker: React.FC<ExamPickerProps> = ({
           >
             {([
               ['strict', 'Thi Thật (Pearson VUE)', 'Bấm giờ chuẩn, ẩn đáp án đến khi nộp bài'],
-              ['practice', 'Luyện Tập (Kèm Giải Thích)', 'Xem đáp án và giải thích chi tiết ngay sau mỗi câu'],
+              ['practice', 'Luyện Tập (Giải Thích Ngay)', 'Không tính giờ. Xem đúng/sai và giải thích chi tiết ngay sau mỗi câu'],
             ] as const).map(([id, label, hint]) => (
               <button
                 key={id}

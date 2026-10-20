@@ -13,11 +13,12 @@ import {
   Flame, 
   CheckCircle2,
   Globe,
+  NotebookPen,
   ChevronDown,
   Check
 } from 'lucide-react';
 
-type Tab = 'study' | 'cheatsheet' | 'exam' | 'progress' | 'manage' | 'history';
+type Tab = 'study' | 'cheatsheet' | 'exam' | 'review' | 'progress' | 'manage' | 'history';
 type Lang = 'bilingual' | 'vi' | 'en';
 
 interface HeaderProps {
@@ -38,6 +39,7 @@ const TABS: { id: Tab; label: string; short: string; icon: React.ElementType }[]
   { id: 'study', label: 'Ôn luyện chuyên đề', short: 'Ôn luyện', icon: BookOpen },
   { id: 'cheatsheet', label: 'Bí kíp & Core Facts', short: 'Bí kíp', icon: Zap },
   { id: 'exam', label: 'Thi thử CLF-C02', short: 'Thi thử', icon: Award },
+  { id: 'review', label: 'Xem lại câu sai', short: 'Xem lại', icon: NotebookPen },
   { id: 'progress', label: 'Tiến độ & Thống kê', short: 'Tiến độ', icon: TrendingUp },
   { id: 'manage', label: 'Kho & Nhập đề', short: 'Kho đề', icon: PlusCircle },
 ];

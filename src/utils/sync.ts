@@ -239,6 +239,30 @@ export const fetchSessions = async (): Promise<ExamSession[]> => {
   return data.map((d) => d.state as ExamSession);
 };
 
+/**
+ * Two-way merge of the in-progress exams: uploads the local ones the cloud does not have
+ * (or that are newer) and returns the merged list. Called on sign-in, so a round started
+ * before logging in is kept instead of being lost, and a round started on another device
+ * can be continued here.
+ */
+export const syncSessions = async (local: ExamSession[]): Promise<ExamSession[]> => {
+  if (!supabase || !(await userId())) return [];
+  const merged = new Map<string, ExamSession>();
+  (await fetchSessions()).forEach((s) => s?.examId && merged.set(s.examId, s));
+
+  const toUpload: ExamSession[] = [];
+  local.forEach((s) => {
+    if (!s?.examId) return;
+    const cloud = merged.get(s.examId);
+    if (!cloud || s.updatedAt > cloud.updatedAt) {
+      merged.set(s.examId, s);
+      toUpload.push(s);
+    }
+  });
+  await Promise.all(toUpload.map((s) => pushSession(s, true)));
+  return [...merged.values()];
+};
+
 export const fetchSession = async (examId?: string): Promise<ExamSession | null> => {
   if (!supabase || !(await userId())) return null;
   let q = supabase.from('exam_sessions').select('state');

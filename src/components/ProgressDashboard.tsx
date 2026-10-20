@@ -185,6 +185,20 @@ export const ProgressDashboard: React.FC<ProgressDashboardProps> = ({ attempts, 
             </button>
           )}
 
+          {wrongCount > 0 && (
+            <button
+              onClick={() => navigate(buildPath('review'))}
+              className="flex w-full items-center gap-4 rounded-2xl border border-white/[0.08] bg-slate-900/60 p-4 text-left hover:bg-slate-800/80"
+            >
+              <BookOpen className="h-5 w-5 shrink-0 text-slate-300" aria-hidden="true" />
+              <span className="min-w-0 flex-1">
+                <span className="block text-sm font-semibold text-slate-50">Xem lại câu sai kèm giải thích</span>
+                <span className="block text-xs text-slate-300">Đọc lại đáp án bạn chọn, đáp án đúng và lý do, không cần làm lại bài</span>
+              </span>
+              <ArrowRight className="h-4 w-4 shrink-0 text-slate-400" aria-hidden="true" />
+            </button>
+          )}
+
           {weak.length === 0 && untouched.length < summary.domains.length && (
             <p className="rounded-2xl border border-emerald-500/30 bg-emerald-500/[0.06] p-4 text-sm leading-relaxed text-emerald-100">
               Các Domain bạn đã luyện đều từ 70% trở lên. Hãy làm thêm đề tổng hợp 65 câu để kiểm tra trong điều kiện thi thật.
@@ -245,7 +259,7 @@ export const ProgressDashboard: React.FC<ProgressDashboardProps> = ({ attempts, 
                   <td className="max-w-[26ch] truncate py-2.5 pr-4 text-slate-200">{a.examTitle.replace(/\s*\([^)]*\)\s*$/, '')}</td>
                   <td className={`py-2.5 pr-4 text-right font-mono tabular-nums ${a.passed ? 'text-emerald-400' : 'text-rose-400'}`}>{a.score}</td>
                   <td className="py-2.5 pr-4 text-right font-mono tabular-nums text-slate-300">{a.correctCount}/{a.totalQuestions}</td>
-                  <td className="py-2.5 text-right font-mono tabular-nums text-slate-400">{mmss(a.timeSpentSeconds)}</td>
+                  <td className="py-2.5 text-right font-mono tabular-nums text-slate-400">{a.timeSpentSeconds > 0 ? mmss(a.timeSpentSeconds) : '—'}</td>
                 </tr>
               ))}
             </tbody>

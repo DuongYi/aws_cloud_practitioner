@@ -28,6 +28,8 @@ interface ResultSummaryProps {
   onRetry: () => void;
   onPickOther: () => void;
   onJumpToQuestion: (id: string | number) => void;
+  /** False for an untimed practice round: the time tile has nothing to report. */
+  showTime?: boolean;
 }
 
 const PASS_RATIO = 0.7;
@@ -102,6 +104,7 @@ export const ResultSummary: React.FC<ResultSummaryProps> = ({
   onRetry,
   onPickOther,
   onJumpToQuestion,
+  showTime = true,
 }) => {
   const reduce = useReducedMotion();
   const passed = score >= exam.passingScore;
@@ -190,10 +193,21 @@ export const ResultSummary: React.FC<ResultSummaryProps> = ({
             </div>
 
             <div className="machined-inner rounded-2xl p-4">
-              <dt className="text-[11px] font-semibold text-slate-400">Thời gian làm bài</dt>
-              <dd className="mt-1 font-mono text-sm font-bold text-slate-200">
-                {fmtTime(Math.max(0, timeSpentSeconds))}
-              </dd>
+              {showTime ? (
+                <>
+                  <dt className="text-[11px] font-semibold text-slate-400">Thời gian làm bài</dt>
+                  <dd className="mt-1 font-mono text-sm font-bold text-slate-200">
+                    {fmtTime(Math.max(0, timeSpentSeconds))}
+                  </dd>
+                </>
+              ) : (
+                <>
+                  <dt className="text-[11px] font-semibold text-slate-400">Câu chưa trả lời</dt>
+                  <dd className="mt-1 font-mono text-2xl font-bold tabular-nums text-slate-200">
+                    {total - Object.values(userAnswers).filter((a) => a.length > 0).length}
+                  </dd>
+                </>
+              )}
             </div>
 
             <div className="machined-inner rounded-2xl p-4">

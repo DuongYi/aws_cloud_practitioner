@@ -44,6 +44,8 @@ export interface AnswerEvent {
   /** Seconds spent, when known. */
   seconds: number;
   examId: string;
+  /** Option indices the user picked, so a review screen can show the chosen answer. */
+  selected: number[];
 }
 
 /** Every recorded answer in time order: from submitted exams and from practice answers checked on the spot. */
@@ -75,13 +77,14 @@ export const buildAnswerEvents = (exams: ExamSet[], attempts: ExamAttempt[], pra
         at: att.date,
         seconds: att.questionTimes?.[rawId] ?? 0,
         examId: att.examId,
+        selected,
       });
     });
   });
 
   practice.forEach((p) => {
     const q = byKey.get(p.key);
-    if (q) events.push({ key: p.key, question: q, right: p.correct, at: p.at, seconds: p.seconds, examId: p.examId });
+    if (q) events.push({ key: p.key, question: q, right: p.correct, at: p.at, seconds: p.seconds, examId: p.examId, selected: p.selected ?? [] });
   });
 
   return events.sort((a, b) => a.at.localeCompare(b.at));
@@ -125,4 +128,38 @@ export const buildNotebookExam = (entries: WrongEntry[]): ExamSet | null => {
     totalScore: 1000,
     questions,
   };
+};
+
+/** One question as it should appear on a review screen: the latest answer to it, plus how often it was missed. */
+export interface ReviewEntry {
+  key: string;
+  question: ExamQuestion;
+  /** What the user picked the last time they answered it. */
+  selected: number[];
+  right: boolean;
+  at: string;
+  timesWrong: number;
+  timesAnswered: number;
+}
+
+/** Every question answered at least once, newest answer first. Wrong ones are the ones with `right === false`. */
+export const collectReviewEntries = (
+  exams: ExamSet[],
+  attempts: ExamAttempt[],
+  practice: PracticeAnswer[] = []
+): ReviewEntry[] => {
+  const state = new Map<string, ReviewEntry>();
+  buildAnswerEvents(exams, attempts, practice).forEach((e) => {
+    const prev = state.get(e.key);
+    state.set(e.key, {
+      key: e.key,
+      question: e.question,
+      selected: e.selected,
+      right: e.right,
+      at: e.at,
+      timesWrong: (prev?.timesWrong ?? 0) + (e.right ? 0 : 1),
+      timesAnswered: (prev?.timesAnswered ?? 0) + 1,
+    });
+  });
+  return [...state.values()].sort((a, b) => b.at.localeCompare(a.at));
 };

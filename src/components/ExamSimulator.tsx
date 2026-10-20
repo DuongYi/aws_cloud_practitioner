@@ -25,7 +25,7 @@ import {
   ListOrdered
 } from 'lucide-react';
 import { recordPracticeAnswer, saveExamAttempt, getAllExamSessions, saveExamSession, clearExamSession, adoptCloudSessions } from '../utils/storage';
-import { fetchSessions } from '../utils/sync';
+import { syncSessions } from '../utils/sync';
 import { ExamPicker } from './ExamPicker';
 import { ResultSummary } from './ResultSummary';
 import { ExplanationPanel } from './ExplanationPanel';
@@ -46,12 +46,14 @@ interface ExamSimulatorProps {
   onPracticeRecorded?: () => void;
   attempts?: ExamAttempt[];
   practice?: PracticeAnswer[];
+  /** Bumped by App after every cloud sync, so the in-progress exams are re-read on sign-in. */
+  syncNonce?: number;
 }
 
 /** Numeric ids (older built-in exams) repeat across exams, so they are namespaced by exam id. */
 const explanationKey = (examId: string, qid: string | number): string => (typeof qid === 'number' ? `${examId}:${qid}` : String(qid));
 
-export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAttempt, langMode, routeExamId, active, onSelectExam, onPracticeRecorded, attempts = [], practice = [] }) => {
+export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAttempt, langMode, routeExamId, active, onSelectExam, onPracticeRecorded, attempts = [], practice = [], syncNonce = 0 }) => {
   const [selectedExamId, setSelectedExamId] = useState<string>(
     exams.find((e) => e.id === routeExamId)?.id || exams[0]?.id || ''
   );
@@ -64,6 +66,8 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
   }, [selectedExamId, active]);
   const [isExamActive, setIsExamActive] = useState<boolean>(false);
   const [examMode, setExamMode] = useState<'strict' | 'practice'>('strict');
+  // Practice mode is untimed on purpose: no countdown, no per-question clock, no auto-submit.
+  const isPractice = examMode === 'practice';
   
   // Active test state
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
@@ -129,10 +133,12 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
     timeRemainingRef.current = timeRemainingSeconds;
   }, [timeRemainingSeconds]);
 
+  // Runs on mount and again after every cloud sync (i.e. right after signing in), so rounds
+  // left half-finished here or on another device come back instead of starting over.
   useEffect(() => {
     let alive = true;
-    fetchSessions().then((clouds) => {
-      if (!alive) return;
+    syncSessions(Object.values(getAllExamSessions())).then((clouds) => {
+      if (!alive || clouds.length === 0) return;
       const adoptedMap = adoptCloudSessions(clouds);
       const valid: Record<string, ExamSession> = {};
       Object.entries(adoptedMap).forEach(([id, s]) => {
@@ -141,7 +147,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
       setSavedSessions(valid);
     });
     return () => { alive = false; };
-  }, []);
+  }, [syncNonce]);
 
   // Save after every change of answers, flags, position (not every timer tick).
   useEffect(() => {
@@ -256,7 +262,9 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
       setSavedSessions((prev) => ({ ...prev, [currentExam.id]: pausedSession }));
       const answered = Object.values(userAnswers).filter((a) => a.length > 0).length;
       const minsLeft = Math.max(1, Math.ceil(timeRemainingSeconds / 60));
-      const base = `Tiến độ đề "${currentExam.title}": ${answered}/${currentExam.questions.length} câu (còn ${minsLeft} phút).`;
+      const base = isPractice
+        ? `Tiến độ đề "${currentExam.title}": ${answered}/${currentExam.questions.length} câu.`
+        : `Tiến độ đề "${currentExam.title}": ${answered}/${currentExam.questions.length} câu (còn ${minsLeft} phút).`;
       setSavedToast(`${base} Đang lưu lên cloud...`);
       cloud.then((ok) => {
         setSavedToast(
@@ -294,9 +302,9 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
     });
   };
 
-  // Timer effect during active strict exam
+  // Timer effect during active strict exam (practice mode is untimed)
   useEffect(() => {
-    if (!isExamActive || isExamCompleted || isPaused) return;
+    if (!isExamActive || isExamCompleted || isPaused || isPractice) return;
 
     const timer = setInterval(() => {
       setTimeRemainingSeconds((prev) => Math.max(0, prev - 1));
@@ -308,7 +316,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [isExamActive, isExamCompleted, isPaused]);
+  }, [isExamActive, isExamCompleted, isPaused, isPractice]);
 
   useEffect(() => {
     if (!isExamActive || isExamCompleted) setIsPaused(false);
@@ -316,8 +324,8 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
 
   // Time is up: submit using the latest answers (finishRef always points at the newest render's closure).
   useEffect(() => {
-    if (isExamActive && !isExamCompleted && !isPaused && timeRemainingSeconds <= 0) finishRef.current();
-  }, [timeRemainingSeconds, isExamActive, isExamCompleted, isPaused]);
+    if (isExamActive && !isExamCompleted && !isPaused && !isPractice && timeRemainingSeconds <= 0) finishRef.current();
+  }, [timeRemainingSeconds, isExamActive, isExamCompleted, isPaused, isPractice]);
 
   const handleStartExam = () => {
     if (!currentExam) return;
@@ -421,7 +429,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
     const totalQuestions = currentExam.questions.length;
     const scaledScore = Math.round((correctCount / (totalQuestions || 1)) * 900 + 100);
     const passed = scaledScore >= currentExam.passingScore;
-    const timeSpent = (currentExam.timeLimitMinutes * 60) - timeRemainingSeconds;
+    const timeSpent = isPractice ? 0 : (currentExam.timeLimitMinutes * 60) - timeRemainingSeconds;
 
     const attempt: ExamAttempt = {
       id: `attempt-${Date.now()}`,
@@ -436,8 +444,8 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
       domainScores,
       userAnswers,
       flaggedQuestionIds: Array.from(flaggedQuestions),
-      questionTimes: questionTimesRef.current,
-      timeLimitSeconds: currentExam.timeLimitMinutes * 60,
+      questionTimes: isPractice ? {} : questionTimesRef.current,
+      timeLimitSeconds: isPractice ? undefined : currentExam.timeLimitMinutes * 60,
     };
 
     saveExamAttempt(attempt);
@@ -501,6 +509,17 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
   const mmss = (sec: number) => `${Math.floor(Math.abs(sec) / 60)}:${String(Math.abs(sec) % 60).padStart(2, '0')}`;
   const paceState: 'ahead' | 'ontrack' | 'behind' =
     Math.abs(paceDelta) < targetPerQ * 0.5 ? 'ontrack' : paceDelta > 0 ? 'ahead' : 'behind';
+  const isRightSelection = (q: ExamQuestion, sel: number[]) =>
+    sel.length === q.correctAnswers.length && sel.every((a) => q.correctAnswers.includes(a));
+  /** Practice mode: the outcome shown on the question board, once that answer has been checked. */
+  const practiceOutcome = (q: ExamQuestion): 'correct' | 'wrong' | null => {
+    if (!isPractice || !checkedQuestions.has(q.id)) return null;
+    return isRightSelection(q, userAnswers[q.id] || []) ? 'correct' : 'wrong';
+  };
+  const practiceCorrect = isPractice ? currentExam.questions.filter((q) => practiceOutcome(q) === 'correct').length : 0;
+  const practiceWrong = isPractice ? currentExam.questions.filter((q) => practiceOutcome(q) === 'wrong').length : 0;
+  const practiceChecked = practiceCorrect + practiceWrong;
+
   const planText = `Gợi ý phân bổ ${currentExam.timeLimitMinutes} phút cho ${totalQ} câu: lượt 1 trả lời hết, khoảng ${firstPassPerQ} giây mỗi câu (~${Math.round(limitSeconds * 0.65 / 60)} phút); ~${Math.round(limitSeconds * 0.25 / 60)} phút cho các câu gắn cờ; ~${Math.round(limitSeconds * 0.1 / 60)} phút cuối để soát lại.`;
 
   // If completed, show Results Screen
@@ -538,7 +557,8 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
           exam={currentExam}
           score={scaledScore}
           correctCount={correctCount}
-          timeSpentSeconds={currentExam.timeLimitMinutes * 60 - timeRemainingSeconds}
+          timeSpentSeconds={isPractice ? 0 : currentExam.timeLimitMinutes * 60 - timeRemainingSeconds}
+          showTime={!isPractice}
           domainScores={domainScores}
           userAnswers={userAnswers}
           flagged={flaggedQuestions}
@@ -552,6 +572,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
           }}
         />
 
+        {!isPractice && (
         <TimeStats
           exam={currentExam}
           questionTimes={questionTimes}
@@ -564,6 +585,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
             );
           }}
         />
+        )}
 
         {/* Review Answers Filter Bar */}
         <div className="machined-card rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-sm">
@@ -712,7 +734,18 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5">
+          {/* Practice mode is untimed: the live score replaces the clock */}
+          {isPractice && (
+            <div className="flex items-center gap-2 rounded-xl border border-white/[0.08] bg-slate-800/90 px-3 py-1.5 text-xs font-semibold">
+              <span className="text-slate-400">Luyện tập</span>
+              <span className="font-mono tabular-nums text-emerald-400">{practiceCorrect} đúng</span>
+              <span className="text-slate-600">/</span>
+              <span className="font-mono tabular-nums text-rose-400">{practiceWrong} sai</span>
+            </div>
+          )}
+
           {/* Pause / resume (the question stays readable while paused) */}
+          {!isPractice && (
           <button
             onClick={isPaused ? handleUnpause : handlePause}
             aria-pressed={isPaused}
@@ -724,6 +757,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
             {isPaused ? <Play className="h-3.5 w-3.5 fill-current" aria-hidden="true" /> : <Pause className="h-3.5 w-3.5" aria-hidden="true" />}
             <span className="hidden sm:inline">{isPaused ? 'Tiếp tục' : 'Tạm dừng'}</span>
           </button>
+          )}
 
           {/* Zoom text control */}
           <button
@@ -735,7 +769,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
           </button>
 
           {/* Pace: ahead / behind an even split of the time limit */}
-          {usedSeconds > 60 && (
+          {!isPractice && usedSeconds > 60 && (
             <div className="hidden md:flex lg:hidden flex-col items-end leading-tight" title={planText}>
               <span className={`text-[11px] font-semibold ${paceState === 'behind' ? 'text-rose-300' : paceState === 'ahead' ? 'text-emerald-300' : 'text-slate-300'}`}>
                 {paceState === 'ontrack' ? 'Đúng nhịp' : paceState === 'ahead' ? `Nhanh hơn ${mmss(paceDelta)}` : `Chậm hơn ${mmss(paceDelta)}`}
@@ -745,6 +779,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
           )}
 
           {/* Pearson VUE Countdown Timer */}
+          {!isPractice && (
           <div className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl border font-mono text-xs font-bold tabular-nums ${
             isTimeCritical 
               ? 'border-rose-500 bg-rose-500/20 text-rose-300 animate-timer-urgent' 
@@ -755,6 +790,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
             <Clock className={`w-3.5 h-3.5 ${isTimeCritical ? 'text-rose-400' : 'text-orange-400'}`} />
             <span>{formatTimer(timeRemainingSeconds)}</span>
           </div>
+          )}
 
           {/* Review Grid Toggle */}
           <button
@@ -769,7 +805,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
             onClick={() => setShowFinishConfirm(true)}
             className="px-4 py-1.5 bg-gradient-to-r from-orange-400 to-amber-500 hover:opacity-95 text-slate-950 font-bold text-xs rounded-xl shadow-md transition"
           >
-            Nộp Bài
+            {isPractice ? 'Kết Thúc' : 'Nộp Bài'}
           </button>
         </div>
       </div>
@@ -786,9 +822,20 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
             </div>
 
             <div className="flex items-center space-x-3 text-xs">
-              <span className="flex items-center gap-1.5 text-emerald-400">
-                <span className="w-2.5 h-2.5 rounded bg-emerald-500" /> Đã làm ({Object.keys(userAnswers).length})
-              </span>
+              {isPractice ? (
+                <>
+                  <span className="flex items-center gap-1.5 text-emerald-400">
+                    <span className="w-2.5 h-2.5 rounded bg-emerald-500" /> Đúng ({practiceCorrect})
+                  </span>
+                  <span className="flex items-center gap-1.5 text-rose-400">
+                    <span className="w-2.5 h-2.5 rounded bg-rose-500" /> Sai ({practiceWrong})
+                  </span>
+                </>
+              ) : (
+                <span className="flex items-center gap-1.5 text-emerald-400">
+                  <span className="w-2.5 h-2.5 rounded bg-emerald-500" /> Đã làm ({Object.keys(userAnswers).length})
+                </span>
+              )}
               <span className="flex items-center gap-1.5 text-amber-400">
                 <span className="w-2.5 h-2.5 rounded bg-amber-400" /> Gắn cờ ({flaggedQuestions.size})
               </span>
@@ -807,10 +854,15 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
               const isFlag = flaggedQuestions.has(q.id);
               const isCurrent = idx === currentQuestionIndex;
 
+              const outcome = practiceOutcome(q);
+
               let btnClass = 'bg-slate-800 text-slate-400 border-white/[0.06]';
               if (isAnswered) btnClass = 'bg-emerald-950/60 border-emerald-500 text-emerald-300 font-bold';
               if (isFlag) btnClass = 'bg-amber-950/60 border-amber-500 text-amber-300 font-bold';
-              if (isCurrent) btnClass += ' ring-2 ring-orange-400 text-white';
+              // A checked practice answer is the strongest signal, so it wins over answered/flagged
+              if (outcome === 'correct') btnClass = 'bg-emerald-500 border-emerald-400 text-slate-950 font-bold';
+              if (outcome === 'wrong') btnClass = 'bg-rose-500 border-rose-400 text-white font-bold';
+              if (isCurrent) btnClass += ' ring-2 ring-orange-400';
 
               return (
                 <button
@@ -819,9 +871,14 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
                     goToQuestion(idx);
                     setShowReviewGrid(false);
                   }}
+                  title={`Câu ${idx + 1}${outcome === 'correct' ? ', đã trả lời đúng' : outcome === 'wrong' ? ', đã trả lời sai' : ''}`}
+                  aria-label={`Câu ${idx + 1}${outcome === 'correct' ? ', đã trả lời đúng' : outcome === 'wrong' ? ', đã trả lời sai' : isAnswered ? ', đã trả lời' : ''}${isFlag ? ', gắn cờ' : ''}`}
                   className={`py-2 rounded-xl text-xs font-mono font-bold border transition ${btnClass}`}
                 >
-                  {idx + 1}
+                  <span className="inline-flex items-center justify-center gap-0.5">
+                    {idx + 1}
+                    {outcome && <span aria-hidden="true" className="text-[9px]">{outcome === 'correct' ? '✓' : '✗'}</span>}
+                  </span>
                 </button>
               );
             })}
@@ -835,7 +892,9 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
           <div className="machined-card max-w-md w-full rounded-3xl p-6 space-y-4 shadow-2xl">
             <h3 className="text-lg font-bold text-white">Rời khỏi bài thi?</h3>
             <p className="text-sm text-slate-300 leading-relaxed">
-              Tiến độ làm bài (câu hỏi đang làm, các câu đã chọn, câu gắn cờ và thời gian làm bài còn lại) sẽ được lưu lại để bạn có thể tiếp tục bất cứ lúc nào.
+              {isPractice
+                ? 'Tiến độ luyện tập (câu hỏi đang làm, các câu đã chọn và các câu đã kiểm tra đáp án) sẽ được lưu lại để bạn tiếp tục bất cứ lúc nào.'
+                : 'Tiến độ làm bài (câu hỏi đang làm, các câu đã chọn, câu gắn cờ và thời gian làm bài còn lại) sẽ được lưu lại để bạn có thể tiếp tục bất cứ lúc nào.'}
             </p>
             <div className="flex flex-wrap items-center justify-end gap-2 pt-2">
               <button
@@ -946,6 +1005,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
                 Câu {currentQuestionIndex + 1} / {currentExam.questions.length}
               </span>
               <span className="text-slate-400 text-xs hidden sm:inline">{currentQ.domain}</span>
+              {!isPractice && (
               <span
                 className={`flex items-center gap-1 rounded-lg border px-2 py-1 font-mono text-[11px] tabular-nums ${
                   currentQTime > targetPerQ * 1.5
@@ -959,6 +1019,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
                 <Clock className="h-3 w-3" aria-hidden="true" />
                 {mmss(currentQTime)} / {mmss(targetPerQ)}
               </span>
+              )}
             </div>
 
             <div className="flex items-center gap-2">
@@ -1161,39 +1222,94 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
         <div className="machined-card rounded-2xl p-4">
           <div className="flex items-baseline justify-between gap-3">
             <h3 className="text-sm font-semibold text-white">Bảng câu hỏi</h3>
-            <span className="font-mono text-xs tabular-nums text-slate-400">{answeredNow}/{totalQ} đã làm</span>
+            <span className="font-mono text-xs tabular-nums text-slate-400">
+              {isPractice ? `${practiceChecked}/${totalQ} đã kiểm tra` : `${answeredNow}/${totalQ} đã làm`}
+            </span>
           </div>
           <div className="mt-3 grid grid-cols-8 gap-1.5">
             {currentExam.questions.map((q, idx) => {
               const isAnswered = (userAnswers[q.id]?.length || 0) > 0;
               const isFlag = flaggedQuestions.has(q.id);
               const isCurrent = idx === currentQuestionIndex;
+              const outcome = practiceOutcome(q);
               let btnClass = 'bg-slate-800 text-slate-400 border-white/[0.06] hover:text-white';
               if (isAnswered) btnClass = 'bg-emerald-950/60 border-emerald-500/70 text-emerald-300 font-bold';
               if (isFlag) btnClass = 'bg-amber-950/60 border-amber-500 text-amber-300 font-bold';
-              if (isCurrent) btnClass += ' ring-2 ring-orange-400 text-white';
+              // A checked practice answer is the strongest signal, so it wins over answered/flagged
+              if (outcome === 'correct') btnClass = 'bg-emerald-500 border-emerald-400 text-slate-950 font-bold';
+              if (outcome === 'wrong') btnClass = 'bg-rose-500 border-rose-400 text-white font-bold';
+              if (isCurrent) btnClass += ' ring-2 ring-orange-400';
               const t = questionTimes[q.id] || 0;
+              const state = outcome === 'correct' ? ', đã trả lời đúng' : outcome === 'wrong' ? ', đã trả lời sai' : isAnswered ? ', đã trả lời' : '';
               return (
                 <button
                   key={q.id}
                   onClick={() => goToQuestion(idx)}
-                  title={`Câu ${idx + 1}${t ? `, đã dùng ${mmss(t)}` : ''}${isFlag ? ', đã gắn cờ' : ''}`}
-                  aria-label={`Câu ${idx + 1}${isAnswered ? ', đã trả lời' : ''}${isFlag ? ', gắn cờ' : ''}`}
+                  title={`Câu ${idx + 1}${state}${!isPractice && t ? `, đã dùng ${mmss(t)}` : ''}${isFlag ? ', đã gắn cờ' : ''}`}
+                  aria-label={`Câu ${idx + 1}${state}${isFlag ? ', gắn cờ' : ''}`}
                   aria-current={isCurrent ? 'true' : undefined}
                   className={`h-8 rounded-lg border font-mono text-xs tabular-nums transition ${btnClass}`}
                 >
-                  {idx + 1}
+                  <span className="inline-flex items-center justify-center gap-0.5">
+                    {idx + 1}
+                    {outcome && <span aria-hidden="true" className="text-[9px]">{outcome === 'correct' ? '✓' : '✗'}</span>}
+                  </span>
                 </button>
               );
             })}
           </div>
           <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-[11px] text-slate-400">
-            <span className="flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded bg-emerald-500" />Đã làm {answeredNow}</span>
-            <span className="flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded bg-amber-400" />Gắn cờ {flaggedQuestions.size}</span>
-            <span className="flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded bg-slate-600" />Chưa làm {questionsLeft}</span>
+            {isPractice ? (
+              <>
+                <span className="flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded bg-emerald-500" />Đúng {practiceCorrect}</span>
+                <span className="flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded bg-rose-500" />Sai {practiceWrong}</span>
+                <span className="flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded bg-slate-600" />Chưa kiểm tra {totalQ - practiceChecked}</span>
+              </>
+            ) : (
+              <>
+                <span className="flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded bg-emerald-500" />Đã làm {answeredNow}</span>
+                <span className="flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded bg-amber-400" />Gắn cờ {flaggedQuestions.size}</span>
+                <span className="flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded bg-slate-600" />Chưa làm {questionsLeft}</span>
+              </>
+            )}
           </div>
         </div>
 
+        {isPractice && (
+          <div className="machined-card space-y-4 rounded-2xl p-4">
+            <div>
+              <p className="text-xs text-slate-400">Chế độ luyện tập</p>
+              <p className="mt-1 text-sm text-slate-300">Không tính giờ. Bấm <span className="font-semibold text-slate-100">Kiểm tra đáp án</span> ở mỗi câu để xem đúng/sai và giải thích.</p>
+            </div>
+
+            <dl className="grid grid-cols-3 gap-2 text-center">
+              <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/[0.08] p-2">
+                <dt className="text-[11px] text-emerald-200/80">Đúng</dt>
+                <dd className="font-mono text-xl font-semibold tabular-nums text-emerald-300">{practiceCorrect}</dd>
+              </div>
+              <div className="rounded-xl border border-rose-500/30 bg-rose-500/[0.08] p-2">
+                <dt className="text-[11px] text-rose-200/80">Sai</dt>
+                <dd className="font-mono text-xl font-semibold tabular-nums text-rose-300">{practiceWrong}</dd>
+              </div>
+              <div className="rounded-xl border border-white/[0.06] bg-slate-900/60 p-2">
+                <dt className="text-[11px] text-slate-400">Còn lại</dt>
+                <dd className="font-mono text-xl font-semibold tabular-nums text-slate-200">{totalQ - practiceChecked}</dd>
+              </div>
+            </dl>
+
+            <div>
+              <div className="flex justify-between text-[11px] text-slate-400">
+                <span>Tỉ lệ đúng</span>
+                <span className="font-mono tabular-nums">{practiceChecked ? Math.round((practiceCorrect / practiceChecked) * 100) : 0}%</span>
+              </div>
+              <div className="mt-1 h-1.5 rounded-full bg-slate-800">
+                <div className="h-1.5 rounded-full bg-emerald-500" style={{ width: `${practiceChecked ? (practiceCorrect / practiceChecked) * 100 : 0}%` }} />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {!isPractice && (
         <div className="machined-card space-y-4 rounded-2xl p-4" title={planText}>
           <div>
             <p className="text-xs text-slate-400">Thời gian còn lại</p>
@@ -1228,6 +1344,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
             <div className="flex justify-between"><dt className="text-slate-400">Còn lại mỗi câu chưa làm</dt><dd className="font-mono tabular-nums text-slate-200">{questionsLeft > 0 ? mmss(secPerQuestionLeft) : '-'}</dd></div>
           </dl>
         </div>
+        )}
       </aside>
       </div>
 

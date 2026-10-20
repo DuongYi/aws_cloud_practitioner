@@ -29,6 +29,7 @@ const CheatSheetView = lazy(() => import('./components/CheatSheetView').then((m)
 const ExamManager = lazy(() => import('./components/ExamManager').then((m) => ({ default: m.ExamManager })));
 
 const ProgressDashboard = lazy(() => import('./components/ProgressDashboard').then((m) => ({ default: m.ProgressDashboard })));
+const WrongReview = lazy(() => import('./components/WrongReview').then((m) => ({ default: m.WrongReview })));
 
 const PageSkeleton = () => (
   <div className="space-y-4 px-4 py-8 sm:px-6 lg:px-8" role="status" aria-label="Đang tải">
@@ -88,8 +89,10 @@ export default function App() {
       } else if (e.key === '3') {
         switchTab('exam');
       } else if (e.key === '4') {
-        switchTab('progress');
+        switchTab('review');
       } else if (e.key === '5') {
+        switchTab('progress');
+      } else if (e.key === '6') {
         switchTab('manage');
       } else if (e.key === '/') {
         e.preventDefault();
@@ -104,6 +107,9 @@ export default function App() {
 
   const [accountEmail, setAccountEmail] = useState<string | null>(null);
   const [syncing, setSyncing] = useState(false);
+  // Bumped after every finished cloud sync so views holding their own copy (the exam simulator's
+  // in-progress rounds) re-read it instead of keeping what was on this device before signing in.
+  const [syncVersion, setSyncVersion] = useState(0);
 
   useEffect(() => {
     if (!supabase) return;
@@ -122,6 +128,7 @@ export default function App() {
       setAccountEmail(email);
       if (!userId) {
         syncedUser = null;
+        setSyncVersion((n) => n + 1);
         return;
       }
       // supabase-js emits SIGNED_IN again whenever the browser tab regains focus.
@@ -142,6 +149,7 @@ export default function App() {
           setAllExamsList(getAllExams());
           setExamAttempts(getExamAttempts());
           setPracticeLog(getPracticeLog());
+          setSyncVersion((n) => n + 1);
           syncedUser = userId;
           break;
         }
@@ -159,6 +167,11 @@ export default function App() {
     });
     return () => sub.subscription.unsubscribe();
   }, []);
+
+  // navigate() alone (e.g. the links from the progress and review screens) must also mount the simulator
+  useEffect(() => {
+    if (route.tab === 'exam') setExamMounted(true);
+  }, [route.tab]);
 
   useEffect(() => {
     import('./data/sections').then((m) => setSections(m.SECTIONS_DATA));
@@ -265,6 +278,19 @@ export default function App() {
             </Suspense>
           )}
 
+          {activeTab === 'review' && (
+            <Suspense fallback={<PageSkeleton />}>
+              <WrongReview
+                exams={allExamsList}
+                attempts={examAttempts}
+                practice={practiceLog}
+                langMode={langMode}
+                syncing={syncing}
+                accountEmail={accountEmail}
+              />
+            </Suspense>
+          )}
+
           {activeTab === 'progress' && (
             <Suspense fallback={<PageSkeleton />}>
               <ProgressDashboard
@@ -300,6 +326,7 @@ export default function App() {
               onPracticeRecorded={() => setPracticeLog(getPracticeLog())}
               attempts={examAttempts}
               practice={practiceLog}
+              syncNonce={syncVersion}
               active={route.tab === 'exam'}
               routeExamId={route.tab === 'exam' ? route.id : undefined}
               onSelectExam={(id, replace) => navigate(buildPath('exam', id), { replace })}
