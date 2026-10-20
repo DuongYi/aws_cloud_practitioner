@@ -1,0 +1,23 @@
+{
+  "id": "/",
+  "name": "AWS Cloud Practitioner CLF-C02: Ôn luyện và thi thử",
+  "short_name": "CloudPrep CLF-C02",
+  "description": "Ôn luyện bài giảng song ngữ và thi thử AWS Cloud Practitioner (CLF-C02), lưu tiến độ học.",
+  "lang": "vi",
+  "start_url": "/study?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#1b1e24",
+  "theme_color": "#1b1e24",
+  "categories": ["education"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Thi thử", "short_name": "Thi thử", "url": "/exam?source=shortcut", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Ôn luyện", "short_name": "Ôn luyện", "url": "/study?source=shortcut", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

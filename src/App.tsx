@@ -20,6 +20,7 @@ import {
   getExamAttempts
 } from './utils/storage';
 import { motion, useReducedMotion } from 'motion/react';
+import { InstallPrompt } from './components/InstallPrompt';
 import { Award, ShieldCheck, Heart, Sparkles } from 'lucide-react';
 
 const CheatSheetView = lazy(() => import('./components/CheatSheetView').then((m) => ({ default: m.CheatSheetView })));
@@ -275,6 +276,8 @@ export default function App() {
       </main>
 
       {/* Commercial Grade Footer */}
+      <InstallPrompt />
+
       <footer className="border-t border-white/[0.08] bg-slate-950 px-4 py-10 text-xs text-slate-400 sm:px-6 lg:px-8 relative z-10">
         <div className="mx-auto flex max-w-[1440px] flex-col justify-between gap-6 md:flex-row md:items-center">
           

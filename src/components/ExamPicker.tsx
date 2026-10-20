@@ -497,7 +497,7 @@ export const ExamPicker: React.FC<ExamPickerProps> = ({
       )}
 
       {/* ================= FIXED COMMERCIAL START DOCK ================= */}
-      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-white/[0.1] bg-slate-950/90 backdrop-blur-2xl shadow-2xl">
+      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-white/[0.1] bg-slate-950/90 backdrop-blur-2xl shadow-2xl" style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>
         <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-x-6 gap-y-3 px-4 py-3 sm:px-6 lg:px-8">
           
           {/* Selected Info */}
