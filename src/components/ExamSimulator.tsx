@@ -62,6 +62,8 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
   const [userAnswers, setUserAnswers] = useState<Record<string | number, number[]>>({});
   const [flaggedQuestions, setFlaggedQuestions] = useState<Set<string | number>>(new Set());
   const [eliminatedOptions, setEliminatedOptions] = useState<Record<string | number, Set<number>>>({});
+  // Practice mode: answers are revealed only after the user presses "Kiểm tra đáp án"
+  const [checkedQuestions, setCheckedQuestions] = useState<Set<string | number>>(new Set());
   const [timeRemainingSeconds, setTimeRemainingSeconds] = useState<number>(90 * 60);
   const [isExamCompleted, setIsExamCompleted] = useState<boolean>(false);
   const [showReviewGrid, setShowReviewGrid] = useState<boolean>(false);
@@ -130,6 +132,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
       answers: userAnswers,
       flagged: Array.from(flaggedQuestions),
       eliminated: Object.fromEntries(Object.entries(eliminatedOptions).map(([k, v]) => [k, Array.from(v)])),
+      checked: Array.from(checkedQuestions),
       endsAt: endsAtRef.current,
       remainingSeconds: timeRemainingRef.current,
       updatedAt: Date.now(),
@@ -137,7 +140,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
     };
     saveExamSession(session);
     setSavedSessions((prev) => ({ ...prev, [currentExam.id]: session }));
-  }, [isExamActive, isExamCompleted, currentExam, examMode, currentQuestionIndex, userAnswers, flaggedQuestions, eliminatedOptions]);
+  }, [isExamActive, isExamCompleted, currentExam, examMode, currentQuestionIndex, userAnswers, flaggedQuestions, eliminatedOptions, checkedQuestions]);
 
   const handleResumeExam = (targetExamId?: string) => {
     const idToResume = targetExamId || selectedExamId;
@@ -159,6 +162,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
     setUserAnswers(s.answers);
     setFlaggedQuestions(new Set(s.flagged));
     setEliminatedOptions(Object.fromEntries(Object.entries(s.eliminated || {}).map(([k, v]) => [k, new Set(v)])));
+    setCheckedQuestions(new Set(s.checked || []));
     setTimeRemainingSeconds(restoredSeconds);
     setIsExamCompleted(false);
     setShowReviewGrid(false);
@@ -177,6 +181,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
         answers: userAnswers,
         flagged: Array.from(flaggedQuestions),
         eliminated: Object.fromEntries(Object.entries(eliminatedOptions).map(([k, v]) => [k, Array.from(v)])),
+      checked: Array.from(checkedQuestions),
         endsAt: endsAtRef.current,
         remainingSeconds: timeRemainingSeconds,
         updatedAt: Date.now(),
@@ -250,6 +255,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
     setUserAnswers({});
     setFlaggedQuestions(new Set());
     setEliminatedOptions({});
+    setCheckedQuestions(new Set());
     setTimeRemainingSeconds(currentExam.timeLimitMinutes * 60);
     endsAtRef.current = Date.now() + currentExam.timeLimitMinutes * 60 * 1000;
     setShowReviewGrid(false);
@@ -259,6 +265,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
 
   const handleSelectOption = (questionId: string | number, optionIndex: number, isMulti: boolean) => {
     if (isExamCompleted && examMode === 'strict') return;
+    if (examMode === 'practice' && checkedQuestions.has(questionId)) return; // answer already revealed
 
     setUserAnswers((prev) => {
       const current = prev[questionId] || [];
@@ -393,6 +400,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
   // Active Exam View
   const currentQ = currentExam?.questions[currentQuestionIndex];
   const selectedForCurrent = (currentQ && userAnswers[currentQ.id]) || [];
+  const isCurrentChecked = examMode === 'practice' && !!currentQ && checkedQuestions.has(currentQ.id);
   const isFlagged = currentQ && flaggedQuestions.has(currentQ.id);
   const eliminatedForCurrent = currentQ ? (eliminatedOptions[currentQ.id] || new Set()) : new Set();
   const unansweredCount = currentExam.questions.length - Object.keys(userAnswers).length;
@@ -834,7 +842,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
               }
 
               // In practice mode, show correct/wrong highlight
-              if (examMode === 'practice' && selectedForCurrent.length > 0) {
+              if (isCurrentChecked) {
                 const isRight = currentQ.correctAnswers.includes(optIdx);
                 if (isRight) {
                   optClass = 'bg-emerald-950/40 border-emerald-500 text-emerald-200 font-semibold ring-1 ring-emerald-500/40';
@@ -876,8 +884,50 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
             })}
           </div>
 
-          {/* Instant Drill Explanation (Only in practice mode) */}
-          {examMode === 'practice' && selectedForCurrent.length > 0 && (
+          {/* Practice mode: check the answer, then show correct/incorrect and the explanation */}
+          {examMode === 'practice' && (
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+              {!isCurrentChecked ? (
+                <button
+                  onClick={() => setCheckedQuestions((prev) => new Set(prev).add(currentQ.id))}
+                  disabled={selectedForCurrent.length === 0}
+                  className="flex h-11 items-center gap-2 rounded-xl bg-orange-500 px-6 text-sm font-semibold text-slate-950 hover:bg-orange-400 disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
+                  Kiểm tra đáp án
+                </button>
+              ) : (
+                <>
+                  {(() => {
+                    const ok = selectedForCurrent.length === currentQ.correctAnswers.length && selectedForCurrent.every((a) => currentQ.correctAnswers.includes(a));
+                    return (
+                      <span className={`flex h-11 items-center gap-2 rounded-xl px-4 text-sm font-semibold ${ok ? 'bg-emerald-500/15 text-emerald-300' : 'bg-rose-500/15 text-rose-300'}`}>
+                        {ok ? <CheckCircle2 className="h-4 w-4" aria-hidden="true" /> : <XCircle className="h-4 w-4" aria-hidden="true" />}
+                        {ok ? 'Chính xác' : 'Chưa đúng'}
+                      </span>
+                    );
+                  })()}
+                  <button
+                    onClick={() => {
+                      setCheckedQuestions((prev) => { const n = new Set(prev); n.delete(currentQ.id); return n; });
+                      setUserAnswers((prev) => { const n = { ...prev }; delete n[currentQ.id]; return n; });
+                    }}
+                    className="h-11 rounded-xl px-3 text-sm font-medium text-slate-300 hover:text-white"
+                  >
+                    Làm lại câu này
+                  </button>
+                </>
+              )}
+              {!isCurrentChecked && selectedForCurrent.length > 0 && currentQ.isMultipleResponse && selectedForCurrent.length !== currentQ.correctAnswers.length && (
+                <span className="text-xs text-slate-400">
+                  Đã chọn {selectedForCurrent.length}/{currentQ.correctAnswers.length} đáp án
+                </span>
+              )}
+            </div>
+          )}
+
+          {/* Explanation, shown only after the answer is checked (practice mode) */}
+          {isCurrentChecked && (
             drill.get(explanationKey(currentExam.id, currentQ.id)) ? (
               <div className="mt-4"><ExplanationPanel data={drill.get(explanationKey(currentExam.id, currentQ.id))!} chosenLabels={selectedForCurrent.map((i) => String.fromCharCode(65 + i))} /></div>
             ) : (

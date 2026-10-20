@@ -109,6 +109,8 @@ export interface ExamSession {
   answers: Record<string | number, number[]>;
   flagged: (string | number)[];
   eliminated: Record<string | number, number[]>;
+  /** Practice mode: questions whose answer the user has already checked. */
+  checked?: (string | number)[];
   /** Epoch ms when time runs out. */
   endsAt: number;
   /** Preserved seconds left when exam was paused. */
