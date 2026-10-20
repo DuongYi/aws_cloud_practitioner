@@ -479,7 +479,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
     });
 
     return (
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6 space-y-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8">
         <ResultSummary
           exam={currentExam}
           score={scaledScore}
@@ -636,28 +636,28 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
 
   // Active Test Question Screen
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 space-y-6">
+    <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
       
       {/* Official Pearson VUE Test Top Control Bar */}
-      <div className="machined-card rounded-2xl p-4 shadow-xl flex items-center justify-between gap-3">
-        <div className="flex items-center space-x-3">
+      <div className="machined-card rounded-2xl p-3 sm:p-4 shadow-xl flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+        <div className="flex min-w-0 flex-1 basis-56 items-center gap-3">
           <button
             onClick={() => setShowExitConfirm(true)}
-            className="text-xs font-semibold text-slate-400 hover:text-white px-2.5 py-1.5 rounded-xl border border-white/[0.08] bg-slate-800/80 hover:bg-slate-700 transition"
+            className="shrink-0 whitespace-nowrap text-xs font-semibold text-slate-400 hover:text-white px-2.5 py-1.5 rounded-xl border border-white/[0.08] bg-slate-800/80 hover:bg-slate-700 transition"
           >
             &larr; Lưu và thoát
           </button>
-          <div>
-            <h2 className="text-xs sm:text-sm font-bold text-white line-clamp-1 flex items-center gap-1.5">
-              <span>{currentExam.title}</span>
+          <div className="min-w-0">
+            <h2 className="text-xs sm:text-sm font-bold text-white truncate">
+              {currentExam.title}
             </h2>
-            <span className="text-[11px] font-mono text-slate-400">
+            <span className="block truncate text-[11px] font-mono text-slate-400">
               Câu {currentQuestionIndex + 1} / {currentExam.questions.length} • {currentQ?.domain}
             </span>
           </div>
         </div>
 
-        <div className="flex items-center space-x-2.5">
+        <div className="flex flex-wrap items-center gap-2.5">
           {/* Zoom text control */}
           <button
             onClick={() => setTextSize(textSize === 'normal' ? 'large' : 'normal')}
@@ -669,7 +669,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
 
           {/* Pace: ahead / behind an even split of the time limit */}
           {usedSeconds > 60 && (
-            <div className="hidden md:flex flex-col items-end leading-tight" title={planText}>
+            <div className="hidden md:flex lg:hidden flex-col items-end leading-tight" title={planText}>
               <span className={`text-[11px] font-semibold ${paceState === 'behind' ? 'text-rose-300' : paceState === 'ahead' ? 'text-emerald-300' : 'text-slate-300'}`}>
                 {paceState === 'ontrack' ? 'Đúng nhịp' : paceState === 'ahead' ? `Nhanh hơn ${mmss(paceDelta)}` : `Chậm hơn ${mmss(paceDelta)}`}
               </span>
@@ -692,7 +692,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
           {/* Review Grid Toggle */}
           <button
             onClick={() => setShowReviewGrid(!showReviewGrid)}
-            className="px-3 py-1.5 rounded-xl border border-white/[0.08] bg-slate-800/80 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition"
+            className="lg:hidden px-3 py-1.5 rounded-xl border border-white/[0.08] bg-slate-800/80 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition"
           >
             Bảng câu hỏi
           </button>
@@ -709,7 +709,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
 
       {/* Question Review Grid Drawer / Panel */}
       {showReviewGrid && (
-        <div className="machined-card rounded-3xl p-5 sm:p-6 shadow-2xl space-y-4">
+        <div className="machined-card rounded-3xl p-5 sm:p-6 shadow-2xl space-y-4 lg:hidden">
           <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
             <div>
               <h3 className="text-sm font-bold text-white uppercase tracking-wider">
@@ -850,12 +850,14 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
         </div>
       )}
 
+      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
+      <div className="min-w-0">
       {/* Active Question Canvas */}
       {currentQ && (
         <div className="machined-card rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
           
           {/* Question Metadata Header */}
-          <div className="flex items-center justify-between gap-2 text-xs border-b border-white/[0.06] pb-4">
+          <div className="flex flex-wrap items-center justify-between gap-2 text-xs border-b border-white/[0.06] pb-4">
             <div className="flex items-center space-x-2.5">
               <span className="px-3 py-1 rounded-full font-bold bg-orange-500/20 text-orange-400 border border-orange-500/30">
                 Câu {currentQuestionIndex + 1} / {currentExam.questions.length}
@@ -904,14 +906,14 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
               }`}
             >
               <Flag className={`w-3.5 h-3.5 ${isFlagged ? 'fill-current' : ''}`} />
-              <span>{isFlagged ? 'Đã Gắn Cờ' : 'Gắn Cờ Xem Lại'}</span>
+              <span className="hidden sm:inline">{isFlagged ? 'Đã Gắn Cờ' : 'Gắn Cờ Xem Lại'}</span>
             </button>
             </div>
           </div>
 
           {/* Question Text */}
           <div>
-            <h3 className={`font-bold text-white leading-relaxed ${
+            <h3 className={`max-w-[80ch] font-bold text-white leading-relaxed ${
               textSize === 'large' ? 'text-lg sm:text-xl' : 'text-base sm:text-lg'
             }`}>
               {currentQ.question}
@@ -1056,6 +1058,82 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
 
         </div>
       )}
+      </div>
+
+      {/* Desktop side panel: question navigator, time and pace */}
+      <aside className="hidden space-y-4 lg:sticky lg:top-24 lg:block lg:max-h-[calc(100dvh-7rem)] lg:overflow-y-auto no-scrollbar" aria-label="Bảng điều hướng bài thi">
+        <div className="machined-card rounded-2xl p-4">
+          <div className="flex items-baseline justify-between gap-3">
+            <h3 className="text-sm font-semibold text-white">Bảng câu hỏi</h3>
+            <span className="font-mono text-xs tabular-nums text-slate-400">{answeredNow}/{totalQ} đã làm</span>
+          </div>
+          <div className="mt-3 grid grid-cols-8 gap-1.5">
+            {currentExam.questions.map((q, idx) => {
+              const isAnswered = (userAnswers[q.id]?.length || 0) > 0;
+              const isFlag = flaggedQuestions.has(q.id);
+              const isCurrent = idx === currentQuestionIndex;
+              let btnClass = 'bg-slate-800 text-slate-400 border-white/[0.06] hover:text-white';
+              if (isAnswered) btnClass = 'bg-emerald-950/60 border-emerald-500/70 text-emerald-300 font-bold';
+              if (isFlag) btnClass = 'bg-amber-950/60 border-amber-500 text-amber-300 font-bold';
+              if (isCurrent) btnClass += ' ring-2 ring-orange-400 text-white';
+              const t = questionTimes[q.id] || 0;
+              return (
+                <button
+                  key={q.id}
+                  onClick={() => setCurrentQuestionIndex(idx)}
+                  title={`Câu ${idx + 1}${t ? `, đã dùng ${mmss(t)}` : ''}${isFlag ? ', đã gắn cờ' : ''}`}
+                  aria-label={`Câu ${idx + 1}${isAnswered ? ', đã trả lời' : ''}${isFlag ? ', gắn cờ' : ''}`}
+                  aria-current={isCurrent ? 'true' : undefined}
+                  className={`h-8 rounded-lg border font-mono text-xs tabular-nums transition ${btnClass}`}
+                >
+                  {idx + 1}
+                </button>
+              );
+            })}
+          </div>
+          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-[11px] text-slate-400">
+            <span className="flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded bg-emerald-500" />Đã làm {answeredNow}</span>
+            <span className="flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded bg-amber-400" />Gắn cờ {flaggedQuestions.size}</span>
+            <span className="flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded bg-slate-600" />Chưa làm {questionsLeft}</span>
+          </div>
+        </div>
+
+        <div className="machined-card space-y-4 rounded-2xl p-4" title={planText}>
+          <div>
+            <p className="text-xs text-slate-400">Thời gian còn lại</p>
+            <p className={`mt-1 font-mono text-3xl font-semibold tabular-nums ${isTimeCritical ? 'text-rose-300' : isTimeWarning ? 'text-amber-300' : 'text-slate-50'}`}>
+              {formatTimer(timeRemainingSeconds)}
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            <div>
+              <div className="flex justify-between text-[11px] text-slate-400"><span>Thời gian đã dùng</span><span className="font-mono tabular-nums">{Math.round((usedSeconds / limitSeconds) * 100)}%</span></div>
+              <div className="mt-1 h-1.5 rounded-full bg-slate-800"><div className="h-1.5 rounded-full bg-orange-500" style={{ width: `${Math.min(100, (usedSeconds / limitSeconds) * 100)}%` }} /></div>
+            </div>
+            <div>
+              <div className="flex justify-between text-[11px] text-slate-400"><span>Số câu đã làm</span><span className="font-mono tabular-nums">{Math.round((answeredNow / totalQ) * 100)}%</span></div>
+              <div className="mt-1 h-1.5 rounded-full bg-slate-800"><div className="h-1.5 rounded-full bg-emerald-500" style={{ width: `${(answeredNow / totalQ) * 100}%` }} /></div>
+            </div>
+            <p className={`text-xs font-medium ${paceState === 'behind' ? 'text-rose-300' : paceState === 'ahead' ? 'text-emerald-300' : 'text-slate-300'}`}>
+              {usedSeconds <= 60
+                ? 'Chưa đủ dữ liệu để đánh giá nhịp.'
+                : paceState === 'ontrack'
+                  ? 'Bạn đang đúng nhịp.'
+                  : paceState === 'ahead'
+                    ? `Bạn đang nhanh hơn nhịp đều ${mmss(paceDelta)}.`
+                    : `Bạn đang chậm hơn nhịp đều ${mmss(paceDelta)}. Nên gắn cờ câu khó và đi tiếp.`}
+            </p>
+          </div>
+
+          <dl className="space-y-1.5 border-t border-white/[0.06] pt-3 text-xs">
+            <div className="flex justify-between"><dt className="text-slate-400">Mục tiêu mỗi câu</dt><dd className="font-mono tabular-nums text-slate-200">{mmss(targetPerQ)}</dd></div>
+            <div className="flex justify-between"><dt className="text-slate-400">Câu này đã dùng</dt><dd className={`font-mono tabular-nums ${currentQTime > targetPerQ ? 'text-amber-300' : 'text-slate-200'}`}>{mmss(currentQTime)}</dd></div>
+            <div className="flex justify-between"><dt className="text-slate-400">Còn lại mỗi câu chưa làm</dt><dd className="font-mono tabular-nums text-slate-200">{questionsLeft > 0 ? mmss(secPerQuestionLeft) : '-'}</dd></div>
+          </dl>
+        </div>
+      </aside>
+      </div>
 
     </div>
   );
