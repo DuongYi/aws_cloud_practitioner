@@ -99,6 +99,10 @@ export interface ExamAttempt {
   domainScores: Record<string, { correct: number; total: number }>;
   userAnswers: Record<string | number, number[]>;
   flaggedQuestionIds: (string | number)[];
+  /** Seconds spent on each question (by question id). */
+  questionTimes?: Record<string | number, number>;
+  /** The exam's time limit, to judge pace afterwards. */
+  timeLimitSeconds?: number;
 }
 
 /** A half-finished exam, saved so it can be resumed after a tab switch or reload. */
@@ -111,6 +115,8 @@ export interface ExamSession {
   eliminated: Record<string | number, number[]>;
   /** Practice mode: questions whose answer the user has already checked. */
   checked?: (string | number)[];
+  /** Seconds spent on each question so far. */
+  questionTimes?: Record<string | number, number>;
   /** Epoch ms when time runs out. */
   endsAt: number;
   /** Preserved seconds left when exam was paused. */

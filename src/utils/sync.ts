@@ -61,6 +61,8 @@ const attemptRow = (a: ExamAttempt) => ({
   domain_scores: a.domainScores,
   user_answers: a.userAnswers,
   flagged_question_ids: a.flaggedQuestionIds,
+  question_times: a.questionTimes ?? {},
+  time_limit_seconds: a.timeLimitSeconds ?? null,
   attempted_at: a.date,
 });
 
@@ -121,6 +123,8 @@ export const syncAll = async (local: LocalSnapshot): Promise<LocalSnapshot | nul
       domainScores: r.domain_scores,
       userAnswers: r.user_answers,
       flaggedQuestionIds: r.flagged_question_ids,
+      questionTimes: r.question_times ?? {},
+      timeLimitSeconds: r.time_limit_seconds ?? undefined,
     }));
     const cloudExams: ExamSet[] = (ce.data ?? []).map((r) => r.exam as ExamSet);
 

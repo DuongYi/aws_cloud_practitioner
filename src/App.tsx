@@ -21,10 +21,13 @@ import {
 } from './utils/storage';
 import { motion, useReducedMotion } from 'motion/react';
 import { InstallPrompt } from './components/InstallPrompt';
+import { collectWrong, buildNotebookExam } from './utils/wrongNotebook';
 import { Award, ShieldCheck, Heart, Sparkles } from 'lucide-react';
 
 const CheatSheetView = lazy(() => import('./components/CheatSheetView').then((m) => ({ default: m.CheatSheetView })));
 const ExamManager = lazy(() => import('./components/ExamManager').then((m) => ({ default: m.ExamManager })));
+
+const ProgressDashboard = lazy(() => import('./components/ProgressDashboard').then((m) => ({ default: m.ProgressDashboard })));
 
 const PageSkeleton = () => (
   <div className="space-y-4 px-4 py-8 sm:px-6 lg:px-8" role="status" aria-label="Đang tải">
@@ -82,6 +85,8 @@ export default function App() {
       } else if (e.key === '3') {
         switchTab('exam');
       } else if (e.key === '4') {
+        switchTab('progress');
+      } else if (e.key === '5') {
         switchTab('manage');
       } else if (e.key === '/') {
         e.preventDefault();
@@ -173,6 +178,13 @@ export default function App() {
     setExamAttempts(getExamAttempts());
   };
 
+  // The wrong-answer notebook is built from attempt history and shown as one more exam
+  const wrongEntries = useMemo(() => collectWrong(allExamsList, examAttempts), [allExamsList, examAttempts]);
+  const examsWithNotebook = useMemo(() => {
+    const nb = buildNotebookExam(wrongEntries);
+    return nb ? [nb, ...allExamsList] : allExamsList;
+  }, [wrongEntries, allExamsList]);
+
   const totalLecturesCount = useMemo(() => {
     return sections.reduce((acc, sec) => acc + sec.lectures.length, 0);
   }, [sections]);
@@ -248,6 +260,18 @@ export default function App() {
             </Suspense>
           )}
 
+          {activeTab === 'progress' && (
+            <Suspense fallback={<PageSkeleton />}>
+              <ProgressDashboard
+                attempts={examAttempts}
+                exams={allExamsList}
+                sections={sections}
+                completedLectures={completedLectures}
+                wrongCount={wrongEntries.length}
+              />
+            </Suspense>
+          )}
+
           {activeTab === 'manage' && (
             <Suspense fallback={<PageSkeleton />}>
               <ExamManager
@@ -264,7 +288,7 @@ export default function App() {
           <div hidden={activeTab !== 'exam'}>
             {!examsReady && activeTab === 'exam' && <PageSkeleton />}
             {examsReady && <ExamSimulator
-              exams={allExamsList}
+              exams={examsWithNotebook}
               langMode={langMode}
               onFinishAttempt={handleRefreshExams}
               active={route.tab === 'exam'}
@@ -276,7 +300,7 @@ export default function App() {
       </main>
 
       {/* Commercial Grade Footer */}
-      <InstallPrompt />
+      {activeTab !== 'exam' && <InstallPrompt />}
 
       <footer className="border-t border-white/[0.08] bg-slate-950 px-4 py-10 text-xs text-slate-400 sm:px-6 lg:px-8 relative z-10">
         <div className="mx-auto flex max-w-[1440px] flex-col justify-between gap-6 md:flex-row md:items-center">

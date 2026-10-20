@@ -18,11 +18,12 @@ import {
 import { ExamSet, ExamAttempt, ExamSession } from '../types';
 import { getExamAttempts } from '../utils/storage';
 
-type Category = 'all' | 'mixed' | 'practice' | 'core' | 'custom';
+type Category = 'all' | 'notebook' | 'mixed' | 'practice' | 'core' | 'custom';
 type Status = 'any' | 'new' | 'passed' | 'failed';
 
 const CATEGORY_LABEL: Record<Category, string> = {
   all: 'Tất cả bộ đề',
+  notebook: 'Sổ tay câu sai',
   mixed: 'Đề thi tổng hợp 65 câu',
   practice: 'Luyện tập theo số',
   core: 'Đề biên soạn trọng tâm',
@@ -39,6 +40,7 @@ const STATUS_LABEL: Record<Status, string> = {
 const cleanTitle = (e: ExamSet) => (e.titleVi || e.title).replace(/\s*\([^)]*\)\s*$/, '');
 
 const categoryOf = (e: ExamSet): Exclude<Category, 'all'> => {
+  if (e.id === 'wrong-notebook') return 'notebook';
   if (e.isCustom) return 'custom';
   if (e.id.startsWith('dump-mixed')) return 'mixed';
   if (e.id.startsWith('dump-exam')) return 'practice';
@@ -104,7 +106,7 @@ export const ExamPicker: React.FC<ExamPickerProps> = ({
   }, [attempts]);
 
   const counts = useMemo(() => {
-    const c: Record<Category, number> = { all: exams.length, mixed: 0, practice: 0, core: 0, custom: 0 };
+    const c: Record<Category, number> = { all: exams.length, notebook: 0, mixed: 0, practice: 0, core: 0, custom: 0 };
     exams.forEach((e) => (c[categoryOf(e)] += 1));
     return c;
   }, [exams]);

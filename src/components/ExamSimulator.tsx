@@ -28,6 +28,7 @@ import { fetchSessions } from '../utils/sync';
 import { ExamPicker } from './ExamPicker';
 import { ResultSummary } from './ResultSummary';
 import { ExplanationPanel } from './ExplanationPanel';
+import { TimeStats } from './TimeStats';
 import { ExplanationFallback } from './ExplanationFallback';
 import { useExplanations } from '../utils/explanations';
 
@@ -64,6 +65,11 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
   const [eliminatedOptions, setEliminatedOptions] = useState<Record<string | number, Set<number>>>({});
   // Practice mode: answers are revealed only after the user presses "Kiểm tra đáp án"
   const [checkedQuestions, setCheckedQuestions] = useState<Set<string | number>>(new Set());
+  // Seconds spent per question. The ref is the source of truth (updated every second), the state re-renders the UI.
+  const [questionTimes, setQuestionTimes] = useState<Record<string | number, number>>({});
+  const questionTimesRef = useRef<Record<string | number, number>>({});
+  const currentQidRef = useRef<string | number | undefined>(undefined);
+  const finishRef = useRef<() => void>(() => {});
   const [timeRemainingSeconds, setTimeRemainingSeconds] = useState<number>(90 * 60);
   const [isExamCompleted, setIsExamCompleted] = useState<boolean>(false);
   const [showReviewGrid, setShowReviewGrid] = useState<boolean>(false);
@@ -72,9 +78,14 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
   const [filterResultView, setFilterResultView] = useState<'ALL' | 'WRONG' | 'FLAGGED'>('ALL');
   const [textSize, setTextSize] = useState<'normal' | 'large'>('normal');
 
-  const currentExam = useMemo(() => {
+  const liveExam = useMemo(() => {
     return exams.find((e) => e.id === selectedExamId) || exams[0];
   }, [exams, selectedExamId]);
+  // The question set of a round is frozen while it is active, because the wrong-answer notebook
+  // reshuffles itself as soon as an attempt is saved and the result screen must still match the round.
+  const frozenExamRef = useRef<ExamSet | null>(null);
+  const currentExam = isExamActive && frozenExamRef.current && frozenExamRef.current.id === liveExam?.id ? frozenExamRef.current : liveExam;
+  currentQidRef.current = currentExam?.questions[currentQuestionIndex]?.id;
 
   const isSessionValid = (s: ExamSession | null): boolean => {
     if (!s) return false;
@@ -133,6 +144,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
       flagged: Array.from(flaggedQuestions),
       eliminated: Object.fromEntries(Object.entries(eliminatedOptions).map(([k, v]) => [k, Array.from(v)])),
       checked: Array.from(checkedQuestions),
+      questionTimes: questionTimesRef.current,
       endsAt: endsAtRef.current,
       remainingSeconds: timeRemainingRef.current,
       updatedAt: Date.now(),
@@ -147,6 +159,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
     const s = savedSessions[idToResume] || Object.values(savedSessions).sort((a, b) => b.updatedAt - a.updatedAt)[0];
     const exam = s && exams.find((e) => e.id === s.examId);
     if (!s || !exam) return;
+    frozenExamRef.current = exam;
 
     // Use preserved paused time, or fallback to real-time wall-clock
     const restoredSeconds = (s.paused || s.mode === 'practice')
@@ -163,6 +176,8 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
     setFlaggedQuestions(new Set(s.flagged));
     setEliminatedOptions(Object.fromEntries(Object.entries(s.eliminated || {}).map(([k, v]) => [k, new Set(v)])));
     setCheckedQuestions(new Set(s.checked || []));
+    questionTimesRef.current = s.questionTimes || {};
+    setQuestionTimes(questionTimesRef.current);
     setTimeRemainingSeconds(restoredSeconds);
     setIsExamCompleted(false);
     setShowReviewGrid(false);
@@ -182,6 +197,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
         flagged: Array.from(flaggedQuestions),
         eliminated: Object.fromEntries(Object.entries(eliminatedOptions).map(([k, v]) => [k, Array.from(v)])),
       checked: Array.from(checkedQuestions),
+      questionTimes: questionTimesRef.current,
         endsAt: endsAtRef.current,
         remainingSeconds: timeRemainingSeconds,
         updatedAt: Date.now(),
@@ -234,21 +250,25 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
     if (!isExamActive || isExamCompleted) return;
 
     const timer = setInterval(() => {
-      setTimeRemainingSeconds((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          handleFinishExam();
-          return 0;
-        }
-        return prev - 1;
-      });
+      setTimeRemainingSeconds((prev) => Math.max(0, prev - 1));
+      const qid = currentQidRef.current;
+      if (qid !== undefined) {
+        questionTimesRef.current = { ...questionTimesRef.current, [qid]: (questionTimesRef.current[qid] || 0) + 1 };
+        setQuestionTimes(questionTimesRef.current);
+      }
     }, 1000);
 
     return () => clearInterval(timer);
   }, [isExamActive, isExamCompleted]);
 
+  // Time is up: submit using the latest answers (finishRef always points at the newest render's closure).
+  useEffect(() => {
+    if (isExamActive && !isExamCompleted && timeRemainingSeconds <= 0) finishRef.current();
+  }, [timeRemainingSeconds, isExamActive, isExamCompleted]);
+
   const handleStartExam = () => {
     if (!currentExam) return;
+    frozenExamRef.current = currentExam;
     setIsExamActive(true);
     setIsExamCompleted(false);
     setCurrentQuestionIndex(0);
@@ -256,6 +276,8 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
     setFlaggedQuestions(new Set());
     setEliminatedOptions({});
     setCheckedQuestions(new Set());
+    questionTimesRef.current = {};
+    setQuestionTimes({});
     setTimeRemainingSeconds(currentExam.timeLimitMinutes * 60);
     endsAtRef.current = Date.now() + currentExam.timeLimitMinutes * 60 * 1000;
     setShowReviewGrid(false);
@@ -360,12 +382,15 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
       timeSpentSeconds: timeSpent,
       domainScores,
       userAnswers,
-      flaggedQuestionIds: Array.from(flaggedQuestions)
+      flaggedQuestionIds: Array.from(flaggedQuestions),
+      questionTimes: questionTimesRef.current,
+      timeLimitSeconds: currentExam.timeLimitMinutes * 60,
     };
 
     saveExamAttempt(attempt);
     if (onFinishAttempt) onFinishAttempt();
   };
+  finishRef.current = handleFinishExam;
 
   const formatTimer = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -406,6 +431,23 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
   const unansweredCount = currentExam.questions.length - Object.keys(userAnswers).length;
   const isTimeCritical = timeRemainingSeconds < 300; // < 5 mins
   const isTimeWarning = timeRemainingSeconds < 900; // < 15 mins
+
+  // Pacing: an even split of the limit is the per-question target. First pass uses ~65% of the time,
+  // ~25% goes to flagged questions and ~10% to a final check.
+  const totalQ = currentExam.questions.length;
+  const limitSeconds = currentExam.timeLimitMinutes * 60;
+  const targetPerQ = Math.max(1, Math.round(limitSeconds / totalQ));
+  const firstPassPerQ = Math.max(1, Math.round((limitSeconds * 0.65) / totalQ));
+  const answeredNow = Object.values(userAnswers).filter((a) => a.length > 0).length;
+  const usedSeconds = Math.max(0, limitSeconds - timeRemainingSeconds);
+  const paceDelta = answeredNow * targetPerQ - usedSeconds; // positive = ahead of the even pace
+  const questionsLeft = totalQ - answeredNow;
+  const secPerQuestionLeft = questionsLeft > 0 ? Math.floor(timeRemainingSeconds / questionsLeft) : 0;
+  const currentQTime = currentQ ? questionTimes[currentQ.id] || 0 : 0;
+  const mmss = (sec: number) => `${Math.floor(Math.abs(sec) / 60)}:${String(Math.abs(sec) % 60).padStart(2, '0')}`;
+  const paceState: 'ahead' | 'ontrack' | 'behind' =
+    Math.abs(paceDelta) < targetPerQ * 0.5 ? 'ontrack' : paceDelta > 0 ? 'ahead' : 'behind';
+  const planText = `Gợi ý phân bổ ${currentExam.timeLimitMinutes} phút cho ${totalQ} câu: lượt 1 trả lời hết, khoảng ${firstPassPerQ} giây mỗi câu (~${Math.round(limitSeconds * 0.65 / 60)} phút); ~${Math.round(limitSeconds * 0.25 / 60)} phút cho các câu gắn cờ; ~${Math.round(limitSeconds * 0.1 / 60)} phút cuối để soát lại.`;
 
   // If completed, show Results Screen
   if (isExamCompleted) {
@@ -448,6 +490,19 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
           flagged={flaggedQuestions}
           onRetry={handleStartExam}
           onPickOther={() => setIsExamActive(false)}
+          onJumpToQuestion={(id) => {
+            setFilterResultView('ALL');
+            requestAnimationFrame(() =>
+              document.getElementById(`review-q-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            );
+          }}
+        />
+
+        <TimeStats
+          exam={currentExam}
+          questionTimes={questionTimes}
+          userAnswers={userAnswers}
+          timeLimitSeconds={currentExam.timeLimitMinutes * 60}
           onJumpToQuestion={(id) => {
             setFilterResultView('ALL');
             requestAnimationFrame(() =>
@@ -611,6 +666,16 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
           >
             {textSize === 'normal' ? <ZoomIn className="h-3.5 w-3.5" /> : <ZoomOut className="h-3.5 w-3.5" />}
           </button>
+
+          {/* Pace: ahead / behind an even split of the time limit */}
+          {usedSeconds > 60 && (
+            <div className="hidden md:flex flex-col items-end leading-tight" title={planText}>
+              <span className={`text-[11px] font-semibold ${paceState === 'behind' ? 'text-rose-300' : paceState === 'ahead' ? 'text-emerald-300' : 'text-slate-300'}`}>
+                {paceState === 'ontrack' ? 'Đúng nhịp' : paceState === 'ahead' ? `Nhanh hơn ${mmss(paceDelta)}` : `Chậm hơn ${mmss(paceDelta)}`}
+              </span>
+              <span className="font-mono text-[10px] text-slate-400">{questionsLeft > 0 ? `~${secPerQuestionLeft} giây/câu còn lại` : 'Đã trả lời hết'}</span>
+            </div>
+          )}
 
           {/* Pearson VUE Countdown Timer */}
           <div className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl border font-mono text-xs font-bold tabular-nums ${
@@ -796,8 +861,40 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
                 Câu {currentQuestionIndex + 1} / {currentExam.questions.length}
               </span>
               <span className="text-slate-400 text-xs hidden sm:inline">{currentQ.domain}</span>
+              <span
+                className={`flex items-center gap-1 rounded-lg border px-2 py-1 font-mono text-[11px] tabular-nums ${
+                  currentQTime > targetPerQ * 1.5
+                    ? 'border-rose-500/40 bg-rose-500/10 text-rose-300'
+                    : currentQTime > targetPerQ
+                      ? 'border-amber-500/40 bg-amber-500/10 text-amber-300'
+                      : 'border-white/[0.08] bg-slate-800/70 text-slate-300'
+                }`}
+                title={`Thời gian cho câu này / mục tiêu ${mmss(targetPerQ)}. ${planText}`}
+              >
+                <Clock className="h-3 w-3" aria-hidden="true" />
+                {mmss(currentQTime)} / {mmss(targetPerQ)}
+              </span>
             </div>
 
+            <div className="flex items-center gap-2">
+            <button
+              onClick={() => setCurrentQuestionIndex((prev) => Math.max(0, prev - 1))}
+              disabled={currentQuestionIndex === 0}
+              aria-label="Câu trước"
+              title="Câu trước"
+              className="flex h-8 w-8 items-center justify-center rounded-xl border border-white/[0.08] bg-slate-800 text-slate-300 hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </button>
+            <button
+              onClick={() => setCurrentQuestionIndex((prev) => Math.min(totalQ - 1, prev + 1))}
+              disabled={currentQuestionIndex >= totalQ - 1}
+              aria-label="Câu tiếp"
+              title="Câu tiếp"
+              className="flex h-8 w-8 items-center justify-center rounded-xl border border-white/[0.08] bg-slate-800 text-slate-300 hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
+            >
+              <ArrowRight className="h-4 w-4" />
+            </button>
             <button
               onClick={() => toggleFlagQuestion(currentQ.id)}
               className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition ${
@@ -809,6 +906,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
               <Flag className={`w-3.5 h-3.5 ${isFlagged ? 'fill-current' : ''}`} />
               <span>{isFlagged ? 'Đã Gắn Cờ' : 'Gắn Cờ Xem Lại'}</span>
             </button>
+            </div>
           </div>
 
           {/* Question Text */}
@@ -943,34 +1041,9 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
             )
           )}
 
-          {/* Question Navigation Footer */}
-          <div className="flex items-center justify-between pt-6 border-t border-white/[0.06]">
-            <button
-              disabled={currentQuestionIndex === 0}
-              onClick={() => setCurrentQuestionIndex((prev) => Math.max(0, prev - 1))}
-              className={`px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center space-x-2 border transition ${
-                currentQuestionIndex === 0
-                  ? 'opacity-30 cursor-not-allowed bg-slate-900 text-slate-500 border-slate-800'
-                  : 'machined-inner text-slate-200 hover:text-white hover:bg-slate-800'
-              }`}
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Câu Trước</span>
-            </button>
-
-            <span className="text-xs text-slate-400 font-mono">
-              {currentQuestionIndex + 1} / {currentExam.questions.length}
-            </span>
-
-            {currentQuestionIndex < currentExam.questions.length - 1 ? (
-              <button
-                onClick={() => setCurrentQuestionIndex((prev) => Math.min(currentExam.questions.length - 1, prev + 1))}
-                className="px-5 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-orange-400 to-amber-500 text-slate-950 flex items-center space-x-2 shadow-sm transition hover:opacity-95"
-              >
-                <span>Câu Tiếp</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            ) : (
+          {/* Navigation lives in the header row (arrows next to the flag button); the last question offers submit */}
+          {currentQuestionIndex >= totalQ - 1 && (
+            <div className="flex justify-end pt-6 border-t border-white/[0.06]">
               <button
                 onClick={() => setShowFinishConfirm(true)}
                 className="px-6 py-2.5 rounded-xl text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 flex items-center space-x-2 transition shadow-md"
@@ -978,8 +1051,8 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
                 <span>Nộp Bài Thi</span>
                 <Check className="w-3.5 h-3.5 stroke-[3]" />
               </button>
-            )}
-          </div>
+            </div>
+          )}
 
         </div>
       )}

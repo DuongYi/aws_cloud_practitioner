@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { AccountMenu } from './AccountMenu';
 import { 
   BookOpen, 
+  TrendingUp,
   Zap, 
   Award, 
   PlusCircle, 
@@ -16,7 +17,7 @@ import {
   Check
 } from 'lucide-react';
 
-type Tab = 'study' | 'cheatsheet' | 'exam' | 'manage' | 'history';
+type Tab = 'study' | 'cheatsheet' | 'exam' | 'progress' | 'manage' | 'history';
 type Lang = 'bilingual' | 'vi' | 'en';
 
 interface HeaderProps {
@@ -37,6 +38,7 @@ const TABS: { id: Tab; label: string; short: string; icon: React.ElementType }[]
   { id: 'study', label: 'Ôn luyện chuyên đề', short: 'Ôn luyện', icon: BookOpen },
   { id: 'cheatsheet', label: 'Bí kíp & Core Facts', short: 'Bí kíp', icon: Zap },
   { id: 'exam', label: 'Thi thử CLF-C02', short: 'Thi thử', icon: Award },
+  { id: 'progress', label: 'Tiến độ & Thống kê', short: 'Tiến độ', icon: TrendingUp },
   { id: 'manage', label: 'Kho & Nhập đề', short: 'Kho đề', icon: PlusCircle },
 ];
 
@@ -380,7 +382,7 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Mobile & Tablet Sub-Navigation Bar (< lg: 1024px) */}
       <nav
         aria-label="Điều hướng phụ"
-        className="grid grid-cols-4 lg:hidden border-t border-white/[0.06] bg-slate-950 px-2 py-1.5 gap-1"
+        className="grid grid-cols-5 lg:hidden border-t border-white/[0.06] bg-slate-950 px-2 py-1.5 gap-1"
       >
         {TABS.map(({ id, short, icon: Icon }) => {
           const active = activeTab === id;
