@@ -8,3 +8,14 @@
 4. Supabase dashboard, Authentication, URL Configuration: set the Site URL to the deployed address and add it
    (plus `http://localhost:3000` for development) to Redirect URLs, otherwise email sign-in links will not return to the app.
 5. Delete or change the test user (`admin@admin.com`) before going public.
+
+## Netlify
+
+`netlify.toml` and `.npmrc` are included (build command, publish folder, SPA redirect, install flag).
+Vite bakes `VITE_*` values into the app **at build time**, and `.env.local` is not uploaded, so set them in Netlify:
+
+1. Site configuration, Environment variables, add:
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_PUBLISHABLE_KEY`
+2. Deploys, Trigger deploy, **Clear cache and deploy site** (a normal redeploy can reuse the old build).
+3. Supabase, Authentication, URL Configuration: add the Netlify address to Site URL / Redirect URLs.
