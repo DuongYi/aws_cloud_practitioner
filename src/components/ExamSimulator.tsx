@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { ExamSet, ExamQuestion, ExamAttempt, ExamSession } from '../types';
+import { ExamSet, ExamQuestion, ExamAttempt, ExamSession, PracticeAnswer } from '../types';
 import { 
   Award, 
   Clock, 
@@ -17,18 +17,21 @@ import {
   Check,
   ChevronRight,
   ShieldCheck,
+  Pause,
   ZoomIn,
   ZoomOut,
   Strikethrough,
   X,
   ListOrdered
 } from 'lucide-react';
-import { saveExamAttempt, getAllExamSessions, saveExamSession, clearExamSession, adoptCloudSessions } from '../utils/storage';
+import { recordPracticeAnswer, saveExamAttempt, getAllExamSessions, saveExamSession, clearExamSession, adoptCloudSessions } from '../utils/storage';
 import { fetchSessions } from '../utils/sync';
 import { ExamPicker } from './ExamPicker';
 import { ResultSummary } from './ResultSummary';
 import { ExplanationPanel } from './ExplanationPanel';
 import { TimeStats } from './TimeStats';
+import { examCoverage } from '../utils/progress';
+import { questionKey } from '../utils/wrongNotebook';
 import { ExplanationFallback } from './ExplanationFallback';
 import { useExplanations } from '../utils/explanations';
 
@@ -39,12 +42,16 @@ interface ExamSimulatorProps {
   routeExamId?: string;
   active?: boolean;
   onSelectExam?: (examId: string, replace: boolean) => void;
+  /** Called after a practice answer was recorded, so the notebook and progress views can refresh. */
+  onPracticeRecorded?: () => void;
+  attempts?: ExamAttempt[];
+  practice?: PracticeAnswer[];
 }
 
 /** Numeric ids (older built-in exams) repeat across exams, so they are namespaced by exam id. */
 const explanationKey = (examId: string, qid: string | number): string => (typeof qid === 'number' ? `${examId}:${qid}` : String(qid));
 
-export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAttempt, langMode, routeExamId, active, onSelectExam }) => {
+export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAttempt, langMode, routeExamId, active, onSelectExam, onPracticeRecorded, attempts = [], practice = [] }) => {
   const [selectedExamId, setSelectedExamId] = useState<string>(
     exams.find((e) => e.id === routeExamId)?.id || exams[0]?.id || ''
   );
@@ -70,6 +77,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
   const questionTimesRef = useRef<Record<string | number, number>>({});
   const currentQidRef = useRef<string | number | undefined>(undefined);
   const finishRef = useRef<() => void>(() => {});
+  const [isPaused, setIsPaused] = useState<boolean>(false);
   const [timeRemainingSeconds, setTimeRemainingSeconds] = useState<number>(90 * 60);
   const [isExamCompleted, setIsExamCompleted] = useState<boolean>(false);
   const [showReviewGrid, setShowReviewGrid] = useState<boolean>(false);
@@ -77,6 +85,8 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
   const [showExitConfirm, setShowExitConfirm] = useState<boolean>(false);
   const [filterResultView, setFilterResultView] = useState<'ALL' | 'WRONG' | 'FLAGGED'>('ALL');
   const [textSize, setTextSize] = useState<'normal' | 'large'>('normal');
+
+  const coverage = useMemo(() => examCoverage(exams, attempts, practice), [exams, attempts, practice]);
 
   const liveExam = useMemo(() => {
     return exams.find((e) => e.id === selectedExamId) || exams[0];
@@ -186,6 +196,39 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
     setIsExamActive(true);
   };
 
+  const makeSession = (paused: boolean): ExamSession => ({
+    examId: currentExam.id,
+    mode: examMode,
+    currentIndex: currentQuestionIndex,
+    answers: userAnswers,
+    flagged: Array.from(flaggedQuestions),
+    eliminated: Object.fromEntries(Object.entries(eliminatedOptions).map(([k, v]) => [k, Array.from(v)])),
+    checked: Array.from(checkedQuestions),
+    questionTimes: questionTimesRef.current,
+    endsAt: endsAtRef.current,
+    remainingSeconds: timeRemainingSeconds,
+    updatedAt: Date.now(),
+    paused,
+  });
+
+  // Pause in place: the clock (overall and per question) stops and the questions are hidden.
+  const handlePause = () => {
+    if (!currentExam) return;
+    setIsPaused(true);
+    const session = makeSession(true);
+    saveExamSession(session, true);
+    setSavedSessions((prev) => ({ ...prev, [currentExam.id]: session }));
+  };
+
+  const handleUnpause = () => {
+    // The deadline moves forward by however long the pause lasted
+    endsAtRef.current = Date.now() + timeRemainingSeconds * 1000;
+    setIsPaused(false);
+    const session = makeSession(false);
+    saveExamSession(session);
+    setSavedSessions((prev) => ({ ...prev, [currentExam.id]: session }));
+  };
+
   const handleSaveAndExit = () => {
     setShowExitConfirm(false);
     if (currentExam) {
@@ -247,7 +290,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
 
   // Timer effect during active strict exam
   useEffect(() => {
-    if (!isExamActive || isExamCompleted) return;
+    if (!isExamActive || isExamCompleted || isPaused) return;
 
     const timer = setInterval(() => {
       setTimeRemainingSeconds((prev) => Math.max(0, prev - 1));
@@ -259,12 +302,16 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
     }, 1000);
 
     return () => clearInterval(timer);
+  }, [isExamActive, isExamCompleted, isPaused]);
+
+  useEffect(() => {
+    if (!isExamActive || isExamCompleted) setIsPaused(false);
   }, [isExamActive, isExamCompleted]);
 
   // Time is up: submit using the latest answers (finishRef always points at the newest render's closure).
   useEffect(() => {
-    if (isExamActive && !isExamCompleted && timeRemainingSeconds <= 0) finishRef.current();
-  }, [timeRemainingSeconds, isExamActive, isExamCompleted]);
+    if (isExamActive && !isExamCompleted && !isPaused && timeRemainingSeconds <= 0) finishRef.current();
+  }, [timeRemainingSeconds, isExamActive, isExamCompleted, isPaused]);
 
   const handleStartExam = () => {
     if (!currentExam) return;
@@ -408,6 +455,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
           </div>
         )}
         <ExamPicker
+          coverage={coverage}
           exams={exams}
           selectedExamId={currentExam?.id || ''}
           onSelect={setSelectedExamId}
@@ -658,6 +706,16 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5">
+          {/* Pause */}
+          <button
+            onClick={handlePause}
+            className="flex items-center gap-1.5 h-8 rounded-xl border border-white/[0.08] bg-slate-800/80 px-3 text-xs font-semibold text-slate-200 transition hover:bg-slate-700"
+            title="Tạm dừng, đồng hồ sẽ dừng lại"
+          >
+            <Pause className="h-3.5 w-3.5" aria-hidden="true" />
+            <span className="hidden sm:inline">Tạm dừng</span>
+          </button>
+
           {/* Zoom text control */}
           <button
             onClick={() => setTextSize(textSize === 'normal' ? 'large' : 'normal')}
@@ -850,6 +908,33 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
         </div>
       )}
 
+      {isPaused && (
+        <div role="dialog" aria-modal="true" aria-label="Bài thi đang tạm dừng" className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/95 p-4 backdrop-blur-xl">
+          <div className="machined-card w-full max-w-md rounded-3xl p-8 text-center">
+            <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-500/15 text-orange-300">
+              <Pause className="h-7 w-7" aria-hidden="true" />
+            </span>
+            <h3 className="mt-5 text-2xl font-semibold tracking-tight text-white">Đã tạm dừng</h3>
+            <p className="mx-auto mt-2 max-w-[34ch] text-sm leading-relaxed text-slate-400">Đồng hồ đã dừng và nội dung câu hỏi được ẩn cho tới khi bạn tiếp tục.</p>
+            <dl className="mt-6 grid grid-cols-3 gap-3 text-center">
+              <div><dt className="text-[11px] text-slate-400">Còn lại</dt><dd className="mt-1 font-mono text-lg tabular-nums text-white">{formatTimer(timeRemainingSeconds)}</dd></div>
+              <div><dt className="text-[11px] text-slate-400">Đã làm</dt><dd className="mt-1 font-mono text-lg tabular-nums text-white">{answeredNow}/{totalQ}</dd></div>
+              <div><dt className="text-[11px] text-slate-400">Câu hiện tại</dt><dd className="mt-1 font-mono text-lg tabular-nums text-white">{currentQuestionIndex + 1}</dd></div>
+            </dl>
+            <button
+              onClick={handleUnpause}
+              autoFocus
+              className="mt-7 flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-orange-500 text-sm font-semibold text-slate-950 hover:bg-orange-400"
+            >
+              <Play className="h-4 w-4 fill-current" aria-hidden="true" /> Tiếp tục làm bài
+            </button>
+            <button onClick={handleSaveAndExit} className="mt-2 h-11 w-full rounded-xl text-sm font-medium text-slate-300 hover:text-white">
+              Lưu và thoát
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
       <div className="min-w-0">
       {/* Active Question Canvas */}
@@ -989,7 +1074,20 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
             <div className="mt-4 flex flex-wrap items-center gap-3">
               {!isCurrentChecked ? (
                 <button
-                  onClick={() => setCheckedQuestions((prev) => new Set(prev).add(currentQ.id))}
+                  onClick={() => {
+                    const ok = selectedForCurrent.length === currentQ.correctAnswers.length && selectedForCurrent.every((a) => currentQ.correctAnswers.includes(a));
+                    recordPracticeAnswer({
+                      id: `pa-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+                      key: questionKey(currentExam.id, currentQ.id),
+                      examId: currentExam.id,
+                      selected: selectedForCurrent,
+                      correct: ok,
+                      seconds: questionTimesRef.current[currentQ.id] || 0,
+                      at: new Date().toISOString(),
+                    });
+                    onPracticeRecorded?.();
+                    setCheckedQuestions((prev) => new Set(prev).add(currentQ.id));
+                  }}
                   disabled={selectedForCurrent.length === 0}
                   className="flex h-11 items-center gap-2 rounded-xl bg-orange-500 px-6 text-sm font-semibold text-slate-950 hover:bg-orange-400 disabled:cursor-not-allowed disabled:opacity-40"
                 >

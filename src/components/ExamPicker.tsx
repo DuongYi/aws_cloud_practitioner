@@ -57,6 +57,8 @@ interface ExamPickerProps {
   savedSessions?: Record<string, ExamSession>;
   resume?: { session: ExamSession; exam: ExamSet } | null;
   onResume?: (examId?: string) => void;
+  /** Per exam: distinct questions answered so far and how many were right the last time. */
+  coverage?: Record<string, { seen: number; correct: number }>;
   onDiscardResume?: (examId?: string) => void;
 }
 
@@ -70,6 +72,7 @@ export const ExamPicker: React.FC<ExamPickerProps> = ({
   savedSessions,
   resume,
   onResume,
+  coverage,
   onDiscardResume,
 }) => {
   const reduce = useReducedMotion();
@@ -490,6 +493,13 @@ export const ExamPicker: React.FC<ExamPickerProps> = ({
                         title={`Mốc đỗ: ${ex.passingScore} điểm`}
                       />
                     </div>
+
+                    {ex.id !== 'wrong-notebook' && coverage?.[ex.id] && coverage[ex.id].seen > 0 && (
+                      <p className="text-[11px] leading-relaxed text-slate-400">
+                        Đã làm <span className="font-mono tabular-nums text-slate-200">{coverage[ex.id].seen}/{ex.questions.length}</span> câu,
+                        đúng <span className="font-mono tabular-nums text-emerald-400">{coverage[ex.id].correct}</span> ở lần gần nhất
+                      </p>
+                    )}
                   </div>
                 </button>
               </motion.li>

@@ -1,6 +1,6 @@
-import { ExamSet, ExamAttempt, ExamSession } from '../types';
+import { ExamSet, ExamAttempt, ExamSession, PracticeAnswer } from '../types';
 import { DEFAULT_EXAMS } from '../data/defaultExams';
-import { pushSession, removeSession, pushAttempt, pushBookmark, pushCustomExam, pushLecture, removeCustomExam } from './sync';
+import { pushSession, removeSession, pushPracticeAnswer, pushAttempt, pushBookmark, pushCustomExam, pushLecture, removeCustomExam } from './sync';
 
 const STORAGE_KEYS = {
   CUSTOM_EXAMS: 'aws_ccp_custom_exams',
@@ -118,9 +118,33 @@ export const toggleBookmarkedFact = (factKey: string): string[] => {
   }
 };
 
-/** Replace local copies with the merged result of a cloud sync. */
-export const applySyncedData = (d: { lectures: string[]; bookmarks: string[]; attempts: ExamAttempt[]; customExams: ExamSet[] }): void => {
+const PRACTICE_KEY = 'aws_ccp_practice_log';
+const PRACTICE_LIMIT = 2000;
+
+export const getPracticeLog = (): PracticeAnswer[] => {
   try {
+    const raw = localStorage.getItem(PRACTICE_KEY);
+    return raw ? (JSON.parse(raw) as PracticeAnswer[]) : [];
+  } catch {
+    return [];
+  }
+};
+
+/** Remember a practice answer on this device and send it to the cloud when signed in. */
+export const recordPracticeAnswer = (answer: PracticeAnswer): void => {
+  try {
+    const log = [...getPracticeLog(), answer].slice(-PRACTICE_LIMIT);
+    localStorage.setItem(PRACTICE_KEY, JSON.stringify(log));
+  } catch (e) {
+    console.error('Failed to save practice answer', e);
+  }
+  void pushPracticeAnswer(answer);
+};
+
+/** Replace local copies with the merged result of a cloud sync. */
+export const applySyncedData = (d: { lectures: string[]; bookmarks: string[]; attempts: ExamAttempt[]; customExams: ExamSet[]; practice?: PracticeAnswer[] }): void => {
+  try {
+    if (d.practice) localStorage.setItem(PRACTICE_KEY, JSON.stringify(d.practice));
     localStorage.setItem(STORAGE_KEYS.COMPLETED_LECTURES, JSON.stringify(d.lectures));
     localStorage.setItem(STORAGE_KEYS.BOOKMARKED_FACTS, JSON.stringify(d.bookmarks));
     localStorage.setItem(STORAGE_KEYS.EXAM_HISTORY, JSON.stringify(d.attempts));

@@ -1,4 +1,4 @@
-import { ExamAttempt, ExamSet, ExamSession } from '../types';
+import { ExamAttempt, ExamSet, ExamSession, PracticeAnswer } from '../types';
 import { supabase } from './supabase';
 
 /**
@@ -85,7 +85,25 @@ export const removeCustomExam = async (examId: string) => {
   await run('custom exam', () => supabase!.from('custom_exams').delete().eq('id', examId));
 };
 
+const practiceRow = (a: PracticeAnswer) => ({
+  client_id: a.id,
+  question_key: a.key,
+  exam_id: a.examId,
+  selected: a.selected,
+  correct: a.correct,
+  seconds: Math.max(0, Math.round(a.seconds)),
+  answered_at: a.at,
+});
+
+export const pushPracticeAnswer = async (a: PracticeAnswer) => {
+  if (!supabase || !(await userId())) return;
+  await run('practice answer', () =>
+    supabase!.from('practice_answers').upsert(practiceRow(a), { onConflict: 'user_id,client_id', ignoreDuplicates: true })
+  );
+};
+
 interface LocalSnapshot {
+  practice?: PracticeAnswer[];
   lectures: string[];
   bookmarks: string[];
   attempts: ExamAttempt[];
@@ -99,13 +117,14 @@ interface LocalSnapshot {
 export const syncAll = async (local: LocalSnapshot): Promise<LocalSnapshot | null> => {
   if (!supabase || !(await userId())) return null;
   try {
-    const [lec, bm, att, ce] = await Promise.all([
+    const [lec, bm, att, ce, pa] = await Promise.all([
       supabase.from('lecture_progress').select('lecture_id'),
       supabase.from('bookmarked_facts').select('fact_key'),
       supabase.from('exam_attempts').select('*').order('attempted_at', { ascending: false }).limit(200),
       supabase.from('custom_exams').select('id, exam'),
+      supabase.from('practice_answers').select('client_id, question_key, exam_id, selected, correct, seconds, answered_at').order('answered_at', { ascending: false }).limit(2000),
     ]);
-    const firstError = [lec, bm, att, ce].find((r) => r.error)?.error;
+    const firstError = [lec, bm, att, ce, pa].find((r) => r.error)?.error;
     if (firstError) throw new Error(firstError.message);
 
     const cloudLectures = (lec.data ?? []).map((r) => r.lecture_id as string);
@@ -127,6 +146,20 @@ export const syncAll = async (local: LocalSnapshot): Promise<LocalSnapshot | nul
       timeLimitSeconds: r.time_limit_seconds ?? undefined,
     }));
     const cloudExams: ExamSet[] = (ce.data ?? []).map((r) => r.exam as ExamSet);
+    const cloudPractice: PracticeAnswer[] = (pa.data ?? []).map((r) => ({
+      id: r.client_id,
+      key: r.question_key,
+      examId: r.exam_id,
+      selected: r.selected,
+      correct: r.correct,
+      seconds: r.seconds,
+      at: r.answered_at,
+    }));
+    const localPractice = local.practice ?? [];
+    const practiceIds = new Set(cloudPractice.map((a) => a.id));
+    const practice = [...cloudPractice, ...localPractice.filter((a) => !practiceIds.has(a.id))]
+      .sort((a, b) => a.at.localeCompare(b.at))
+      .slice(-2000);
 
     const lectures = Array.from(new Set([...cloudLectures, ...local.lectures]));
     const bookmarks = Array.from(new Set([...cloudBookmarks, ...local.bookmarks]));
@@ -149,9 +182,10 @@ export const syncAll = async (local: LocalSnapshot): Promise<LocalSnapshot | nul
         : null,
       ...local.attempts.filter((a) => !attemptIds.has(a.id)).map((a) => pushAttempt(a)),
       ...local.customExams.filter((e) => !examIds.has(e.id)).map((e) => pushCustomExam(e)),
+      ...localPractice.filter((a) => !practiceIds.has(a.id)).map((a) => pushPracticeAnswer(a)),
     ]);
 
-    return { lectures, bookmarks, attempts: attempts.slice(0, 200), customExams };
+    return { lectures, bookmarks, attempts: attempts.slice(0, 200), customExams, practice };
   } catch (e) {
     console.warn('[sync] syncAll failed', e);
     return null;

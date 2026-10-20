@@ -17,7 +17,8 @@ import {
   toggleCompletedLecture, 
   getBookmarkedFacts, 
   toggleBookmarkedFact,
-  getExamAttempts
+  getExamAttempts,
+  getPracticeLog
 } from './utils/storage';
 import { motion, useReducedMotion } from 'motion/react';
 import { InstallPrompt } from './components/InstallPrompt';
@@ -62,12 +63,14 @@ export default function App() {
   const [bookmarkedFacts, setBookmarkedFacts] = useState<string[]>([]);
   const [allExamsList, setAllExamsList] = useState(getAllExams());
   const [examAttempts, setExamAttempts] = useState(getExamAttempts());
+  const [practiceLog, setPracticeLog] = useState(getPracticeLog());
 
   useEffect(() => {
     setCompletedLectures(getCompletedLectures());
     setBookmarkedFacts(getBookmarkedFacts());
     setAllExamsList(getAllExams());
     setExamAttempts(getExamAttempts());
+    setPracticeLog(getPracticeLog());
   }, []);
 
   // Keyboard shortcut listener
@@ -111,6 +114,7 @@ export default function App() {
       lectures: getCompletedLectures(),
       bookmarks: getBookmarkedFacts(),
       attempts: getExamAttempts(),
+      practice: getPracticeLog(),
       customExams: getStoredCustomExams(),
     });
 
@@ -137,6 +141,7 @@ export default function App() {
           setBookmarkedFacts(merged.bookmarks);
           setAllExamsList(getAllExams());
           setExamAttempts(getExamAttempts());
+          setPracticeLog(getPracticeLog());
           syncedUser = userId;
           break;
         }
@@ -179,7 +184,7 @@ export default function App() {
   };
 
   // The wrong-answer notebook is built from attempt history and shown as one more exam
-  const wrongEntries = useMemo(() => collectWrong(allExamsList, examAttempts), [allExamsList, examAttempts]);
+  const wrongEntries = useMemo(() => collectWrong(allExamsList, examAttempts, practiceLog), [allExamsList, examAttempts, practiceLog]);
   const examsWithNotebook = useMemo(() => {
     const nb = buildNotebookExam(wrongEntries);
     return nb ? [nb, ...allExamsList] : allExamsList;
@@ -264,6 +269,7 @@ export default function App() {
             <Suspense fallback={<PageSkeleton />}>
               <ProgressDashboard
                 attempts={examAttempts}
+                practice={practiceLog}
                 exams={allExamsList}
                 sections={sections}
                 completedLectures={completedLectures}
@@ -291,6 +297,9 @@ export default function App() {
               exams={examsWithNotebook}
               langMode={langMode}
               onFinishAttempt={handleRefreshExams}
+              onPracticeRecorded={() => setPracticeLog(getPracticeLog())}
+              attempts={examAttempts}
+              practice={practiceLog}
               active={route.tab === 'exam'}
               routeExamId={route.tab === 'exam' ? route.id : undefined}
               onSelectExam={(id, replace) => navigate(buildPath('exam', id), { replace })}

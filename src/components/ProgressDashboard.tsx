@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react';
 import { ArrowRight, BookOpen, NotebookPen, Play, TrendingUp } from 'lucide-react';
-import { ExamAttempt, ExamSet, SectionItem } from '../types';
+import { ExamAttempt, ExamSet, PracticeAnswer, SectionItem } from '../types';
 import { analyzeProgress } from '../utils/progress';
 import { buildPath, navigate } from '../utils/router';
 
 interface ProgressDashboardProps {
   attempts: ExamAttempt[];
+  practice: PracticeAnswer[];
   exams: ExamSet[];
   sections: SectionItem[];
   completedLectures: string[];
@@ -60,8 +61,8 @@ const ScoreTrend: React.FC<{ points: { score: number; date: string }[] }> = ({ p
   );
 };
 
-export const ProgressDashboard: React.FC<ProgressDashboardProps> = ({ attempts, exams, sections, completedLectures, wrongCount }) => {
-  const summary = useMemo(() => analyzeProgress(exams, attempts), [exams, attempts]);
+export const ProgressDashboard: React.FC<ProgressDashboardProps> = ({ attempts, practice, exams, sections, completedLectures, wrongCount }) => {
+  const summary = useMemo(() => analyzeProgress(exams, attempts, practice), [exams, attempts, practice]);
   const trend = useMemo(() => [...attempts].sort((a, b) => a.date.localeCompare(b.date)).slice(-20), [attempts]);
   const recent = useMemo(() => [...attempts].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 8), [attempts]);
 
@@ -82,7 +83,7 @@ export const ProgressDashboard: React.FC<ProgressDashboardProps> = ({ attempts, 
       .sort((a, b) => a.done / a.total - b.done / b.total)
       .slice(0, 3);
 
-  if (attempts.length === 0) {
+  if (attempts.length === 0 && practice.length === 0) {
     return (
       <div className="px-4 py-10 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-xl rounded-3xl border border-dashed border-slate-700 px-6 py-16 text-center">
@@ -107,7 +108,7 @@ export const ProgressDashboard: React.FC<ProgressDashboardProps> = ({ attempts, 
       <header>
         <h2 className="text-3xl font-semibold tracking-tighter text-slate-50 sm:text-4xl">Tiến độ ôn thi</h2>
         <p className="mt-2 max-w-[60ch] text-sm leading-relaxed text-slate-400">
-          Tính từ {summary.attempts} lượt thi đã lưu. Với mỗi câu hỏi, chỉ lần trả lời gần nhất được tính.
+          Tính từ {summary.attempts} lượt thi đã nộp và các câu bạn đã kiểm tra khi luyện tập. Với mỗi câu hỏi, chỉ lần trả lời gần nhất được tính.
         </p>
       </header>
 
@@ -127,11 +128,13 @@ export const ProgressDashboard: React.FC<ProgressDashboardProps> = ({ attempts, 
         ))}
       </dl>
 
+      {trend.length > 0 && (
       <section aria-label="Điểm theo thời gian" className="machined-card rounded-3xl p-6 sm:p-8">
         <h3 className="text-base font-semibold text-slate-50">Điểm qua các lần thi</h3>
         <p className="mt-1 text-xs text-slate-400">Xanh: đạt (từ {PASS_SCORE}), đỏ: chưa đạt. Hiển thị tối đa 20 lượt gần nhất.</p>
         <div className="mt-4"><ScoreTrend points={trend.map((a) => ({ score: a.score, date: a.date }))} /></div>
       </section>
+      )}
 
       <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr]">
         {/* Domain mastery */}
@@ -221,6 +224,7 @@ export const ProgressDashboard: React.FC<ProgressDashboardProps> = ({ attempts, 
       </div>
 
       {/* Recent attempts */}
+      {recent.length > 0 && (
       <section aria-label="Lịch sử làm bài">
         <h3 className="text-base font-semibold text-slate-50">Lịch sử gần đây</h3>
         <div className="mt-4 overflow-x-auto">
@@ -248,6 +252,7 @@ export const ProgressDashboard: React.FC<ProgressDashboardProps> = ({ attempts, 
           </table>
         </div>
       </section>
+      )}
     </div>
   );
 };

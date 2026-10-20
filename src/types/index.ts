@@ -125,3 +125,16 @@ export interface ExamSession {
   /** True when the user left the exam on purpose; false means it was interrupted. */
   paused?: boolean;
 }
+
+/** One answer checked in practice mode. Kept as a log so progress survives rounds that are never submitted. */
+export interface PracticeAnswer {
+  /** Unique per answer; also the dedupe key in the cloud table. */
+  id: string;
+  /** Question key (see questionKey in utils/wrongNotebook). */
+  key: string;
+  examId: string;
+  selected: number[];
+  correct: boolean;
+  seconds: number;
+  at: string;
+}

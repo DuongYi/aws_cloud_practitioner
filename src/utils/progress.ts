@@ -1,5 +1,5 @@
-import { ExamAttempt, ExamSet } from '../types';
-import { buildResolver } from './wrongNotebook';
+import { ExamAttempt, ExamSet, PracticeAnswer } from '../types';
+import { buildResolver, buildAnswerEvents } from './wrongNotebook';
 
 export interface DomainProgress {
   domain: string;
@@ -26,31 +26,19 @@ export const DOMAINS = [
   'Domain 4: Billing, Pricing and Support',
 ] as const;
 
-const isRight = (selected: number[], correct: number[]) =>
-  selected.length === correct.length && selected.every((a) => correct.includes(a));
-
-/** Learning progress derived from the saved attempts: only the latest answer to each question counts. */
-export const analyzeProgress = (exams: ExamSet[], attempts: ExamAttempt[]): ProgressSummary => {
-  const { byKey, resolve } = buildResolver(exams);
+/** Learning progress derived from the answer history: only the latest answer to each question counts. */
+export const analyzeProgress = (exams: ExamSet[], attempts: ExamAttempt[], practice: PracticeAnswer[] = []): ProgressSummary => {
+  const { byKey } = buildResolver(exams);
   const latest = new Map<string, boolean>();
   const timing = new Map<string, { sec: number; n: number }>();
 
-  [...attempts]
-    .sort((a, b) => a.date.localeCompare(b.date))
-    .forEach((att) => {
-      Object.entries(att.userAnswers || {}).forEach(([rawId, sel]) => {
-        if (!sel || sel.length === 0) return;
-        const q = resolve(att.examId, rawId);
-        if (q) latest.set(String(q.id), isRight(sel, q.correctAnswers || []));
-      });
-      Object.entries(att.questionTimes || {}).forEach(([rawId, sec]) => {
-        if (!sec || sec <= 0) return;
-        const q = resolve(att.examId, rawId);
-        if (!q) return;
-        const t = timing.get(q.domain) ?? { sec: 0, n: 0 };
-        timing.set(q.domain, { sec: t.sec + sec, n: t.n + 1 });
-      });
-    });
+  buildAnswerEvents(exams, attempts, practice).forEach((e) => {
+    latest.set(e.key, e.right);
+    if (e.seconds > 0) {
+      const t = timing.get(e.question.domain) ?? { sec: 0, n: 0 };
+      timing.set(e.question.domain, { sec: t.sec + e.seconds, n: t.n + 1 });
+    }
+  });
 
   const domains: DomainProgress[] = DOMAINS.map((domain) => {
     const pool = [...byKey.values()].filter((q) => q.domain === domain);
@@ -79,4 +67,24 @@ export const analyzeProgress = (exams: ExamSet[], attempts: ExamAttempt[]): Prog
     accuracy: answered ? correctAll / answered : 0,
     domains,
   };
+};
+
+/** How much of each exam has been answered, and how many of those answers were right the last time. */
+export const examCoverage = (exams: ExamSet[], attempts: ExamAttempt[], practice: PracticeAnswer[] = []): Record<string, { seen: number; correct: number }> => {
+  const latest = new Map<string, boolean>();
+  buildAnswerEvents(exams, attempts, practice).forEach((e) => latest.set(e.key, e.right));
+  const out: Record<string, { seen: number; correct: number }> = {};
+  exams.forEach((exam) => {
+    let seen = 0;
+    let correct = 0;
+    exam.questions.forEach((q) => {
+      const key = typeof q.id === 'number' ? `${exam.id}:${q.id}` : String(q.id);
+      if (latest.has(key)) {
+        seen += 1;
+        if (latest.get(key)) correct += 1;
+      }
+    });
+    out[exam.id] = { seen, correct };
+  });
+  return out;
 };
