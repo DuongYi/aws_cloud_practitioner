@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, lazy, Suspense } from 'react';
+import React, { useState, useEffect, useMemo, useRef, lazy, Suspense } from 'react';
 import { Header } from './components/Header';
 import { ExecutiveDashboard } from './components/ExecutiveDashboard';
 import { StudySections } from './components/StudySections';
@@ -30,6 +30,7 @@ const ExamManager = lazy(() => import('./components/ExamManager').then((m) => ({
 
 const ProgressDashboard = lazy(() => import('./components/ProgressDashboard').then((m) => ({ default: m.ProgressDashboard })));
 const WrongReview = lazy(() => import('./components/WrongReview').then((m) => ({ default: m.WrongReview })));
+const VSCodeSimulator = lazy(() => import('./components/vscode/VSCodeSimulator').then((m) => ({ default: m.VSCodeSimulator })));
 
 const PageSkeleton = () => (
   <div className="space-y-4 px-4 py-8 sm:px-6 lg:px-8" role="status" aria-label="Đang tải">
@@ -74,11 +75,24 @@ export default function App() {
     setPracticeLog(getPracticeLog());
   }, []);
 
+  const lastRegularTabRef = useRef<Tab>('study');
+  useEffect(() => {
+    if (activeTab !== 'vscode') {
+      lastRegularTabRef.current = activeTab;
+    }
+  }, [activeTab]);
+
   // Keyboard shortcut listener
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Don't trigger if user is typing in an input or textarea
       if (['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement)?.tagName)) {
+        return;
+      }
+
+      if (e.key === 'F2' || (e.altKey && e.key.toLowerCase() === 'v')) {
+        e.preventDefault();
+        switchTab(activeTab === 'vscode' ? (lastRegularTabRef.current || 'study') : 'vscode');
         return;
       }
 
@@ -103,7 +117,7 @@ export default function App() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [activeTab]);
 
   const [accountEmail, setAccountEmail] = useState<string | null>(null);
   const [syncing, setSyncing] = useState(false);
@@ -336,7 +350,14 @@ export default function App() {
       </main>
 
       {/* Commercial Grade Footer */}
-      {activeTab !== 'exam' && <InstallPrompt />}
+      {activeTab !== 'exam' && activeTab !== 'vscode' && <InstallPrompt />}
+
+      {/* Full-Screen VS Code Simulator (Fake Work / Fake Study Mode) */}
+      {activeTab === 'vscode' && (
+        <Suspense fallback={<div className="fixed inset-0 z-50 bg-[#1e1e1e]" />}>
+          <VSCodeSimulator onExit={() => switchTab(lastRegularTabRef.current || 'study')} />
+        </Suspense>
+      )}
 
       <footer className="border-t border-white/[0.08] bg-slate-950 px-4 py-10 text-xs text-slate-400 sm:px-6 lg:px-8 relative z-10">
         <div className="mx-auto flex max-w-[1440px] flex-col justify-between gap-6 md:flex-row md:items-center">

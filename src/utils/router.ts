@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from 'react';
 
-export type Tab = 'study' | 'cheatsheet' | 'exam' | 'review' | 'progress' | 'manage';
+export type Tab = 'study' | 'cheatsheet' | 'exam' | 'review' | 'progress' | 'manage' | 'vscode';
 
 export interface Route {
   tab: Tab;
@@ -8,7 +8,7 @@ export interface Route {
   id?: string;
 }
 
-const TABS: Tab[] = ['study', 'cheatsheet', 'exam', 'review', 'progress', 'manage'];
+const TABS: Tab[] = ['study', 'cheatsheet', 'exam', 'review', 'progress', 'manage', 'vscode'];
 
 export const parsePath = (pathname: string): Route => {
   const [first, second] = pathname.split('/').filter(Boolean).map(decodeURIComponent);
