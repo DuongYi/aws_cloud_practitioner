@@ -147,12 +147,12 @@ export const Header: React.FC<HeaderProps> = ({
             aria-label="CloudPrep Pro AWS CLF-C02 Trang chủ"
           >
             {/* Logo Badge */}
-            <div className="relative flex h-8 w-8 sm:h-8.5 sm:w-8.5 items-center justify-center rounded-xl bg-gradient-to-br from-orange-400 via-orange-500 to-amber-600 p-0.5 shadow-md shadow-orange-500/20 transition-transform duration-200 group-hover:scale-105">
-              <div className="flex h-full w-full items-center justify-center rounded-[10px] bg-slate-950 font-mono text-[11px] font-black">
-                <span className="bg-gradient-to-r from-orange-400 to-amber-300 bg-clip-text text-transparent tracking-tight">
-                  C02
-                </span>
-              </div>
+            <div className="relative flex h-8 w-8 sm:h-8.5 sm:w-8.5 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-orange-400 via-orange-500 to-amber-600 p-0.5 shadow-md shadow-orange-500/20 transition-transform duration-200 group-hover:scale-105">
+              <img
+                src="/logo.png"
+                alt="CloudPrep Pro"
+                className="h-full w-full rounded-[10px] object-cover"
+              />
               <span className="absolute -bottom-0.5 -right-0.5 flex h-2 w-2 items-center justify-center rounded-full bg-emerald-500 ring-2 ring-slate-950" />
             </div>
 
