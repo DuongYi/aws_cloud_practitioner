@@ -23,6 +23,17 @@ export const ExplanationFallback: React.FC<ExplanationFallbackProps> = ({ loadin
       </div>
     );
   }
+  if (legacyText) {
+    return (
+      <div className="space-y-1.5 rounded-2xl border border-white/[0.06] bg-slate-950/70 p-4 text-xs sm:text-sm">
+        <div className="flex items-center gap-1.5 font-bold text-amber-400">
+          <AlertCircle className="h-4 w-4" aria-hidden="true" />
+          <span>Giải thích:</span>
+        </div>
+        <p className="leading-relaxed text-slate-200 whitespace-pre-line">{legacyText}</p>
+      </div>
+    );
+  }
   if (failed || !configured) {
     return (
       <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-orange-500/30 bg-orange-500/[0.06] p-4 text-sm text-orange-100">
@@ -40,14 +51,5 @@ export const ExplanationFallback: React.FC<ExplanationFallbackProps> = ({ loadin
       </div>
     );
   }
-  if (!legacyText) return null;
-  return (
-    <div className="space-y-1.5 rounded-2xl border border-white/[0.06] bg-slate-950/70 p-4 text-xs sm:text-sm">
-      <div className="flex items-center gap-1.5 font-bold text-amber-400">
-        <AlertCircle className="h-4 w-4" aria-hidden="true" />
-        <span>Giải thích:</span>
-      </div>
-      <p className="leading-relaxed text-slate-200">{legacyText}</p>
-    </div>
-  );
+  return null;
 };

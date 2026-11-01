@@ -252,7 +252,14 @@ export default function App() {
         syncing={syncing}
       />
 
-      <main id="main" className="mx-auto w-full max-w-[1440px] flex-1 pb-16 relative z-10">
+      <main
+        id="main"
+        className="mx-auto w-full max-w-[1440px] flex-1 pb-16 relative z-10"
+        style={{
+          paddingLeft: 'max(0.75rem, env(safe-area-inset-left, 0px))',
+          paddingRight: 'max(0.75rem, env(safe-area-inset-right, 0px))',
+        }}
+      >
         
         {/* Executive Readiness Dashboard (Displayed on Study & Home view) */}
         {activeTab === 'study' && sections.length > 0 && (
@@ -359,7 +366,14 @@ export default function App() {
         </Suspense>
       )}
 
-      <footer className="border-t border-white/[0.08] bg-slate-950 px-4 py-10 text-xs text-slate-400 sm:px-6 lg:px-8 relative z-10">
+      <footer
+        className="border-t border-white/[0.08] bg-slate-950 px-4 py-10 text-xs text-slate-400 sm:px-6 lg:px-8 relative z-10"
+        style={{
+          paddingBottom: 'calc(2.5rem + env(safe-area-inset-bottom, 0px))',
+          paddingLeft: 'max(1rem, env(safe-area-inset-left, 0px))',
+          paddingRight: 'max(1rem, env(safe-area-inset-right, 0px))',
+        }}
+      >
         <div className="mx-auto flex max-w-[1440px] flex-col justify-between gap-6 md:flex-row md:items-center">
           
           <div className="space-y-1">

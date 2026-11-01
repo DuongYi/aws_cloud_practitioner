@@ -20,6 +20,7 @@ import {
   Target
 } from 'lucide-react';
 import { SectionItem, ExamAttempt } from '../types';
+import { navigate, buildPath } from '../utils/router';
 
 interface ExecutiveDashboardProps {
   sections: SectionItem[];
@@ -268,12 +269,33 @@ export const ExecutiveDashboard: React.FC<ExecutiveDashboardProps> = ({
               </div>
 
               {/* Quick Action Navigation Buttons */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-2 border-t border-white/[0.06]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 pt-2 border-t border-white/[0.06]">
                 
-                {/* Action 1: Thi Thử Ngay */}
+                {/* Action 1: Practice 283 */}
+                <button
+                  onClick={() => navigate(buildPath('exam', 'practice_283'))}
+                  className="group flex items-center justify-between rounded-2xl border border-emerald-500/40 bg-gradient-to-r from-emerald-500/15 via-teal-500/10 to-transparent p-4 text-left transition-all duration-200 hover:border-emerald-500/70 hover:bg-emerald-500/20 shadow-lg shadow-emerald-500/5 cursor-pointer"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500 text-slate-950 font-bold shadow-md shadow-emerald-500/25 group-hover:scale-105 transition-transform">
+                      <Target className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <span className="block text-sm font-bold text-white group-hover:text-emerald-300 transition-colors">
+                        Practice 283 (Đề PDF)
+                      </span>
+                      <span className="block text-xs text-emerald-400/90 font-medium">
+                        283 câu • Chế độ tập luyện
+                      </span>
+                    </div>
+                  </div>
+                  <ArrowRight className="h-4 w-4 text-emerald-400 group-hover:translate-x-1 transition-transform" />
+                </button>
+
+                {/* Action 2: Thi Thử Pearson VUE */}
                 <button
                   onClick={() => onNavigateTab('exam')}
-                  className="group flex items-center justify-between rounded-2xl border border-orange-500/30 bg-gradient-to-r from-orange-500/10 via-amber-500/5 to-transparent p-4 text-left transition-all duration-200 hover:border-orange-500/60 hover:bg-orange-500/15"
+                  className="group flex items-center justify-between rounded-2xl border border-orange-500/30 bg-gradient-to-r from-orange-500/10 via-amber-500/5 to-transparent p-4 text-left transition-all duration-200 hover:border-orange-500/60 hover:bg-orange-500/15 cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500 text-slate-950 font-bold shadow-md shadow-orange-500/20 group-hover:scale-105 transition-transform">
@@ -281,20 +303,20 @@ export const ExecutiveDashboard: React.FC<ExecutiveDashboardProps> = ({
                     </div>
                     <div>
                       <span className="block text-sm font-bold text-white group-hover:text-orange-300 transition-colors">
-                        Mô Phỏng Thi Pearson VUE
+                        Mô Phỏng Pearson VUE
                       </span>
                       <span className="block text-xs text-slate-400">
-                        65 câu • 90 phút • Đạt từ 700/1000
+                        65 câu • 90 phút • 700đ
                       </span>
                     </div>
                   </div>
                   <ArrowRight className="h-4 w-4 text-orange-400 group-hover:translate-x-1 transition-transform" />
                 </button>
 
-                {/* Action 2: Tra Cứu Từ Khóa Bí Kíp */}
+                {/* Action 3: Tra Cứu Từ Khóa Bí Kíp */}
                 <button
                   onClick={() => onNavigateTab('cheatsheet')}
-                  className="group flex items-center justify-between rounded-2xl border border-white/[0.08] bg-slate-900/60 p-4 text-left transition-all duration-200 hover:border-amber-500/40 hover:bg-slate-800/60"
+                  className="group flex items-center justify-between rounded-2xl border border-white/[0.08] bg-slate-900/60 p-4 text-left transition-all duration-200 hover:border-amber-500/40 hover:bg-slate-800/60 cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/30 group-hover:scale-105 transition-transform">
@@ -302,20 +324,20 @@ export const ExecutiveDashboard: React.FC<ExecutiveDashboardProps> = ({
                     </div>
                     <div>
                       <span className="block text-sm font-bold text-white group-hover:text-amber-300 transition-colors">
-                        Bí Kíp &amp; Keyword Matrix
+                        Bí Kíp &amp; Core Facts
                       </span>
                       <span className="block text-xs text-slate-400">
-                        Thấy từ khóa &rarr; Chọn ngay đáp án
+                        Thấy từ khóa &rarr; Chọn đáp án
                       </span>
                     </div>
                   </div>
                   <ArrowRight className="h-4 w-4 text-slate-400 group-hover:text-amber-400 group-hover:translate-x-1 transition-transform" />
                 </button>
 
-                {/* Action 3: Tiếp Tục Học Bài Mới */}
+                {/* Action 4: Tiếp Tục Học Bài Mới */}
                 <button
                   onClick={() => onNavigateTab('study')}
-                  className="group flex items-center justify-between rounded-2xl border border-white/[0.08] bg-slate-900/60 p-4 text-left transition-all duration-200 hover:border-blue-500/40 hover:bg-slate-800/60"
+                  className="group flex items-center justify-between rounded-2xl border border-white/[0.08] bg-slate-900/60 p-4 text-left transition-all duration-200 hover:border-blue-500/40 hover:bg-slate-800/60 cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-500/20 text-blue-400 border border-blue-500/30 group-hover:scale-105 transition-transform">
@@ -326,7 +348,7 @@ export const ExecutiveDashboard: React.FC<ExecutiveDashboardProps> = ({
                         20 Chuyên Đề Song Ngữ
                       </span>
                       <span className="block text-xs text-slate-400">
-                        {completedLectures.length} bài hoàn thành • Đầy đủ mẹo thi
+                        {completedLectures.length} bài hoàn thành
                       </span>
                     </div>
                   </div>

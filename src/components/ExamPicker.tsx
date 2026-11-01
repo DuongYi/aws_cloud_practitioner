@@ -18,11 +18,12 @@ import {
 import { ExamSet, ExamAttempt, ExamSession } from '../types';
 import { getExamAttempts } from '../utils/storage';
 
-type Category = 'all' | 'notebook' | 'mixed' | 'practice' | 'core' | 'custom';
+type Category = 'all' | 'practice283' | 'notebook' | 'mixed' | 'practice' | 'core' | 'custom';
 type Status = 'any' | 'new' | 'passed' | 'failed';
 
 const CATEGORY_LABEL: Record<Category, string> = {
   all: 'Tất cả bộ đề',
+  practice283: 'Practice 283 (Đề 283 câu PDF)',
   notebook: 'Sổ tay câu sai',
   mixed: 'Đề thi tổng hợp 65 câu',
   practice: 'Luyện tập theo số',
@@ -40,6 +41,7 @@ const STATUS_LABEL: Record<Status, string> = {
 const cleanTitle = (e: ExamSet) => (e.titleVi || e.title).replace(/\s*\([^)]*\)\s*$/, '');
 
 const categoryOf = (e: ExamSet): Exclude<Category, 'all'> => {
+  if (e.id === 'practice_283') return 'practice283';
   if (e.id === 'wrong-notebook') return 'notebook';
   if (e.isCustom) return 'custom';
   if (e.id.startsWith('dump-mixed')) return 'mixed';

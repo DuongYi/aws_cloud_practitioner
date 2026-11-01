@@ -125,7 +125,14 @@ export const Header: React.FC<HeaderProps> = ({
   const activeSecondaryTab = SECONDARY_TABS.find(t => t.id === activeTab);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/[0.08] bg-slate-950/90 backdrop-blur-2xl">
+    <header
+      className="sticky top-0 z-40 border-b border-white/[0.08] bg-slate-950/90 backdrop-blur-2xl safe-area-top safe-area-x"
+      style={{
+        paddingTop: 'env(safe-area-inset-top, 0px)',
+        paddingLeft: 'env(safe-area-inset-left, 0px)',
+        paddingRight: 'env(safe-area-inset-right, 0px)',
+      }}
+    >
       <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-x-2.5 px-3 sm:px-6 lg:h-[62px] py-2 lg:py-0 lg:px-8">
         
         {/* 1. Brand identity - Streamlined & Minimalist */}

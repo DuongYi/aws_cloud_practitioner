@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { supabase } from './supabase';
+import practice283Explanations from '../data/practice283_explanations.json';
 
 export interface ExplanationOption {
   label: string;
@@ -32,6 +33,17 @@ try {
   const saved = JSON.parse(localStorage.getItem(STORE_KEY) || '[]') as Explanation[];
   saved.forEach((e) => cache.set(e.question_id, e));
 } catch { /* storage unavailable or corrupt: start empty */ }
+
+// Preload built-in practice 283 explanations so they are immediately available offline
+(practice283Explanations as unknown as Explanation[]).forEach((e) => {
+  cache.set(e.question_id, e);
+  cache.set(`practice_283:${e.question_id}`, e);
+  const numPart = e.question_id.split('-').pop();
+  if (numPart) {
+    cache.set(`practice_283:${numPart}`, e);
+    cache.set(numPart, e);
+  }
+});
 
 let persistTimer: ReturnType<typeof setTimeout> | undefined;
 const persist = () => {

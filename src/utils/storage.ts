@@ -1,5 +1,6 @@
 import { ExamSet, ExamAttempt, ExamSession, PracticeAnswer } from '../types';
 import { DEFAULT_EXAMS } from '../data/defaultExams';
+import { PRACTICE_283_EXAM } from '../data/practice283';
 import { pushSession, removeSession, pushPracticeAnswer, pushAttempt, pushBookmark, pushCustomExam, pushLecture, removeCustomExam } from './sync';
 
 const STORAGE_KEYS = {
@@ -50,7 +51,7 @@ export const loadDumpExams = async (): Promise<void> => {
 
 export const getAllExams = (): ExamSet[] => {
   const custom = getStoredCustomExams();
-  return [...DEFAULT_EXAMS, ...dumpExams, ...custom];
+  return [PRACTICE_283_EXAM, ...DEFAULT_EXAMS, ...dumpExams, ...custom];
 };
 
 export const getExamAttempts = (): ExamAttempt[] => {

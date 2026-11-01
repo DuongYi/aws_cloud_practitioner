@@ -53,6 +53,15 @@ interface ExamSimulatorProps {
 /** Numeric ids (older built-in exams) repeat across exams, so they are namespaced by exam id. */
 const explanationKey = (examId: string, qid: string | number): string => (typeof qid === 'number' ? `${examId}:${qid}` : String(qid));
 
+const getLegacyExplanation = (q: ExamQuestion, lang: 'bilingual' | 'vi' | 'en'): string | undefined => {
+  if (lang === 'en') return q.explanation || undefined;
+  if (lang === 'vi') return q.explanationVi || q.explanation || undefined;
+  if (q.explanationVi && q.explanation && q.explanationVi.trim() !== q.explanation.trim()) {
+    return `🇻🇳 Tiếng Việt:\n${q.explanationVi}\n\n🇬🇧 Original (English):\n${q.explanation}`;
+  }
+  return (q.explanationVi || q.explanation) || undefined;
+};
+
 export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAttempt, langMode, routeExamId, active, onSelectExam, onPracticeRecorded, attempts = [], practice = [], syncNonce = 0 }) => {
   const [selectedExamId, setSelectedExamId] = useState<string>(
     exams.find((e) => e.id === routeExamId)?.id || exams[0]?.id || ''
@@ -65,9 +74,17 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
     if (active && onSelectExam && selectedExamId && selectedExamId !== routeExamId) onSelectExam(selectedExamId, !routeExamId);
   }, [selectedExamId, active]);
   const [isExamActive, setIsExamActive] = useState<boolean>(false);
-  const [examMode, setExamMode] = useState<'strict' | 'practice'>('strict');
+  const [examMode, setExamMode] = useState<'strict' | 'practice'>(() =>
+    (routeExamId === 'practice_283' || (!routeExamId && exams[0]?.id === 'practice_283')) ? 'practice' : 'strict'
+  );
   // Practice mode is untimed on purpose: no countdown, no per-question clock, no auto-submit.
   const isPractice = examMode === 'practice';
+
+  useEffect(() => {
+    if (!isExamActive && selectedExamId === 'practice_283') {
+      setExamMode('practice');
+    }
+  }, [selectedExamId, isExamActive]);
   
   // Active test state
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
@@ -464,7 +481,11 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
     return (
       <div className="mx-auto max-w-[1440px]">
         {savedToast && (
-          <div role="status" className="fixed left-1/2 top-20 z-50 w-[min(92vw,34rem)] -translate-x-1/2 rounded-2xl border border-emerald-500/40 bg-slate-900/95 px-5 py-3 text-sm text-slate-100 shadow-2xl backdrop-blur-xl">
+          <div
+            role="status"
+            className="fixed left-1/2 z-50 w-[min(92vw,34rem)] -translate-x-1/2 rounded-2xl border border-emerald-500/40 bg-slate-900/95 px-5 py-3 text-sm text-slate-100 shadow-2xl backdrop-blur-xl"
+            style={{ top: 'calc(5.5rem + env(safe-area-inset-top, 0px))' }}
+          >
             {savedToast}
           </div>
         )}
@@ -699,7 +720,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
                     failed={detailed.isFailed(explanationKey(currentExam.id, q.id))}
                     configured={detailed.configured}
                     onRetry={detailed.retry}
-                    legacyText={(langMode === 'en' ? q.explanation : q.explanationVi || q.explanation) || undefined}
+                    legacyText={getLegacyExplanation(q, langMode)}
                   />
                 )}
               </div>
@@ -888,7 +909,13 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
 
       {/* Exit Confirmation Modal */}
       {showExitConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md p-4">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md p-4"
+          style={{
+            paddingTop: 'env(safe-area-inset-top, 0px)',
+            paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+          }}
+        >
           <div className="machined-card max-w-md w-full rounded-3xl p-6 space-y-4 shadow-2xl">
             <h3 className="text-lg font-bold text-white">Rời khỏi bài thi?</h3>
             <p className="text-sm text-slate-300 leading-relaxed">
@@ -933,7 +960,13 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
 
       {/* Finish Confirmation Modal */}
       {showFinishConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md p-4">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md p-4"
+          style={{
+            paddingTop: 'env(safe-area-inset-top, 0px)',
+            paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+          }}
+        >
           <div className="machined-card max-w-md w-full rounded-3xl p-6 space-y-4 shadow-2xl">
             <h3 className="text-lg font-bold text-white">Xác nhận nộp bài thi?</h3>
             <div className="machined-inner rounded-2xl p-4 text-xs space-y-2">
@@ -1194,7 +1227,7 @@ export const ExamSimulator: React.FC<ExamSimulatorProps> = ({ exams, onFinishAtt
                   failed={drill.isFailed(explanationKey(currentExam.id, currentQ.id))}
                   configured={drill.configured}
                   onRetry={drill.retry}
-                  legacyText={(langMode === 'en' ? currentQ.explanation : currentQ.explanationVi || currentQ.explanation) || undefined}
+                  legacyText={getLegacyExplanation(currentQ, langMode)}
                 />
               </div>
             )
